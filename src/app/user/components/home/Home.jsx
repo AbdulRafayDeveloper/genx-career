@@ -1,0 +1,516 @@
+"use client";
+import Header from "../header/Header";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
+import Footer from "../footer/Footer";
+
+const Home = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+    const labels = document.querySelectorAll(".label");
+    const section = document.querySelector(".benefits-section");
+
+    if (section) {
+      const sectionWidth = section.offsetWidth;
+      const sectionHeight = section.offsetHeight;
+
+      // Adjusted positions to be much closer to the center
+      const positions = [
+        { top: (sectionHeight - 90) / 4, left: (sectionWidth - 150) / 2 }, // Closer to top center
+        { top: sectionHeight - 150, left: (sectionWidth - 150) / 2 }, // Closer to bottom center
+        { top: (sectionHeight - 90) / 2, left: 50 }, // Closer to left center
+        { top: (sectionHeight - 90) / 2, left: sectionWidth - 180 }, // Closer to right center
+        { top: (sectionHeight - 90) / 4, left: 80 }, // Closer to top-left
+        { top: sectionHeight - 180, left: 80 }, // Closer to bottom-left
+        { top: (sectionHeight - 90) / 4, left: sectionWidth - 180 }, // Closer to top-right
+        { top: sectionHeight - 180, left: sectionWidth - 180 }, // Closer to bottom-right
+      ];
+
+      labels.forEach((label, index) => {
+        if (positions[index]) {
+          label.style.top = `${positions[index].top}px`;
+          label.style.left = `${positions[index].left}px`;
+        }
+      });
+    }
+  }, []);
+
+  const testimonialSlides = [
+    {
+      quote:
+        '"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."',
+      name: "Micheal Gough",
+      position: "CEO at Google",
+      image:
+        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png",
+    },
+    {
+      quote:
+        '"A fantastic platform that helps businesses and job seekers connect quickly. It’s like having a personal assistant for recruitment."',
+      name: "Sarah Lee",
+      position: "HR Manager at Facebook",
+      image:
+        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png",
+    },
+    {
+      quote:
+        '"An amazing tool that saves us so much time in hiring. We can easily find the right talent and get started with the process faster."',
+      name: "John Doe",
+      position: "CTO at Apple",
+      image:
+        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png",
+    },
+  ];
+
+  // Automatically change slides every 5 seconds
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % testimonialSlides.length);
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(slideInterval); // Clean up the interval on component unmount
+  }, [testimonialSlides.length]);
+
+  const slides = [
+    {
+      title: "Job Finding",
+      description: [
+        "Navigate the job market with confidence. Discover the best-suited roles for your skills, apply with ease, and track your applications seamlessly.",
+        "Enter keywords or apply filters to find relevant job postings.",
+        "Browse through jobs fetched from multiple platforms.",
+        "Fine-tune results by location, experience, or salary.",
+        "View personalized job suggestions based on your profile.",
+        "Submit applications to suitable job postings seamlessly.",
+      ],
+      image: "/images/Capture.PNG",
+    },
+    {
+      title: "CV Matching",
+      description: [
+        "Effortlessly align your skills and experience with the perfect job opportunities using advanced CV matching technology.",
+        "Upload your resume in PDF or Word format.",
+        "Select a job posting from the list of fetched jobs.",
+        "Click 'Match CV' to analyze how well your resume aligns with the selected job.",
+        "Review feedback and suggestions to improve your resume.",
+        "Update your resume and recheck the match to maximize compatibility.",
+      ],
+      image: "/images/Capture2.PNG",
+    },
+    {
+      title: "CV Generation",
+      description: [
+        "Create a professional CV in minutes with customizable templates that highlight your strengths and achievements.",
+        "Choose a professional resume template from our collection.",
+        "Fill in your personal details, work experience, education, and skills.",
+        "Add optional sections like certifications, achievements, or hobbies.",
+        "Preview your resume and make final adjustments.",
+        "Download your polished resume in PDF format.",
+      ],
+      image: "/images/Capture3.PNG",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  return (
+    <div className="relative">
+      <div
+        className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/design.png')",
+        }}
+      ></div>
+
+      <div className="relative z-10">
+        <Header />
+        <div className="flex flex-col justify-center items-center min-h-screen">
+          <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
+            Revolutionize
+            <br /> Job Hunt
+            <br /> with
+            <br /> GenX Career
+          </h1>
+          <p className="mt-4 text-lg text-center font-normal">
+            Effortlessly Fetch, Match, and Create: Discover the Power of Job
+            Tools
+          </p>
+          <div className="mt-4">
+            <div className="scoped-container bg-white bg-opacity-40 rounded-2xl">
+              <button
+                onClick={() => (window.location.href = "/job-posts")}
+                className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
+              >
+                Explore Jobs
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="marquee-container mt-20 mb-20 rounded-lg overflow-hidden ">
+          <div className="marquee flex items-center">
+            {/* Individual marquee items */}
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-1.svg"
+                alt="Feature 1"
+                className="h-28 w-28 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-2.svg"
+                alt="Feature 2"
+                className="h-20 w-20 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-3.svg"
+                alt="Feature 3"
+                className="h-36 w-36 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-4.svg"
+                alt="Feature 4"
+                className="h-48 w-48 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-1">
+              <img
+                src="/images/image-5.png"
+                alt="Feature 5"
+                className="h-40 w-40 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-6.svg"
+                alt="Feature 6"
+                className="h-48 w-48 object-contain m-12"
+              />
+            </div>
+            {/* Duplicated marquee items */}
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-1.svg"
+                alt="Feature Duplicate 1"
+                className="h-28 w-28 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-2.svg"
+                alt="Feature Duplicate 2"
+                className="h-20 w-20 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-3.svg"
+                alt="Feature Duplicate 3"
+                className="h-36 w-36 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-4.svg"
+                alt="Feature Duplicate 4"
+                className="h-48 w-48 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-5.png"
+                alt="Feature Duplicate 5"
+                className="h-40 w-40 object-contain m-12"
+              />
+            </div>
+            <div className="marquee-item mx-2">
+              <img
+                src="/images/image-6.svg"
+                alt="Feature Duplicate 6"
+                className="h-48 w-48 object-contain m-12"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="h-screen items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50">
+          <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
+            Our Features
+          </h1>
+          <p className="text-center text-white">
+            Effortlessly match your skills to jobs, create a standout CV, and
+            navigate the job market <br /> with confidence.
+          </p>
+          <div className="flex flex-wrap justify-center mt-4">
+            {/* Feature Card 1 */}
+            <div className="p-4 max-w-sm">
+              <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
+                <div className="flex items-center mb-5">
+                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                    <img src="/images/briefcase.png" alt="" />
+                  </div>*/}
+                  <h2 className="text-[#595959] text-xl font-medium">
+                    Job Finding
+                  </h2>
+                </div>
+                <div className="flex-grow">
+                  <p className="leading-relaxed text-base text-[#595959]">
+                    Navigate the job market with confidence. Discover the
+                    best-suited roles for your skills, apply with ease, and
+                    track your applications seamlessly. Empower your job search
+                    journey with tools designed to land your dream role.
+                  </p>
+                </div>
+                <div className="mt-5">
+                  <a
+                    href="#"
+                    className="text-black hover:text-[#9866C7] inline-flex items-center"
+                  >
+                    Learn More
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 max-w-sm">
+              <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
+                <div className="flex items-center mb-5">
+                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                    <img src="/images/cv.png" alt="" />
+                  </div>*/}
+                  <h2 className="text-[#595959] text-xl font-medium">
+                    CV Matching
+                  </h2>
+                </div>
+                <div className="flex-grow">
+                  <p className="leading-relaxed text-base text-[#595959]">
+                    Effortlessly align your skills and experience with the
+                    perfect job opportunities. Our advanced CV matching
+                    technology analyzes your profile and recommends positions
+                    tailored to your expertise and aspirations. Stand out from
+                    the crowd and save time in your job search.
+                  </p>
+                </div>
+                <div className="mt-5">
+                  <a
+                    href="#"
+                    className="text-black hover:text-[#9866C7] inline-flex items-center"
+                  >
+                    Learn More
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Card 2 */}
+            <div className="p-4 max-w-sm">
+              <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
+                <div className="flex items-center mb-5">
+                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                    <img src="/images/curriculum-vitae.png" alt="" />
+                  </div>*/}
+                  <h2 className="text-[#595959] text-xl font-medium">
+                    CV Generation
+                  </h2>
+                </div>
+                <div className="flex-grow">
+                  <p className="leading-relaxed text-base text-[#595959]">
+                    Create a professional, visually appealing CV in minutes.
+                    Customize templates designed to showcase your strengths and
+                    achievements. Let our smart tool help you craft a resume
+                    that gets noticed by employers and highlights your career
+                    potential.
+                  </p>
+                </div>
+                <div className="mt-5">
+                  <a
+                    href="#"
+                    className="text-black hover:text-[#9866C7] inline-flex items-center"
+                  >
+                    Learn More
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="my-12 pt-12">
+          <h1 className="text-5xl font-extralight text-[#a67ccd] mb-10 text-center font-serif">
+            How It Works
+          </h1>
+
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Large Image Section */}
+            <div className="lg:w-1/2 w-full h-full">
+              <img
+                src={slides[currentSlide].image}
+                alt={slides[currentSlide].title}
+                className="rounded-lg shadow-lg controls object-cover object-right h-[500px] w-full"
+              />
+            </div>
+
+            {/* Slider Section */}
+            <div className="lg:w-1/2 w-full relative flex ">
+              <div className="h-[400px] bg-transparent overflow-hidden flex">
+                {slides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${
+                      currentSlide === index ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <h2 className="text-3xl font-semibold text-white mb-4">
+                      {slide.title}
+                    </h2>
+                    <div className="text-lg text-gray-600 mb-6">
+                      {/* Display each description item on a new line with arrow */}
+                      {slide.description.map((point, i) => (
+                        <div key={i} className="flex items-start mb-4">
+                          <span className="text-[#9866C7] mr-3">
+                            <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                          </span>
+                          <p>{point}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Navigation Dots at the Bottom */}
+            </div>
+          </div>
+        </div>
+
+        <section className="benefits-section">
+          <h1 className="section-heading flex items-center justify-center">
+            Benefits of <br />
+            GenX Career
+          </h1>
+
+          <div className="floating-labels opacity-50">
+            <div className="label">
+              <span>Job Fetching</span>
+            </div>
+            <div className="label">
+              <span>Platform Integration</span>
+            </div>
+            <div className="label">
+              <span>Periodic Updates</span>
+            </div>
+            <div className="label">
+              <span>Data Storage</span>
+            </div>
+            <div className="label">
+              <span>Advanced Filters</span>
+            </div>
+            <div className="label">
+              <span>Job Recommendations</span>
+            </div>
+            <div className="label">
+              <span>Resume Matching</span>
+            </div>
+            <div className="label">
+              <span>Job Fit</span>
+            </div>
+          </div>
+        </section>
+        <section className="h-screen flex items-center justify-center bg-opacity-25  ">
+          <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+            <figure className="max-w-screen-md mx-auto p-8 bg-white bg-opacity-40 rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
+              <svg
+                className="h-12 mx-auto mb-3 text-purple-400"
+                viewBox="0 0 24 27"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+                  fill="currentColor"
+                />
+              </svg>
+              {/* Testimonial content */}
+              <blockquote>
+                <p className="text-2xl font-medium text-purple-500 animate__animated animate__fadeIn animate__delay-1s">
+                  {testimonialSlides[currentSlide].quote}
+                </p>
+              </blockquote>
+              <figcaption className="flex items-center justify-center mt-6 space-x-3">
+                <img
+                  className="w-16 h-16 rounded-full border-4 border-white shadow-md transform transition duration-500 hover:scale-110"
+                  src={testimonialSlides[currentSlide].image}
+                  alt="profile picture"
+                />
+                <div className="flex items-center divide-x-2 divide-gray-500">
+                  <div className="pr-3 font-medium text-purple-500">
+                    {testimonialSlides[currentSlide].name}
+                  </div>
+                  <div className="pl-3 text-sm font-light text-purple-500">
+                    {testimonialSlides[currentSlide].position}
+                  </div>
+                </div>
+              </figcaption>
+            </figure>
+            <div className="flex justify-center mt-8">
+              {testimonialSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)} // Function to set the current slide
+                  className={`w-3 h-3 mx-2 rounded-full ${
+                    currentSlide === index ? "bg-purple-500" : "bg-gray-400"
+                  } transition-all duration-300`}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;
