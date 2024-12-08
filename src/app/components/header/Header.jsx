@@ -20,7 +20,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    href="/user/about"
+                    href="/about"
                     className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#9866C7] md:p-0"
                   >
                     About us
@@ -28,7 +28,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/jobs"
                     className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#9866C7] md:p-0"
                   >
                     Find Jobs
@@ -44,7 +44,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/contact"
                     className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#9866C7] md:p-0"
                   >
                     Contact us

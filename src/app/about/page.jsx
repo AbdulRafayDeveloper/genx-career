@@ -1,9 +1,8 @@
 "use client";
 import Header from "../components/header/Header";
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../components/footer/Footer";
+import Link from "next/link";
 
 const page = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
@@ -87,7 +86,7 @@ const page = () => {
           <div className="mt-12">
             <div className="scoped-container bg-white bg-opacity-40 rounded-2xl">
               <button
-                onClick={() => (window.location.href = "/job-posts")}
+                onClick={() => (window.location.href = "/jobs")}
                 className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
               >
                 Explore Jobs
@@ -419,9 +418,12 @@ const page = () => {
             </div>
             <p className="text-center text-gray-600 text-base mt-9">
               Still have questions?{" "}
-              <span className="cursor-pointer font-medium text-tertiary transition-all duration-200 hover:text-tertiary focus:text-tertiary hover-underline">
+              <Link
+                href={"/contact"}
+                className="cursor-pointer font-medium text-tertiary transition-all duration-200 hover:text-tertiary focus:text-tertiary hover-underline"
+              >
                 Contact our support
-              </span>
+              </Link>
             </p>
           </div>
         </section>

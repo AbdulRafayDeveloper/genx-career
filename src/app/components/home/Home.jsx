@@ -143,7 +143,7 @@ const Home = () => {
           <div className="mt-4">
             <div className="scoped-container bg-white bg-opacity-40 rounded-2xl">
               <button
-                onClick={() => (window.location.href = "/job-posts")}
+                onClick={() => (window.location.href = "/jobs")}
                 className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
               >
                 Explore Jobs
