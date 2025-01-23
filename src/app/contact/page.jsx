@@ -27,12 +27,7 @@ const Home = () => {
                   Get in Touch
                 </h2>
                 <p className="text-gray-700 text-lg ">
-                  Have questions or feedback? We are here to help! Our dedicated
-                  support team is just a click away, ready to assist you on your
-                  journey. Whether you need technical assistance, or simply want
-                  to share your thoughts, we value your input and are committed
-                  to providing a seamless experience. Reach out to us today and
-                  let's embark on this educational adventure together!
+                  Have questions or feedback? We are here to help! Our dedicated support team is just a click away, ready to assist you on your journey. Whether you need technical assistance, or simply want to share your thoughts, we value your input and are committed to providing a seamless experience. Reach out to us today and let&apos;s embark on this educational adventure together!
                 </p>
                 <div className="flex items-center space-x-4">
                   <FontAwesomeIcon icon={faPhone} className="text-purple-700" />

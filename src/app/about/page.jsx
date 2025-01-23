@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Footer from "../components/footer/Footer";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const toggleQuestion = (index) => {
@@ -433,4 +433,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
