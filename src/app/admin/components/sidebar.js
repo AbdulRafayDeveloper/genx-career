@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { GoChecklist } from "react-icons/go";
-import { BiSolidUserDetail } from "react-icons/bi";
 import { LuUsers } from "react-icons/lu";
 import { GoQuestion } from "react-icons/go";
 import { VscVerified } from "react-icons/vsc";
@@ -12,25 +11,37 @@ import { BsPersonWorkspace } from "react-icons/bs";
 
 const LeftSideBar = () => {
   const [menu, setMenu] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 640) {
-        setMenu(true); // Always show menu on larger screens
-      } else {
-        setMenu(false); // Hide menu on smaller screens
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Run on initial load
-    return () => window.removeEventListener("resize", handleResize);
+    setIsClient(true); // Ensures that the code runs on the client-side
   }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      const handleResize = () => {
+        if (window.innerWidth >= 640) {
+          setMenu(true); // Always show menu on larger screens
+        } else {
+          setMenu(false); // Hide menu on smaller screens
+        }
+      };
+
+      window.addEventListener("resize", handleResize);
+      handleResize(); // Run on initial load
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, [isClient]);
 
   // Toggle menu for small screens
   const handleChange = () => {
     setMenu(!menu);
   };
+
+  if (!isClient) {
+    return null; // Prevent rendering on server side
+  }
 
   return (
     <>
