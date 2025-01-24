@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { RiEyeLine } from "react-icons/ri";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { useRouter } from "next/navigation";
-import Pagination from "./pagination";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { RiEyeLine, RiDeleteBin6Line  } from "react-icons/ri";
+import { FiUpload } from "react-icons/fi";
+import Pagination from "./pagination";
 import Header from "./header";
 
 const JobListing = () => {
@@ -138,12 +138,12 @@ const JobListing = () => {
             {/* Search Form */}
             <div className="flex flex-wrap justify-between items-center  w-full lg:w-auto space-y-3 md:space-y-0">
               <button
-                className="flex items-center text-sm w-full sm:w-auto font-medium text-gray-700 bg-gray-200  border rounded-lg p-2 px-4 hover:bg-gray-200 transition duration-300 h-8"
+                className="flex items-center text-sm w-full sm:w-auto font-medium text-gray-700 bg-gray-200 border rounded-lg p-2 px-4 hover:bg-gray-200 transition duration-300 h-8"
                 style={{ border: "1px solid grey" }}
                 onClick={downloadJobsExcel}
                 aria-label="Export Records"
               >
-                <i className="fa-solid fa-cloud-arrow-up text-md mr-2"></i>
+                <FiUpload className="text-md mr-2 text-gray-900" />
                 Export
               </button>
 
@@ -156,8 +156,8 @@ const JobListing = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   id="simple-search"
                   className="py-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-[175px] pl-3"
-                  placeholder="Search here..."
-                  aria-label="Search here..."
+                  placeholder="Search by title..."
+                  aria-label="Search by title..."
                   required
                 />
               </div>

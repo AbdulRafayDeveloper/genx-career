@@ -3,10 +3,27 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { data1 } from "./data";
 import Header from "./header";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const JobDetail = () => {
+  const [jobDetails, setJobDetails] = useState();
   const { id } = useParams();
-  const jobDetails = data1.find((item) => item.id === parseInt(id));
+
+  useEffect(() => {
+    const fetchOneJob = async () => {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${id}`
+      );
+      const data = await response.data;
+      console.log(data.data);
+      console.log(data.status);
+      if (data.status == 200) {
+        setJobDetails(data.data);
+      }
+    };
+    fetchOneJob();
+  }, [id]);
 
   if (!jobDetails) {
     return <p>Loading...</p>;
@@ -22,8 +39,8 @@ const JobDetail = () => {
         </h1>
         <div className="flex items-center space-x-4 mt-2">
           <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-            Posted on: {jobDetails.jobPostDate}
-          </span>          
+            Posted on: {new Date(jobDetails.jobPostDate).toISOString().split('T')[0]}
+          </span>
         </div>
 
         {/* Row 1: Other Job Details */}
@@ -62,14 +79,6 @@ const JobDetail = () => {
             </div>
             <div className="flex items-center">
               <span className="font-semibold text-sm text-gray-700 w-1/2">
-                Salary:
-              </span>
-              <span className="text-gray-600 text-sm">
-                {jobDetails.salary} ({jobDetails.salaryCurrency})
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Minimum Annual Salary:
               </span>
               <span className="text-gray-600 text-sm">
@@ -82,6 +91,14 @@ const JobDetail = () => {
               </span>
               <span className="text-gray-600 text-sm">
                 {jobDetails.maxAnnualSalary}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-semibold text-sm text-gray-700 w-1/2">
+                Total Salary with currency:
+              </span>
+              <span className="text-gray-600 text-sm">
+                {jobDetails.salary} ({jobDetails.salaryCurrency})
               </span>
             </div>
           </div>
