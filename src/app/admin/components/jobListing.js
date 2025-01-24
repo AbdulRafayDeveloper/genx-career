@@ -18,12 +18,13 @@ const JobListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const itemsPerPage = 5;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState(null);
+  const totalPages = Math.ceil(totalJobs / itemsPerPage);
 
   const handleViewDetails = (id) => {
     router.push(`/admin/jobs/details/${id}`);
   };
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const totalPages = Math.ceil(totalJobs / itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -43,8 +44,6 @@ const JobListing = () => {
     };
     fetchJobs();
   }, [currentPage, itemsPerPage, searchStatus]);
-
-  const [selectedJobId, setSelectedJobId] = useState(null);
 
   const handleDeleteClick = (id) => {
     setSelectedJobId(id);
@@ -97,16 +96,10 @@ const JobListing = () => {
   const downloadJobsExcel = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/export`, {
-        responseType: "blob", // Set responseType to blob
+        responseType: "blob",
       });
 
-      console.log("Response: ", response);
-
-      // Create a link element to download the file
       const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-
-      console.log("Blob: ", blob);
-
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = "Jobs_Export.xlsx";
@@ -114,7 +107,12 @@ const JobListing = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error("Failed to download jobs Excel file:", error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to download jobs Excel file. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }
   };
 
