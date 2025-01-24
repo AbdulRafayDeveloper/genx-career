@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const router = useRouter();
@@ -36,7 +37,14 @@ const Page = () => {
           title: "Login Successful!",
           text: response.data.message,
         }).then(() => {
-          router.push("/jobs"); // Navigate to /jobs page after success
+          Cookies.set("token", response.data.data.token);
+
+          if (response.data.data.user.role === "admin") {
+            router.push("/admin/dashboard");
+          }
+          else {
+            router.push("/jobs");
+          }
         });
       }
     } catch (error) {

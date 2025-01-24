@@ -24,32 +24,32 @@ const RightSide = () => {
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                label: "Total Revenue",
+                label: "Total Jobs",
                 icon: <LuUsers color="purple" size={20} />,
                 color: "#E3F5FF",
               },
               {
-                label: "New Account",
+                label: "Total Users",
                 icon: <MdOutlineAccountBalance color="purple" size={20} />,
                 color: "#fefae0",
               },
               {
-                label: "Income",
+                label: "Total Queries",
                 icon: <BiMoneyWithdraw color="purple" size={20} />,
                 color: "#d9dcd6",
               },
               {
-                label: "Spending",
+                label: "Total Cv Matchers",
                 icon: <BsPercent color="purple" size={18} />,
                 color: "#faedcd",
               },
               {
-                label: "Totals",
+                label: "Total Cv Creators",
                 icon: <RiMoneyPoundCircleLine color="purple" size={20} />,
                 color: "#ffe5ec",
               },
               {
-                label: "Targets",
+                label: "Total Cv Templates",
                 icon: <BsBullseye color="purple" size={20} />,
                 color: "#d5f2e3",
               },
