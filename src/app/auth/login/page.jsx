@@ -1,6 +1,55 @@
 "use client";
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+        formData
+      );
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful!",
+          text: response.data.message,
+        }).then(() => {
+          router.push("/jobs"); // Navigate to /jobs page after success
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Login Error!",
+        text: error.response?.data?.message || "Something went wrong.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative">
       <div
@@ -32,7 +81,7 @@ const page = () => {
               </p>
             </div>
 
-            <form className="max-w-md md:ml-auto w-full">
+            <form onSubmit={handleSubmit} className="max-w-md md:ml-auto w-full">
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
                 Login
               </h3>
@@ -43,6 +92,8 @@ const page = () => {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                     className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Email address"
@@ -53,6 +104,8 @@ const page = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
                     className="bg-gray-100 bg-opacity-40  w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Password"
@@ -78,10 +131,11 @@ const page = () => {
 
               <div className="!mt-8">
                 <button
-                  type="button"
+                  type="submit"
                   className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded bg-purple-600 text-white hover:text-purple-500 focus:outline-none"
+                  disabled={loading}
                 >
-                  Login
+                  {loading ? "Loading..." : "Login"}
                 </button>
               </div>
             </form>
@@ -92,4 +146,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

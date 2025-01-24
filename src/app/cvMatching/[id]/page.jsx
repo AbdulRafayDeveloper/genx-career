@@ -64,7 +64,7 @@ const Page = () => {
   };
 
   const extractRatingAndDetails = (text) => {
-    const ratingMatch = text.match(/Rating: (.+)/);
+    const ratingMatch = text.match(/(?:One-word rating|Rating): (.+)/);
     const rating = ratingMatch ? ratingMatch[1].trim() : "Not Available";
     const details = text.replace(ratingMatch ? ratingMatch[0] : "", "").trim();
     return { rating, details };

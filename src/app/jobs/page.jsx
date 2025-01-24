@@ -146,9 +146,10 @@ const Page = () => {
 
     const queryParams = new URLSearchParams(filteredData).toString();
     console.log(queryParams);
+    console.log("process.env.NEXT_PUBLIC_BASE_URL: ", process.env.NEXT_PUBLIC_BASE_URL);
     try {
       const response = await axios.get(
-        `https://fyp-job-automation-backend.vercel.app/api/jobs?${queryParams}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?${queryParams}`
       );
       console.log(response);
       setJobs(response.data.data.getAllJobs);
@@ -174,7 +175,7 @@ const Page = () => {
     console.log("2");
     try {
       const response = await axios.post(
-        "https://fyp-job-automation-backend.vercel.app/api/cv-matching",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching`,
         formData,
         {
           headers: {
@@ -194,11 +195,11 @@ const Page = () => {
         );
         router.push(`/cvMatching/${matchJob}`);
       } else {
-        console.log("No use");
+        alert(data.message);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("Failed to upload file. Please try again.");
+      alert("There is some error in uploading this file. Please Match with some other Correct Cv!");
     }
   };
 
@@ -313,22 +314,21 @@ const Page = () => {
                       onClick={
                         filter === "Remote only"
                           ? () => {
-                              setFormData((prev) => ({
-                                ...prev,
-                                remote: !prev.remote, // Toggle the remote value
-                              }));
-                            }
+                            setFormData((prev) => ({
+                              ...prev,
+                              remote: !prev.remote, // Toggle the remote value
+                            }));
+                          }
                           : filter === "Salary Range"
-                          ? toggleModal
-                          : filter === "Date Posted"
-                          ? toggleModalCalender
-                          : undefined
+                            ? toggleModal
+                            : filter === "Date Posted"
+                              ? toggleModalCalender
+                              : undefined
                       }
-                      className={`px-3 py-2 border rounded-full shadow ${
-                        filter === "Remote only" && formData.remote
-                          ? "bg-purple-500 text-white" // Active state styles
-                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
-                      }`}
+                      className={`px-3 py-2 border rounded-full shadow ${filter === "Remote only" && formData.remote
+                        ? "bg-purple-500 text-white" // Active state styles
+                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
+                        }`}
                     >
                       {filter}
                     </button>
@@ -356,6 +356,13 @@ const Page = () => {
                   <p className="text-gray-600">{job.salary}</p>
                 </div>
               ))}
+              {jobsPost.length === 0 && (
+                <p className="text-gray-800">No jobs found</p>
+              )}
+              {jobsPost.length > 2 && (
+                <button
+                  className="flex items-center justify-center w-full h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
+                >Load More Jobs</button>)}
             </div>
 
             {/* Right Column (Job Details) */}

@@ -1,6 +1,56 @@
 "use client";
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,
+        formData
+      );
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful!",
+          text: response.data.message,
+        }).then(() => {
+          router.push("/auth/login");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Registration Error!",
+        text: error.response?.data?.message || "Something went wrong.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative">
       <div
@@ -18,8 +68,7 @@ const Page = () => {
               </h2>
               <p className="text-sm mt-6 text-gray-800">
                 Immerse yourself in a hassle-free login journey with our
-                intuitively designed login Form. Effortlessly access your
-                account.
+                intuitively designed login Form. Effortlessly access your account.
               </p>
               <p className="text-sm mt-12 text-gray-800">
                 Already have an account?{" "}
@@ -32,7 +81,7 @@ const Page = () => {
               </p>
             </div>
 
-            <form className="max-w-md md:ml-auto w-full">
+            <form onSubmit={handleSubmit} className="max-w-md md:ml-auto w-full">
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
                 Register
               </h3>
@@ -42,7 +91,8 @@ const Page = () => {
                   <input
                     name="name"
                     type="text"
-                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                     className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Name"
@@ -52,7 +102,8 @@ const Page = () => {
                   <input
                     name="email"
                     type="email"
-                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                     className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Email address"
@@ -62,9 +113,10 @@ const Page = () => {
                   <input
                     name="password"
                     type="password"
-                    autoComplete="current-password"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
-                    className="bg-gray-100 bg-opacity-40  w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Password"
                   />
                 </div>
@@ -76,10 +128,7 @@ const Page = () => {
                       type="checkbox"
                       className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                     />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-3 block text-sm text-gray-800"
-                    >
+                    <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
                       Remember me
                     </label>
                   </div>
@@ -88,10 +137,11 @@ const Page = () => {
 
               <div className="!mt-8">
                 <button
-                  type="button"
+                  type="submit"
                   className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded bg-purple-600 text-white hover:text-purple-500 focus:outline-none"
+                  disabled={loading}
                 >
-                  Register
+                  {loading ? "Loading..." : "Register"}
                 </button>
               </div>
             </form>
