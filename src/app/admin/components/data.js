@@ -1,3 +1,4 @@
+"use client";
 export const data = [
   {
     id: 1,

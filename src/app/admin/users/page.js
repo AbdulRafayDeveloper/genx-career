@@ -1,3 +1,4 @@
+"use client";
 import LeftSideBar from "../components/sidebar";
 import UserSection from "../components/usersSection";
 

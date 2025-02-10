@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";

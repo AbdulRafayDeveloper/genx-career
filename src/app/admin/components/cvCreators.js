@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -190,7 +189,7 @@ const CvCreators = () => {
                 <tr>
                   <th className="px-5 py-3">Sr #</th>
                   <th className="px-5 py-3">Email</th>
-                  <th className="px-5 py-3">Jobs Matched with CV</th>
+                  <th className="px-5 py-3">No. of Templates Created</th>
                   <th className="px-5 py-3">Created Date</th>
                   <th className="px-5 py-3">Action</th>
                 </tr>

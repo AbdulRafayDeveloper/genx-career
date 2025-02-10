@@ -22,7 +22,7 @@ const Page = () => {
   const [formData, setFormData] = useState({
     search: "",
     location: "",
-    remote: false,
+    remote: "",
     datePosted: null,
     minSalary: null,
     maxSalary: null,
@@ -116,22 +116,27 @@ const Page = () => {
   };
 
   useEffect(() => {
+    console.log("formData.location: ", formData.location);
+    console.log("formData.search: ", formData.search);
+    console.log("formData.remote: ", formData.remote);
+    console.log("Applied Date Posted:", formData.datePosted);
+    console.log("formData.minSalary:", formData.minSalary);
+    console.log("maxSalary:", formData.maxSalary);
     const fetchJobs = async () => {
       try {
-        const response = await fetch(
-          `https://fyp-job-automation-backend.vercel.app/api/jobs`
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
         );
 
-        const data = await response.json();
-        console.log(data.data.getAllJobs);
-        setJobs(data.data.getAllJobs);
+        console.log(response.data.data.getAllJobs);
+        setJobs(response.data.data.getAllJobs);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       }
     };
 
     fetchJobs();
-  }, []);
+  }, [formData.search, formData.location, formData.remote, formData.datePosted, formData.minSalary, formData.maxSalary]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -167,12 +172,14 @@ const Page = () => {
       return;
     }
     console.log(matchJob);
+    console.log("process.env.FIRST_USER_ID_ON_MONGODB: ", process.env.NEXT_PUBLIC_FIRST_USER_ID_ON_MONGODB);
 
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("jobId", matchJob);
-    formData.append("userId", "674db325f24f9b17a4cd6876");
-    console.log("2");
+    formData.append("userId", process.env.NEXT_PUBLIC_FIRST_USER_ID_ON_MONGODB);
+    console.log("2", process.env.NEXT_PUBLIC_BASE_URL);
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching`,
@@ -184,7 +191,7 @@ const Page = () => {
         }
       );
 
-      console.log(response);
+      console.log("response: ", response);
       if (response.data.status === 200) {
         console.log("3");
         const { data } = response;
@@ -195,11 +202,18 @@ const Page = () => {
         );
         router.push(`/cvMatching/${matchJob}`);
       } else {
-        alert(data.message);
+        alert(response.data.message);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("There is some error in uploading this file. Please Match with some other Correct Cv!");
+      console.error("Error uploading file:", error.response);
+      console.error("Error uploading file:", error.response.data);
+      console.error("Error uploading file:", error.response.data.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("There is some error in uploading this file. Please try with a correct CV!");
+      }
     }
   };
 
@@ -343,7 +357,7 @@ const Page = () => {
               </p>
               {jobsPost.map((job) => (
                 <div
-                  key={job.id}
+                  key={job._id}
                   className="p-4 mb-4 bg-white bg-opacity-80 rounded-lg cursor-pointer hover:shadow-lg"
                   onClick={() => setSelectedJob(job)}
                 >
@@ -455,9 +469,9 @@ const Page = () => {
                 type="range"
                 id="minSalary"
                 name="minSalary"
-                min="20000"
+                min="0000"
                 max="200000"
-                step="5000"
+                step="2000"
                 value={formData.minSalary}
                 onChange={handleSalaryChange}
                 className="w-full"
@@ -474,9 +488,9 @@ const Page = () => {
                 type="range"
                 id="maxSalary"
                 name="maxSalary"
-                min="20000"
+                min="0"
                 max="200000"
-                step="5000"
+                step="2000"
                 value={formData.maxSalary}
                 onChange={handleSalaryChange}
                 className="w-full"

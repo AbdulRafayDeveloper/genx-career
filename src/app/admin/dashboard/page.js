@@ -1,3 +1,4 @@
+"use client";
 import RigthSide from "../components/rightSidebar";
 import LeftSideBar from "../components/sidebar";
 
