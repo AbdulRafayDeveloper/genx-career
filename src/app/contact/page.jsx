@@ -144,7 +144,7 @@ const Home = () => {
                     <textarea
                       id="message"
                       name="message"
-                      placeholder="Your Message"
+                      placeholder="Hello..."
                       rows="4"
                       className="mt-1 block w-full rounded-md border border-gray-600 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
