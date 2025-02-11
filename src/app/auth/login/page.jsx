@@ -90,10 +90,7 @@ const Page = () => {
               </p>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="max-w-md md:ml-auto w-full"
-            >
+            <form onSubmit={handleSubmit} className="max-w-md md:ml-auto w-full">
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
                 Login
               </h3>
