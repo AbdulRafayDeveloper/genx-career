@@ -11,6 +11,7 @@ const Page = () => {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -68,7 +69,8 @@ const Page = () => {
               </h2>
               <p className="text-sm mt-6 text-gray-800">
                 Immerse yourself in a hassle-free login journey with our
-                intuitively designed login Form. Effortlessly access your account.
+                intuitively designed login Form. Effortlessly access your
+                account.
               </p>
               <p className="text-sm mt-12 text-gray-800">
                 Already have an account?{" "}
@@ -81,7 +83,10 @@ const Page = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="max-w-md md:ml-auto w-full">
+            <form
+              onSubmit={handleSubmit}
+              className="max-w-md md:ml-auto w-full"
+            >
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
                 Register
               </h3>
@@ -120,18 +125,16 @@ const Page = () => {
                     placeholder="Password"
                   />
                 </div>
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                    />
-                    <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
-                      Remember me
-                    </label>
-                  </div>
+                <div>
+                  <input
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    placeholder="Password"
+                  />
                 </div>
               </div>
 
