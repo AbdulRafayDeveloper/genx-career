@@ -7,10 +7,15 @@ import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+  const token = Cookies.get("token");
+  const userId = Cookies.get("userId");
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCalenderModalOpen, setCalenderIsModalOpen] = useState(false);
@@ -20,7 +25,6 @@ const Page = () => {
   const [isModalMatchOpen, setModalMatchOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [matchJob, setMatchJob] = useState();
-
   const [formData, setFormData] = useState({
     search: "",
     location: "",
@@ -30,7 +34,112 @@ const Page = () => {
     maxSalary: null,
   });
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
+        );
+
+        setTotalJobsCount(response.data.data.totalJobsCount);
+
+        setJobs((prevJobs) => {
+          if (pageNumber === 1) {
+            // Agar filters change huay hain, toh purani list replace karni hai
+            return response.data.data.getAllJobs;
+          } else {
+            // Load More pe naye jobs purani list ke saath append hon
+            const newJobs = response.data.data.getAllJobs;
+            const uniqueJobs = [...prevJobs, ...newJobs].reduce((acc, job) => {
+              if (!acc.some((existingJob) => existingJob._id === job._id)) {
+                acc.push(job);
+              }
+              return acc;
+            }, []);
+            return uniqueJobs;
+          }
+        });
+
+      } catch (error) {
+        console.log("Error fetching jobs:", error);
+      }
+    };
+
+    fetchJobs();
+  }, [pageNumber, formData]);
+
+  useEffect(() => {
+    if (jobsPost.length > 0 && !selectedJob) {
+      setSelectedJob(jobsPost[0]);
+    }
+  }, [jobsPost, selectedJob]);
+
+  const shouldShowLoadMore = jobsPost.length < totalJobsCount;
+
+  const matchCv = async () => {
+    if (!selectedFile) {
+      alert("Please select a file before submitting!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("jobId", matchJob);
+    formData.append("userId", userId);
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching`,
+        formData,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data.status === 200) {
+        const { data } = response;
+        localStorage.setItem(
+          "cvResults",
+          JSON.stringify(data.message.CvMatchingResult)
+        );
+        router.push(`/cvMatching/${matchJob}`);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("There is some error in uploading this file. Please try with a correct CV!");
+      }
+    }
+  };
+
   const toggleMatch = () => {
+    console.log("token: ", token);
+    console.log("userId: ", userId);
+
+    if (!token) {
+      Swal.fire({
+        title: "Login Required",
+        text: "You need to login first to match CV.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/auth/login");
+        }
+      });
+
+      return;
+    }
+
     setModalMatchOpen(!isModalMatchOpen);
   };
 
@@ -56,12 +165,6 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    if (jobsPost.length > 0 && !selectedJob) {
-      setSelectedJob(jobsPost[0]);
-    }
-  }, [jobsPost, selectedJob]);
-
   const handleApplySalary = () => {
     setFormData((prevFilters) => ({
       ...prevFilters,
@@ -69,19 +172,15 @@ const Page = () => {
       maxSalary: formData.maxSalary,
     }));
 
-    console.log("Applied Min Salary:", formData.minSalary);
-    console.log("Applied Max Salary:", formData.maxSalary);
     toggleModal(); // Close the modal
   };
 
-  console.log(formData.remote);
   const handleApplyDatePosted = () => {
     setFormData((prevFilters) => ({
       ...prevFilters,
       datePosted: formData.datePosted,
     }));
 
-    console.log("Applied Date Posted:", formData.datePosted);
     toggleModalCalender();
   };
 
@@ -91,12 +190,12 @@ const Page = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: type === "checkbox" ? checked : value,
     }));
-    console.log(formData.search);
-    console.log(formData.location);
+
     setPageNumber(1);
   };
 
@@ -121,106 +220,10 @@ const Page = () => {
     setPageNumber(1);
   };
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      
-      try {        
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
-        );
-
-        console.log("Data: ", response.data.data);
-        setTotalJobsCount(response.data.data.totalJobsCount);
-        console.log(response.data.data.getAllJobs);
-
-        setJobs((prevJobs) => {
-          if (pageNumber === 1) {
-            // Agar filters change huay hain, toh purani list replace karni hai
-            return response.data.data.getAllJobs;
-          } else {
-            // Load More pe naye jobs purani list ke saath append hon
-            const newJobs = response.data.data.getAllJobs;
-            const uniqueJobs = [...prevJobs, ...newJobs].reduce((acc, job) => {
-              if (!acc.some((existingJob) => existingJob._id === job._id)) {
-                acc.push(job);
-              }
-              return acc;
-            }, []);
-            return uniqueJobs;
-          }
-        });
-
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
-    fetchJobs();
-  }, [pageNumber, formData]); // Jab bhi filters ya pageNumber change ho, ye trigger hoga
-
-  // }, [pageNumber, formData.search, formData.location, formData.remote, formData.datePosted, formData.minSalary, formData.maxSalary]);
-
-
   const handleSearch = async (e) => {
     e.preventDefault();
     setPageNumber(1);
   };
-
-  const router = useRouter();
-
-  const matchCv = async () => {
-    console.log("1");
-    if (!selectedFile) {
-      alert("Please select a file before submitting!");
-      return;
-    }
-    console.log(matchJob);
-    console.log("process.env.FIRST_USER_ID_ON_MONGODB: ", process.env.NEXT_PUBLIC_FIRST_USER_ID_ON_MONGODB);
-
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("jobId", matchJob);
-    formData.append("userId", process.env.NEXT_PUBLIC_FIRST_USER_ID_ON_MONGODB);
-    console.log("2", process.env.NEXT_PUBLIC_BASE_URL);
-
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("response: ", response);
-      if (response.data.status === 200) {
-        console.log("3");
-        const { data } = response;
-        console.log("data: ", data);
-        localStorage.setItem(
-          "cvResults",
-          JSON.stringify(data.message.CvMatchingResult)
-        );
-        router.push(`/cvMatching/${matchJob}`);
-      } else {
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      console.error("Error uploading file:", error.response);
-      console.error("Error uploading file:", error.response.data);
-      console.error("Error uploading file:", error.response.data.message);
-      if (error.response && error.response.data && error.response.data.message) {
-        alert(error.response.data.message);
-      } else {
-        alert("There is some error in uploading this file. Please try with a correct CV!");
-      }
-    }
-  };
-
-  const shouldShowLoadMore = jobsPost.length < totalJobsCount;
 
   return (
     <div className="relative ">

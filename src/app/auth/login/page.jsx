@@ -37,18 +37,15 @@ const Page = () => {
           title: "Login Successful!",
           text: "Welcome back! You have successfully logged in.",
         }).then(() => {
-          // console.log("response.data.data.token: ", response.data.data.token);
-          // console.log("user: ", response.data.data.user);
-          // console.log("user Id: ", response.data.data.user._id);
           Cookies.set("token", response.data.data.token);
           Cookies.set("userId", response.data.data.user._id);
 
-          // if (response.data.data.user.role === "admin") {
-          //   router.push("/admin/dashboard");
-          // }
-          // else {
-          //   router.push("/jobs");
-          // }
+          if (response.data.data.user.role === "admin") {
+            router.push("/admin/dashboard");
+          }
+          else {
+            router.push("/jobs");
+          }
         });
       }
     } catch (error) {
