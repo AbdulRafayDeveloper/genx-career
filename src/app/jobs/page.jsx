@@ -15,6 +15,8 @@ const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCalenderModalOpen, setCalenderIsModalOpen] = useState(false);
   const [jobsPost, setJobs] = useState([]);
+  const [totalJobsCount, setTotalJobsCount] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [isModalMatchOpen, setModalMatchOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [matchJob, setMatchJob] = useState();
@@ -122,21 +124,25 @@ const Page = () => {
     console.log("Applied Date Posted:", formData.datePosted);
     console.log("formData.minSalary:", formData.minSalary);
     console.log("maxSalary:", formData.maxSalary);
+    console.log("pageNumber:", pageNumber);
+    pageNumber
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
         );
 
+        console.log("Data: ", response.data.data);
+        setTotalJobsCount(response.data.data.totalJobsCount)
         console.log(response.data.data.getAllJobs);
-        setJobs(response.data.data.getAllJobs);
+        setJobs((prevJobs) => [...prevJobs, ...response.data.data.getAllJobs]);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       }
     };
 
     fetchJobs();
-  }, [formData.search, formData.location, formData.remote, formData.datePosted, formData.minSalary, formData.maxSalary]);
+  }, [pageNumber, formData]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -216,6 +222,8 @@ const Page = () => {
       }
     }
   };
+
+  const shouldShowLoadMore = jobsPost.length < totalJobsCount;
 
   return (
     <div className="relative ">
@@ -373,8 +381,9 @@ const Page = () => {
               {jobsPost.length === 0 && (
                 <p className="text-gray-800">No jobs found</p>
               )}
-              {jobsPost.length > 2 && (
+              {shouldShowLoadMore && (
                 <button
+                  onClick={() => setPageNumber((prevPage) => prevPage + 1)}
                   className="flex items-center justify-center w-full h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
                 >Load More Jobs</button>)}
             </div>
