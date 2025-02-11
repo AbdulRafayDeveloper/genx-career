@@ -283,7 +283,7 @@ const LeftSideBar = () => {
             </li>
             <li>
               <a
-                href="/admin/cv-templates"
+                href="#"
                 className="flex items-center p-2 rounded-lg hover:bg-gray-100 group"
               >
                 <LuLayoutTemplate color="purple" size={20} />
@@ -292,7 +292,7 @@ const LeftSideBar = () => {
             </li>
             <li>
               <a
-                href="/admin/cv-creators"
+                href="#"
                 className="flex items-center p-2 rounded-lg hover:bg-gray-100 group"
               >
                 <BsPersonWorkspace color="purple" size={20} />

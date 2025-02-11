@@ -24,7 +24,7 @@ const Page = () => {
   const [formData, setFormData] = useState({
     search: "",
     location: "",
-    remote: "",
+    remote: false,
     datePosted: null,
     minSalary: null,
     maxSalary: null,
@@ -37,6 +37,7 @@ const Page = () => {
   const deletefile = () => {
     setSelectedFile(null);
   };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
@@ -96,6 +97,7 @@ const Page = () => {
     }));
     console.log(formData.search);
     console.log(formData.location);
+    setPageNumber(1);
   };
 
   const handleDateChange = (date) => {
@@ -103,6 +105,7 @@ const Page = () => {
       ...prevState,
       datePosted: date,
     }));
+    setPageNumber(1);
   };
 
   const toggleModal = () => {
@@ -115,58 +118,52 @@ const Page = () => {
       ...prevState,
       [name]: parseInt(value),
     }));
+    setPageNumber(1);
   };
 
   useEffect(() => {
-    console.log("formData.location: ", formData.location);
-    console.log("formData.search: ", formData.search);
-    console.log("formData.remote: ", formData.remote);
-    console.log("Applied Date Posted:", formData.datePosted);
-    console.log("formData.minSalary:", formData.minSalary);
-    console.log("maxSalary:", formData.maxSalary);
-    console.log("pageNumber:", pageNumber);
-    pageNumber
     const fetchJobs = async () => {
-      try {
+      
+      try {        
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
         );
 
         console.log("Data: ", response.data.data);
-        setTotalJobsCount(response.data.data.totalJobsCount)
+        setTotalJobsCount(response.data.data.totalJobsCount);
         console.log(response.data.data.getAllJobs);
-        setJobs((prevJobs) => [...prevJobs, ...response.data.data.getAllJobs]);
+
+        setJobs((prevJobs) => {
+          if (pageNumber === 1) {
+            // Agar filters change huay hain, toh purani list replace karni hai
+            return response.data.data.getAllJobs;
+          } else {
+            // Load More pe naye jobs purani list ke saath append hon
+            const newJobs = response.data.data.getAllJobs;
+            const uniqueJobs = [...prevJobs, ...newJobs].reduce((acc, job) => {
+              if (!acc.some((existingJob) => existingJob._id === job._id)) {
+                acc.push(job);
+              }
+              return acc;
+            }, []);
+            return uniqueJobs;
+          }
+        });
+
       } catch (error) {
         console.error("Error fetching jobs:", error);
       }
     };
 
     fetchJobs();
-  }, [pageNumber, formData]);
+  }, [pageNumber, formData]); // Jab bhi filters ya pageNumber change ho, ye trigger hoga
+
+  // }, [pageNumber, formData.search, formData.location, formData.remote, formData.datePosted, formData.minSalary, formData.maxSalary]);
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
-    console.log("Entered 1");
-    // Filter out null or empty values from formData
-    const filteredData = Object.fromEntries(
-      Object.entries(formData).filter(
-        ([key, value]) => value !== "" && value !== null
-      )
-    );
-
-    const queryParams = new URLSearchParams(filteredData).toString();
-    console.log(queryParams);
-    console.log("process.env.NEXT_PUBLIC_BASE_URL: ", process.env.NEXT_PUBLIC_BASE_URL);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?${queryParams}`
-      );
-      console.log(response);
-      setJobs(response.data.data.getAllJobs);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    }
+    setPageNumber(1);
   };
 
   const router = useRouter();
