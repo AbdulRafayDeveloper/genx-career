@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Header from "../components/header/Header";
@@ -10,10 +10,11 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../components/footer/Footer";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
-
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -53,6 +54,15 @@ const Home = () => {
     }
   };
 
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsCheckingAuth(false);
+  }, []);
+
   return (
     <div className="relative">
       <div
@@ -60,8 +70,12 @@ const Home = () => {
         style={{ backgroundImage: "url('/images/design.png')" }}
       ></div>
       <div className="relative z-10">
-        <Header />
-        <div className="flex flex-col justify-center items-center min-h-screen mt-6">
+        <Header
+          token={token}
+          isCheckingAuth={isCheckingAuth}
+          setIsCheckingAuth={setIsCheckingAuth}
+        />
+        <div className="flex flex-col justify-center items-center min-h-screen mt-10">
           <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-6xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Left Column */}

@@ -3,9 +3,11 @@ import Header from "../components/header/Header";
 import { useState, useEffect } from "react";
 import Footer from "../components/footer/Footer";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   const toggleQuestion = (index) => {
     setOpenQuestion(openQuestion === index ? null : index);
@@ -63,6 +65,15 @@ const Page = () => {
     }
   }, []);
 
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsCheckingAuth(false);
+  }, []);
+
   return (
     <div className="relative">
       <div
@@ -73,7 +84,11 @@ const Page = () => {
       ></div>
 
       <div className="relative z-10">
-        <Header />
+        <Header
+          token={token}
+          isCheckingAuth={isCheckingAuth}
+          setIsCheckingAuth={setIsCheckingAuth}
+        />
         <div className="flex flex-col justify-center items-center mb-12 mt-20">
           <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
             About

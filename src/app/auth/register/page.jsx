@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const router = useRouter();
@@ -11,6 +13,7 @@ const Page = () => {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -25,10 +28,26 @@ const Page = () => {
     e.preventDefault();
     setLoading(true);
 
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Mismatch",
+        text: "Passwords do not match. Please try again.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    const submissionData = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,
-        formData
+        submissionData
       );
 
       if (response.status === 200) {
@@ -55,20 +74,27 @@ const Page = () => {
     <div className="relative">
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        style={{
-          backgroundImage: "url('/images/design.png')",
-        }}
+        style={{ backgroundImage: "url('/images/design.png')" }}
       ></div>
       <div className="font-[sans-serif] relative z-10">
         <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
           <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
+            <button
+              onClick={() => router.push("/")}
+              className="absolute top-6 left-6 p-4 bg-white bg-opacity-80 rounded-full text-purple-600 font-semibold hover:underline"
+            >
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="w-6 h-6"
+              ></FontAwesomeIcon>
+            </button>
             <div>
               <h2 className="lg:text-5xl text-4xl font-extrabold lg:leading-[55px] text-purple-900 font-serif">
                 Seamless Register For Exclusive Access
               </h2>
               <p className="text-sm mt-6 text-gray-800">
                 Immerse yourself in a hassle-free login journey with our
-                intuitively designed login Form. Effortlessly access your
+                intuitively designed login form. Effortlessly access your
                 account.
               </p>
               <p className="text-sm mt-12 text-gray-800">
@@ -124,21 +150,16 @@ const Page = () => {
                     placeholder="Password"
                   />
                 </div>
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-3 block text-sm text-gray-800"
-                    >
-                      Remember me
-                    </label>
-                  </div>
+                <div>
+                  <input
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    placeholder="Confirm Password"
+                  />
                 </div>
               </div>
 

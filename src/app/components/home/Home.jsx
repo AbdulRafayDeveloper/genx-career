@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../footer/Footer";
-
+import Cookies from "js-cookie";
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   useEffect(() => {
     const labels = document.querySelectorAll(".label");
     const section = document.querySelector(".benefits-section");
@@ -118,6 +119,14 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsCheckingAuth(false);
+  }, []);
   return (
     <div className="relative">
       <div
@@ -128,7 +137,11 @@ const Home = () => {
       ></div>
 
       <div className="relative z-10">
-        <Header />
+        <Header
+          token={token}
+          isCheckingAuth={isCheckingAuth}
+          setIsCheckingAuth={setIsCheckingAuth}
+        />
         <div className="flex flex-col justify-center items-center min-h-screen">
           <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
             Revolutionize
@@ -474,7 +487,7 @@ const Home = () => {
               </svg>
               {/* Testimonial content */}
               <blockquote>
-                <p className="text-2xl font-medium text-purple-500 animate__animated animate__fadeIn animate__delay-1s">
+                <p className="text-2xl font-medium text-purple-900 animate__animated animate__fadeIn animate__delay-1s">
                   {testimonialSlides[currentSlide].quote}
                 </p>
               </blockquote>
@@ -485,10 +498,10 @@ const Home = () => {
                   alt="profile picture"
                 />
                 <div className="flex items-center divide-x-2 divide-gray-500">
-                  <div className="pr-3 font-medium text-purple-500">
+                  <div className="pr-3 font-medium text-purple-900">
                     {testimonialSlides[currentSlide].name}
                   </div>
-                  <div className="pl-3 text-sm font-light text-purple-500">
+                  <div className="pl-3 text-sm font-light text-purple-900">
                     {testimonialSlides[currentSlide].position}
                   </div>
                 </div>
@@ -500,7 +513,7 @@ const Home = () => {
                   key={index}
                   onClick={() => setCurrentSlide(index)} // Function to set the current slide
                   className={`w-3 h-3 mx-2 rounded-full ${
-                    currentSlide === index ? "bg-purple-500" : "bg-gray-400"
+                    currentSlide === index ? "bg-purple-900" : "bg-gray-400"
                   } transition-all duration-300`}
                 />
               ))}

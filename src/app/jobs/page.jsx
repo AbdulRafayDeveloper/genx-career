@@ -1,4 +1,3 @@
-
 "use client";
 import Header from "../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,8 +14,9 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
   const userId = Cookies.get("userId");
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCalenderModalOpen, setCalenderIsModalOpen] = useState(false);
@@ -37,7 +37,6 @@ const Page = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
@@ -61,7 +60,6 @@ const Page = () => {
             return uniqueJobs;
           }
         });
-
       } catch (error) {
         console.log("Error fetching jobs:", error);
       }
@@ -77,11 +75,13 @@ const Page = () => {
   }, [jobsPost, selectedJob]);
 
   const shouldShowLoadMore = jobsPost.length < totalJobsCount;
+  const [isMatching, setIsMatching] = useState(false);
+  const [selectFile, setSelectFile] = useState(false);
 
   const matchCv = async () => {
+    console.log("entered 1");
     if (!selectedFile) {
-      alert("Please select a file before submitting!");
-      return;
+      setSelectFile(true);
     }
 
     const formData = new FormData();
@@ -90,12 +90,13 @@ const Page = () => {
     formData.append("userId", userId);
 
     try {
+      setIsMatching(true);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching`,
         formData,
         {
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -107,16 +108,25 @@ const Page = () => {
           "cvResults",
           JSON.stringify(data.message.CvMatchingResult)
         );
+
         router.push(`/cvMatching/${matchJob}`);
       } else {
         alert(response.data.message);
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         alert(error.response.data.message);
       } else {
-        alert("There is some error in uploading this file. Please try with a correct CV!");
+        alert(
+          "There is some error in uploading this file. Please try with a correct CV!"
+        );
       }
+    } finally {
+      setIsMatching(false);
     }
   };
 
@@ -173,7 +183,7 @@ const Page = () => {
       maxSalary: formData.maxSalary,
     }));
 
-    toggleModal(); // Close the modal
+    toggleModal();
   };
 
   const handleApplyDatePosted = () => {
@@ -226,6 +236,15 @@ const Page = () => {
     setPageNumber(1);
   };
 
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsCheckingAuth(false);
+  }, []);
+
   return (
     <div className="relative ">
       {/* Background Image */}
@@ -238,7 +257,11 @@ const Page = () => {
 
       {/* Main Content */}
       <div className="relative z-10 scrollbar-hidden ">
-        <Header />
+        <Header
+          token={token}
+          isCheckingAuth={isCheckingAuth}
+          setIsCheckingAuth={setIsCheckingAuth}
+        />
         <div className="flex flex-col justify-center items-center">
           <div className="w-screen flex justify-center mt-24">
             <form
@@ -337,21 +360,22 @@ const Page = () => {
                       onClick={
                         filter === "Remote only"
                           ? () => {
-                            setFormData((prev) => ({
-                              ...prev,
-                              remote: !prev.remote, // Toggle the remote value
-                            }));
-                          }
+                              setFormData((prev) => ({
+                                ...prev,
+                                remote: !prev.remote, // Toggle the remote value
+                              }));
+                            }
                           : filter === "Salary Range"
-                            ? toggleModal
-                            : filter === "Date Posted"
-                              ? toggleModalCalender
-                              : undefined
+                          ? toggleModal
+                          : filter === "Date Posted"
+                          ? toggleModalCalender
+                          : undefined
                       }
-                      className={`px-3 py-2 border rounded-full shadow ${filter === "Remote only" && formData.remote
-                        ? "bg-purple-500 text-white" // Active state styles
-                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
-                        }`}
+                      className={`px-3 py-2 border rounded-full shadow ${
+                        filter === "Remote only" && formData.remote
+                          ? "bg-purple-500 text-white" // Active state styles
+                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
+                      }`}
                     >
                       {filter}
                     </button>
@@ -386,7 +410,10 @@ const Page = () => {
                 <button
                   onClick={() => setPageNumber((prevPage) => prevPage + 1)}
                   className="flex items-center justify-center w-full h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
-                >Load More Jobs</button>)}
+                >
+                  Load More Jobs
+                </button>
+              )}
             </div>
 
             {/* Right Column (Job Details) */}
@@ -410,6 +437,8 @@ const Page = () => {
                       <Link
                         href={selectedJob.applyUrl}
                         className="flex items-center justify-center w-32 h-10 text-sm border rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         <div className="flex items-center space-x-1">
                           <svg
@@ -565,103 +594,146 @@ const Page = () => {
 
       {isModalMatchOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-1/2">
-            {/* Dropzone Component */}
-            <h3 className="text-lg font-bold mb-2 text-purple-950">
-              Upload Resume
-            </h3>
-
-            <div className="flex items-center justify-center w-full mb-4">
-              <label
-                htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-              >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+          <div className="bg-white p-6 rounded-lg w-1/2 flex justify-center items-center">
+            {selectedFile ? (
+              isMatching ? (
+                <div className="flex flex-col items-center p-20">
                   <svg
-                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
+                    className="animate-spin h-10 w-10 text-purple-600"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 20 16"
+                    viewBox="0 0 24 24"
                   >
-                    <path
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
                       stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                    />
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 0 0 8-8v8H4z"
+                    ></path>
                   </svg>
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Click to upload</span> or
-                    drag and drop
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Only PDF files (MAX. 5MB)
+                  <p className="mt-4 text-purple-900 font-semibold text-lg">
+                    Matching in progress...
                   </p>
                 </div>
-                <input
-                  id="dropzone-file"
-                  type="file"
-                  className="hidden"
-                  accept=".pdf"
-                  onChange={handleFileChange}
-                />
-              </label>
-            </div>
-
-            {/* File Preview */}
-            {selectedFile && (
-              <div className="mt-4 border-t pt-4">
-                <p className="text-sm text-gray-600">Selected file:</p>
-                <div className="flex items-center space-x-2">
-                  <svg
-                    className="w-5 h-5 text-gray-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 4v2m4 4V6M8 10V6M4 4v8M12 14v2m4 4v-8m-8 0v8"
-                    />
-                  </svg>
-                  <div className="text-sm text-gray-700">
-                    <div className="grid grid-cols-2">
-                      <p>{selectedFile.name}</p>
-                      <button onClick={deletefile} className="text-end">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="text-red-600"
-                        ></FontAwesomeIcon>
-                      </button>
+              ) : (
+                <div className="bg-white p-6 rounded-lg w-full">
+                  {/* File Preview */}
+                  <p className="text-lg font-bold text-gray-700">
+                    File selected:
+                  </p>
+                  <div className="mt-4 border-t pt-4">
+                    <p className="text-sm text-gray-600">Selected file:</p>
+                    <div className="flex items-center space-x-2">
+                      <svg
+                        className="w-5 h-5 text-gray-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 4v2m4 4V6M8 10V6M4 4v8M12 14v2m4 4v-8m-8 0v8"
+                        />
+                      </svg>
+                      <div className="text-sm text-gray-700">
+                        <div className="grid grid-cols-2">
+                          <p>{selectedFile.name}</p>
+                          <button onClick={deletefile} className="text-end">
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className="text-red-600"
+                            />
+                          </button>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          {Math.round(selectedFile.size / 1024)} KB
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-500">
-                      {Math.round(selectedFile.size / 1024)} KB
-                    </p>
                   </div>
+
+                  {/* Close Button */}
+                  <div className="mt-4 flex justify-end gap-4">
+                    <button
+                      onClick={matchCv}
+                      className="px-4 py-2 border border-gray-400 hover:bg-purple-600 text-black rounded-full hover:text-white hover:border-white shadow-lg"
+                    >
+                      Match
+                    </button>
+                    <button
+                      onClick={toggleMatch}
+                      className="px-4 py-2 bg-purple-400 hover:bg-purple-600 text-white rounded-full"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              )
+            ) : (
+              <div className="bg-white p-6 rounded-lg w-full">
+                <p className="text-xl font-semibold text-gray-700 mb-4">
+                  Please select a file to proceed
+                </p>
+                <div className="flex items-center justify-center w-full mb-4">
+                  <label
+                    htmlFor="dropzone-file"
+                    className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                  >
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg
+                        className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 16"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                        />
+                      </svg>
+                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="font-semibold">Click to upload</span>{" "}
+                        or drag and drop
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Only PDF files (MAX. 5MB)
+                      </p>
+                    </div>
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      className="hidden"
+                      accept=".pdf"
+                      onChange={handleFileChange}
+                    />
+                  </label>
+                </div>
+
+                {/* Close Button */}
+                <div className="mt-4 flex justify-end gap-4">
+                  <button
+                    onClick={toggleMatch}
+                    className="px-4 py-2 bg-purple-400 hover:bg-purple-600 text-white rounded-full"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             )}
-
-            {/* Close Button */}
-            <div className="mt-4 flex justify-end gap-4">
-              <button
-                onClick={matchCv}
-                className="px-4 py-2 border border-gray-400 hover:bg-purple-600 text-black rounded-full hover:text-white hover:border-white shadow-lg"
-              >
-                Match
-              </button>
-              <button
-                onClick={toggleMatch}
-                className="px-4 py-2 bg-purple-400 hover:bg-purple-600 text-white rounded-full"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       )}

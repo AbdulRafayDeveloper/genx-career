@@ -4,6 +4,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const router = useRouter();
@@ -42,8 +44,7 @@ const Page = () => {
 
           if (response.data.data.user.role === "admin") {
             router.push("/admin/dashboard");
-          }
-          else {
+          } else {
             router.push("/jobs");
           }
         });
@@ -70,6 +71,15 @@ const Page = () => {
       <div className="font-[sans-serif] relative z-10">
         <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
           <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
+            <button
+              onClick={() => router.push("/")}
+              className="absolute top-6 left-6 p-4 bg-white bg-opacity-80 rounded-full text-purple-600 font-semibold hover:underline"
+            >
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="w-6 h-6"
+              ></FontAwesomeIcon>
+            </button>
             <div>
               <h2 className="lg:text-5xl text-4xl font-extrabold lg:leading-[55px] text-purple-900 font-serif">
                 Seamless Login For Exclusive Access
@@ -90,7 +100,10 @@ const Page = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="max-w-md md:ml-auto w-full">
+            <form
+              onSubmit={handleSubmit}
+              className="max-w-md md:ml-auto w-full"
+            >
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
                 Login
               </h3>
@@ -119,22 +132,6 @@ const Page = () => {
                     className="bg-gray-100 bg-opacity-40  w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Password"
                   />
-                </div>
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-3 block text-sm text-gray-800"
-                    >
-                      Remember me
-                    </label>
-                  </div>
                 </div>
               </div>
 
