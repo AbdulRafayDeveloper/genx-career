@@ -3,15 +3,26 @@ import { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const [results, setResults] = useState(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
     const data = localStorage.getItem("cvResults");
     if (data) {
       setResults(JSON.parse(data));
     }
+  }, []);
+
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    setIsCheckingAuth(false);
   }, []);
 
   const formatText = (text) => {
@@ -119,7 +130,11 @@ const Page = () => {
         }}
       ></div>
       <div className="relative z-10 scrollbar-hidden">
-        <Header />
+        <Header
+          token={token}
+          isCheckingAuth={isCheckingAuth}
+          setIsCheckingAuth={setIsCheckingAuth}
+        />
 
         {/* Job Listing Section */}
         <div className="flex h-screen w-screen mt-28">
