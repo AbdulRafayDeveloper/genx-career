@@ -158,7 +158,7 @@ const Home = () => {
                     <textarea
                       id="message"
                       name="message"
-                      placeholder="Hello..."
+                      placeholder="Write a message here..."
                       rows="4"
                       className="mt-1 block w-full rounded-md border border-gray-600 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
@@ -168,11 +168,10 @@ const Home = () => {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
-                      loading
+                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
                         ? "cursor-not-allowed bg-purple-300"
                         : "hover:bg-purple-800"
-                    }`}
+                      }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-4">
