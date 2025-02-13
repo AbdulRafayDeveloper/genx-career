@@ -1,27 +1,35 @@
 "use client";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
+  const router = useRouter();
   console.log("Header Props:", { isCheckingAuth, setIsCheckingAuth });
-
-  //const [token, setToken] = useState(null);
   const [showData, setShowData] = useState(false);
-  //const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  /*useEffect(() => {
-    const storedToken = Cookies.get("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-    setIsCheckingAuth(false);
-  }, [setIsCheckingAuth]);
-*/
   const handleChange = () => {
     setShowData(!showData);
+  };
+
+  const handleLogout = () => {
+    const token = Cookies.get('token');
+
+    if (token) {
+      Cookies.remove('token');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: "Your Account Logout",
+      });
+
+      router.push("/auth/login");
+    }
   };
 
   return (
@@ -112,7 +120,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                           </div>
                           <div className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100">
                             <IoLogOutOutline className="mt-1" color="purple" />
-                            <p className="text-sm">Logout</p>
+                            <button onClick={handleLogout} className='text-sm'>Logout</button>
                           </div>
                         </div>
                       )}
