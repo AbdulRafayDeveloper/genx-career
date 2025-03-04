@@ -208,3 +208,7 @@ body {
 .scrollbar-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
+div:where(.swal2-icon){
+  border:none !important;
+}

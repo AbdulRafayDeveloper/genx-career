@@ -1,19 +1,18 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   });
 
   const handleChange = (e) => {
@@ -24,50 +23,57 @@ const Page = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const validateForm = () => {
+    const { currentPassword, newPassword, confirmNewPassword } = formData;
 
-    if (formData.password !== formData.confirmPassword) {
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Fields",
+        text: "All fields are required.",
+      });
+      return false;
+    }
+
+    if (newPassword.length < 8) {
+      Swal.fire({
+        icon: "error",
+        title: "Weak Password",
+        text: "New password must be at least 8 characters long.",
+      });
+      return false;
+    }
+
+    if (newPassword !== confirmNewPassword) {
       Swal.fire({
         icon: "error",
         title: "Password Mismatch",
-        text: "Passwords do not match. Please try again.",
+        text: "New password and confirm password do not match.",
       });
-      setLoading(false);
-      return;
+      return false;
     }
 
-    const submissionData = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
+    return true;
+  };
 
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,
-        submissionData
-      );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Registration Successful!",
-          text: response.data.message,
-        }).then(() => {
-          router.push("/auth/login");
-        });
-      }
-    } catch (error) {
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    // Simulating successful password update (replace with API call later)
+    setTimeout(() => {
+      setLoading(false);
       Swal.fire({
-        icon: "error",
-        title: "Registration Error!",
-        text: error.response?.data?.message || "Something went wrong.",
+        icon: "success",
+        title: "Password Updated!",
+        text: "Your password has been successfully updated.",
+      }).then(() => {
+        router.push("/");
       });
-    } finally {
-      setLoading(false);
-    }
+    }, 1500);
   };
 
   return (
@@ -83,28 +89,16 @@ const Page = () => {
               onClick={() => router.push("/")}
               className="absolute top-6 left-6 p-4 bg-white bg-opacity-80 rounded-full text-purple-600 font-semibold hover:underline"
             >
-              <FontAwesomeIcon
-                icon={faArrowLeft}
-                className="w-6 h-6"
-              ></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6" />
             </button>
             <div>
               <h2 className="lg:text-5xl text-4xl font-extrabold lg:leading-[55px] text-purple-900 font-serif">
-                Seamless Register For Exclusive Access
+                Seamless Update: Secure Your Password
               </h2>
               <p className="text-sm mt-6 text-gray-800">
-                Immerse yourself in a hassle-free login journey with our
-                intuitively designed login form. Effortlessly access your
-                account.
-              </p>
-              <p className="text-sm mt-12 text-gray-800">
-                Already have an account?{" "}
-                <a
-                  href="/auth/login"
-                  className="text-purple-600 font-semibold hover:underline ml-1"
-                >
-                  Login here
-                </a>
+                Immerse yourself in a hassle-free security update with our
+                intuitively designed password reset form. Effortlessly update
+                your password and secure your account.
               </p>
             </div>
 
@@ -113,52 +107,41 @@ const Page = () => {
               className="max-w-md md:ml-auto w-full"
             >
               <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
-                Register
+                Update Password
               </h3>
 
               <div className="space-y-4">
                 <div>
                   <input
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Name"
-                  />
-                </div>
-                <div>
-                  <input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Email address"
-                  />
-                </div>
-                <div>
-                  <input
-                    name="password"
+                    name="currentPassword"
                     type="password"
-                    value={formData.password}
+                    value={formData.currentPassword}
                     onChange={handleChange}
                     required
                     className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Password"
+                    placeholder="Current Password"
                   />
                 </div>
                 <div>
                   <input
-                    name="confirmPassword"
+                    name="newPassword"
                     type="password"
-                    value={formData.confirmPassword}
+                    value={formData.newPassword}
                     onChange={handleChange}
                     required
                     className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Confirm Password"
+                    placeholder="New Password"
+                  />
+                </div>
+                <div>
+                  <input
+                    name="confirmNewPassword"
+                    type="password"
+                    value={formData.confirmNewPassword}
+                    onChange={handleChange}
+                    required
+                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    placeholder="Confirm New Password"
                   />
                 </div>
               </div>
@@ -169,7 +152,7 @@ const Page = () => {
                   className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded bg-purple-600 text-white hover:text-purple-500 focus:outline-none"
                   disabled={loading}
                 >
-                  {loading ? "Loading..." : "Register"}
+                  {loading ? "Processing..." : "Update Password"}
                 </button>
               </div>
             </form>

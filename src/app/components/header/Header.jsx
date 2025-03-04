@@ -5,7 +5,7 @@ import { useState } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
   const router = useRouter();
@@ -17,14 +17,14 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
   };
 
   const handleLogout = () => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
 
     if (token) {
-      Cookies.remove('token');
+      Cookies.remove("token");
 
       Swal.fire({
-        icon: 'success',
-        title: 'Success',
+        icon: "success",
+        title: "Success",
         text: "Your Account Logout",
       });
 
@@ -66,7 +66,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/cvCreation"
                     className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#9866C7] md:p-0"
                   >
                     Cv Creation
@@ -104,23 +104,38 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                       </button>
                       {showData && (
                         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-44 bg-white rounded-lg shadow-lg whitespace-nowrap">
-                          <div className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100">
+                          <Link
+                            href={"../update_profile"}
+                            className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100"
+                          >
                             <MdOutlineTipsAndUpdates
                               className="mt-1"
                               color="purple"
                             />
-                            <p className="text-sm">Update Profile</p>
-                          </div>
-                          <div className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100">
+                            <p className="text-sm font-normal">
+                              Update Profile
+                            </p>
+                          </Link>
+                          <Link
+                            href={"../change_password"}
+                            className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100"
+                          >
                             <IoSettingsOutline
                               className="mt-1"
                               color="purple"
                             />
-                            <p className="text-sm">Change Password</p>
-                          </div>
+                            <p className="text-sm font-normal">
+                              Change Password
+                            </p>
+                          </Link>
                           <div className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100">
                             <IoLogOutOutline className="mt-1" color="purple" />
-                            <button onClick={handleLogout} className='text-sm'>Logout</button>
+                            <button
+                              onClick={handleLogout}
+                              className="text-sm font-normal"
+                            >
+                              Logout
+                            </button>
                           </div>
                         </div>
                       )}
