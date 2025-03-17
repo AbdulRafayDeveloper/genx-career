@@ -138,7 +138,7 @@ const Page = () => {
               {/* Forget Password Link */}
               <div className="text-right mt-2">
                 <a
-                  href="../forget_password/email_verification"
+                  href="../auth/forget_password/email_verification"
                   className="text-sm text-purple-600 font-semibold hover:underline"
                 >
                   Forget Password?

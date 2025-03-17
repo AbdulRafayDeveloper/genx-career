@@ -117,7 +117,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                             </p>
                           </Link>
                           <Link
-                            href={"../change_password"}
+                            href={"../auth/change_password"}
                             className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100"
                           >
                             <IoSettingsOutline

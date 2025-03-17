@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import Footer from "../components/footer/Footer";
 
 const Page = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const buildCvSectionRef = useRef(null);
 
   const [token, setToken] = useState(null);
   useEffect(() => {
@@ -18,6 +19,10 @@ const Page = () => {
     }
     setIsCheckingAuth(false);
   }, []);
+
+  const handleScrollToBuildCv = () => {
+    buildCvSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="relative">
@@ -57,7 +62,10 @@ const Page = () => {
                 </p>
 
                 <div className="scoped-container  bg-opacity-40 rounded-2xl w-fit p-4">
-                  <button className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white">
+                  <button
+                    onClick={handleScrollToBuildCv}
+                    className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
+                  >
                     Build my cv
                   </button>
                 </div>
@@ -79,7 +87,10 @@ const Page = () => {
               style={{ backgroundImage: "url('/images/bg.png')" }}
             >
               {/* Section Content */}
-              <div className="flex flex-col pt-12 items-center h-full bg-black bg-opacity-30 pb-12">
+              <div
+                className="flex flex-col pt-12 items-center h-full bg-black bg-opacity-30 pb-12"
+                ref={buildCvSectionRef}
+              >
                 <p className="text-5xl font-bold text-purple-100 text-center">
                   CV TEMPLATES FOR <br />
                   LANDING A PERFECT JOB
@@ -97,14 +108,17 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_1.png"
+                      src="/images/resume_2.png"
                       alt="Resume Template"
                     />
 
                     {/* Button Overlay */}
-                    <button className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100">
+                    <Link
+                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
+                      href="/cvCreationForm/1"
+                    >
                       Build My CV
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Card 2 */}
@@ -112,7 +126,7 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_2.jpeg"
+                      src="/images/resume_3.png"
                       alt="Resume Template"
                     />
 
@@ -127,7 +141,7 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_3.jpg"
+                      src="/images/resume_1.png"
                       alt="Resume Template"
                     />
 

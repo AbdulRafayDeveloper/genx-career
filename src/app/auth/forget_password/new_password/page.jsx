@@ -117,7 +117,7 @@ const Page = () => {
                     value={formData.newPassword}
                     onChange={handleChange}
                     required
-                    className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="New Password"
                   />
                 </div>
@@ -128,7 +128,7 @@ const Page = () => {
                     value={formData.confirmNewPassword}
                     onChange={handleChange}
                     required
-                    className="bg-gray-100 bg-opacity-40 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
                     placeholder="Confirm New Password"
                   />
                 </div>

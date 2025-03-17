@@ -45,7 +45,7 @@ const Page = () => {
 			</div>
 		  `,
         showConfirmButton: true,
-        confirmButtonText: "Go to Login",
+        confirmButtonText: "Change Password",
         confirmButtonColor: "#4F46E5", // Nice shade of purple
         customClass: {
           popup: "rounded-xl shadow-lg", // Optional: Better rounded corners
@@ -53,7 +53,7 @@ const Page = () => {
             "px-6 py-2 text-white font-semibold text-sm rounded-lg",
         },
       }).then(() => {
-        router.push("/forget_password/new_password");
+        router.push("/auth/forget_password/new_password");
       });
     }, 1500);
   };
