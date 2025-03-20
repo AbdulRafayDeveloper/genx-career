@@ -97,7 +97,7 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_1.png"
+                      src="/images/resume1.png"
                       alt="Resume Template"
                     />
 
@@ -112,7 +112,7 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_2.jpeg"
+                      src="/images/resume2.png"
                       alt="Resume Template"
                     />
 
@@ -127,7 +127,7 @@ const Page = () => {
                     {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume_3.jpg"
+                      src="/images/resume3.png"
                       alt="Resume Template"
                     />
 
