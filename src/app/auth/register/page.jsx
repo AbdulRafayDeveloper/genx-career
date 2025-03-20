@@ -74,7 +74,7 @@ const Page = () => {
     <div className="relative">
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        style={{ backgroundImage: "url('/images/design.png')" }}
+        // style={{ backgroundImage: "url('/images/design.png')" }}
       ></div>
       <div className="font-[sans-serif] relative z-10">
         <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -88,31 +88,15 @@ const Page = () => {
                 className="w-6 h-6"
               ></FontAwesomeIcon>
             </button>
-            <div>
-              <h2 className="lg:text-5xl text-4xl font-extrabold lg:leading-[55px] text-purple-900 font-serif">
-                Seamless Register For Exclusive Access
-              </h2>
-              <p className="text-sm mt-6 text-gray-800">
-                Immerse yourself in a hassle-free login journey with our
-                intuitively designed login form. Effortlessly access your
-                account.
-              </p>
-              <p className="text-sm mt-12 text-gray-800">
-                Already have an account?{" "}
-                <a
-                  href="/auth/login"
-                  className="text-purple-600 font-semibold hover:underline ml-1"
-                >
-                  Login here
-                </a>
-              </p>
+            <div style={{ backgroundImage: "url('/images/registerlogo.jpg')" }} className="p-4 h-[400px]">
+             
             </div>
 
             <form
               onSubmit={handleSubmit}
               className="max-w-md md:ml-auto w-full"
             >
-              <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8">
+              <h3 className="text-purple-900 font-serif text-3xl font-extrabold mb-8 text-center">
                 Register
               </h3>
 
@@ -172,6 +156,15 @@ const Page = () => {
                   {loading ? "Loading..." : "Register"}
                 </button>
               </div>
+              <p className="text-sm mt-4 text-gray-800 text-right">
+                Already have an account?{" "}
+                <a
+                  href="/auth/login"
+                  className="text-purple-600 font-semibold hover:underline ml-1"
+                >
+                  Login here
+                </a>
+              </p>
             </form>
           </div>
         </div>

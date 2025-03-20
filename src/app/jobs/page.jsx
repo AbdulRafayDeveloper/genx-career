@@ -1,7 +1,7 @@
 "use client";
 import Header from "../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faL, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
@@ -28,6 +28,7 @@ const Page = () => {
   const [isModalMatchOpen, setModalMatchOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [matchJob, setMatchJob] = useState();
+  const [loading,setLoading]=useState(true);
   const [formData, setFormData] = useState({
     search: "",
     location: "",
@@ -63,8 +64,11 @@ const Page = () => {
           }
         });
       } catch (error) {
-        toast.error('Error fetching jobs:', error);
+        // toast.error('Error fetching jobs:', error);
         console.log("Error fetching jobs:", error);
+      }
+      finally{
+        setLoading(false);
       }
     };
 
@@ -255,7 +259,7 @@ const Page = () => {
 
   return (
     <>
-      <ToastContainer></ToastContainer>
+      {/* <ToastContainer></ToastContainer> */}
       <div className="relative ">
         {/* Background Image */}
         <div
@@ -290,7 +294,7 @@ const Page = () => {
                     name="search"
                     value={formData.search} // Bind state to input
                     onChange={handleChange} // Handle change in input
-                    className="w-full border h-11 shadow p-4 rounded-l-full rounded-r-md text-gray-800 bg-white bg-opacity-80"
+                    className="w-full h-11 shadow p-4 border border-r-0 border-purple-400 outline outline-none rounded-l-full rounded-r-md text-gray-800 bg-white bg-opacity-80"
                     placeholder="Search"
                     aria-label="Search"
                   />
@@ -310,7 +314,7 @@ const Page = () => {
                 </div>
 
                 {/* Location Bar */}
-                <div className="relative w-[160px]">
+                <div className="relative w-[160px] ">
                   <label htmlFor="location" className="sr-only">
                     Location
                   </label>
@@ -320,7 +324,7 @@ const Page = () => {
                     name="location"
                     value={formData.location} // Bind state to input
                     onChange={handleChange} // Handle change in input
-                    className="w-full border h-11 shadow p-4 rounded-l-md rounded-r-full text-gray-800 bg-white bg-opacity-80"
+                    className="w-full  h-11 shadow p-4 border border-l-0 border-purple-400 outline outline-none rounded-l-md rounded-r-full text-gray-800 bg-white bg-opacity-80"
                     placeholder="Location"
                     aria-label="Location"
                   />
@@ -391,12 +395,44 @@ const Page = () => {
                     )
                   )}
                 </div>
+                
+                <div className="flex text-center justify-center">
+                  <button disabled={loading} 
+                  className="text-purple-500 text-sm text-center inline-flex">
+                     {loading && (
+                <>
+                <div className="flex flex-col text-lg justify-center items-center">
+                <svg
+                  aria-hidden="true"
+                  role="status"
+                  className="inline w-8 h-8 text-purple-600 animate-spin "
+                  viewBox="0 0 100 101"
+                  fill="#7D0A0A"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                    fill="CurrentColor"
+                  />
+                </svg>
+                <p className="mt-3">Loading...</p>
+                </div>
+                </>
+              )}
+                  </button>
+                </div>
                 <p
                   className="pb-2 text-gray-800
               "
                 >
                   {jobsPost.length} jobs fetched
                 </p>
+                {/* loader for jobs */}
+                
                 {jobsPost.map((job) => (
                   <div
                     key={job._id}
@@ -423,7 +459,9 @@ const Page = () => {
                     Load More Jobs
                   </button>
                 )}
+
               </div>
+
 
               {/* Right Column (Job Details) */}
               <div className="flex-grow lg:w-2/3 max-h-screen overflow-y-auto border rounded-lg p-4 shadow bg-white bg-opacity-80 pr-12 pb-12 scrollbar-hidden">

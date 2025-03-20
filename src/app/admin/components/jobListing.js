@@ -21,7 +21,9 @@ const JobListing = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState(null);
   const totalPages = Math.ceil(totalJobs / itemsPerPage);
-
+  // loading table
+  const [loading,setLoading]=useState(true);
+  
   const handleViewDetails = (id) => {
     router.push(`/admin/jobs/details/${id}`);
   };
@@ -32,16 +34,23 @@ const JobListing = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`
-      );
-      const data = await response.data;
-      console.log(data);
-      if (data.status == 200) {
-        setJobs(data.data.getAllJobs);
-        setTotalJobs(data.data.totalJobsCount);
-      }
-    };
+      try{
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`
+        );
+        const data = await response.data;
+        console.log(data);
+        if (data.status == 200) {
+          setJobs(data.data.getAllJobs);
+          setTotalJobs(data.data.totalJobsCount);
+        }
+  
+      }catch(error){
+        console.log("error",error)
+      }finally{
+        setLoading(false);
+    }
+  };
     fetchJobs();
   }, [currentPage, itemsPerPage, searchStatus]);
 
@@ -192,6 +201,7 @@ const JobListing = () => {
                 </tr>
               </thead>
               <tbody>
+
                 {jobs && jobs.map((item, index) => (
                   <tr key={item._id} className="bg-white border-b text-left">
                     <td className="px-6 py-4">{item.title}</td>
@@ -261,6 +271,40 @@ const JobListing = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
+          <div className="flex justify-center items-center p-2">
+            <button
+
+              disabled={loading}
+              className="text-purple-600
+              ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center inline-flex 
+              items-center"
+              >
+              {loading && (
+                <>
+                <div className="flex flex-col text-lg justify-center items-center">
+                <svg
+                  aria-hidden="true"
+                  role="status"
+                  className="inline w-8 h-8 text-purple-600 animate-spin "
+                  viewBox="0 0 100 101"
+                  fill="#7D0A0A"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                    fill="CurrentColor"
+                  />
+                </svg>
+                <p className="mt-3">Loading...</p>
+                </div>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

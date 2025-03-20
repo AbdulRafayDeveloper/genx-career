@@ -200,15 +200,25 @@ body {
 }
 
 /* Add this to your global CSS file or a styled component */
-.scrollbar-hidden {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+/* styles/globals.css */
+::-webkit-scrollbar {
+  width: 6px; /* Width of scrollbar */
 }
 
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px;
 }
 
-div:where(.swal2-icon){
-  border:none !important;
+::-webkit-scrollbar-thumb {
+  background: #c03ab9f3; /* Thumb (scroll) color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c03ab9f3; /* Hover effect */
+}
+::selection{
+  background-color: #9a3cd1f1;
+  color: white;
 }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   const getPages = () => {
@@ -12,20 +12,21 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   };
 
   return (
-    <nav className="flex justify-end items-center my-4">
-      <ul className="inline-flex -space-x-px">
+    <nav className="flex justify-end items-center mt-5">
+      <div className="flex jusitify-center items-center shadow-md p-2 ">
+      <ul className="inline-flex space-x-px">
         {/* Previous Button */}
         <li>
           <button
-            className={`px-3 py-2 rounded-l-lg mt-1 ${
+            className={`p-1 bg-purple-400  border-2 border-purple-200 mr-3 ${
               currentPage === 1
-                ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                : "hover:bg-gray-100"
+                ? "cursor-not-allowed  bg-purple-200 text-gray-500"
+                : "hover:text-purple-900"
             }`}
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            <FaArrowLeft />
+            {/* <FaAngleLeft /> */}Prev
           </button>
         </li>
 
@@ -33,7 +34,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         {getPages().map((page) => (
           <li key={page}>
             <button
-              className={`px-2 py-1 mx-1 border ${
+              className={`px-3 py-1 border-2 border-purple-200  ${
                 page === currentPage
                   ? "bg-purple-500 text-white"
                   : "hover:bg-gray-100"
@@ -48,20 +49,21 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         {/* Next Button */}
         <li>
           <button
-            className={`px-3 py-2 rounded-r-lg  ${
+            className={`p-1 bg-purple-400  border-2 border-purple-200 ml-3 ${
               currentPage === totalPages
-                ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                : "hover:bg-gray-100"
+                ? "cursor-not-allowed text-gray-500 bg-purple-200"
+                : "hover:text-purple-900"
             }`}
             onClick={() =>
               currentPage < totalPages && onPageChange(currentPage + 1)
             }
             disabled={currentPage === totalPages}
           >
-            <FaArrowRight />
+            {/* <FaAngleRight /> */}Next
           </button>
         </li>
       </ul>
+      </div>
     </nav>
   );
 };

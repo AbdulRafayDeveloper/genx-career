@@ -1,13 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { useCallback } from "react";
 
 const Header = () => {
   const [showData, setShowData] = useState(false);
+  const dropdownRef=useRef(null);
+  
   const handleChange = () => {
     setShowData(!showData);
   };
+
+  const handleClickOutside= useCallback((event)=>{
+    if(dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    )
+    setShowData(false);
+  },[]);
+  useEffect(()=>{
+    document.addEventListener("mousedown",handleClickOutside);
+    return()=>document.removeEventListener("mousedown",handleClickOutside);
+  },[handleClickOutside]);
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -24,6 +38,7 @@ const Header = () => {
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
             aria-expanded={showData}
             onClick={handleChange}
+            ref={dropdownRef}
           >
             <span className="sr-only">Open user menu</span>
             <img

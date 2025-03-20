@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../footer/Footer";
 import Cookies from "js-cookie";
+import Link from "next/link";
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -159,7 +160,9 @@ const Home = () => {
                 onClick={() => (window.location.href = "/jobs")}
                 className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
               >
-                Explore Jobs
+                <Link href="/jobs">
+                  Explore Jobs
+                </Link>
               </button>
             </div>
           </div>
@@ -286,10 +289,10 @@ const Home = () => {
                 </div>
                 <div className="mt-5">
                   <a
-                    href="#"
+                    href="/jobs"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
-                    Learn More
+                    Get Started
                     <svg
                       fill="none"
                       stroke="currentColor"
@@ -326,10 +329,10 @@ const Home = () => {
                 </div>
                 <div className="mt-5">
                   <a
-                    href="#"
+                    href="/cvMatching"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
-                    Learn More
+                    Get Started
                     <svg
                       fill="none"
                       stroke="currentColor"
@@ -368,10 +371,10 @@ const Home = () => {
                 </div>
                 <div className="mt-5">
                   <a
-                    href="#"
+                    href="/jobs"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
-                    Learn More
+                    Get Started
                     <svg
                       fill="none"
                       stroke="currentColor"
