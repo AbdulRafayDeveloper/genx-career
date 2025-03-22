@@ -143,8 +143,8 @@ const Home = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
-        <div className="flex flex-col justify-center items-center min-h-screen">
-          <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
+        <div className="flex flex-col justify-center items-center mt-14">
+          <h1 className="md:text-8xl text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
             Revolutionize
             <br /> Job Hunt
             <br /> with
@@ -259,7 +259,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="h-screen items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50">
+        <div className=" items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50">
           <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
             Our Features
           </h1>
@@ -393,12 +393,12 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="my-12 pt-12">
+        <div className=" pt-12">
           <h1 className="text-5xl font-extralight text-[#a67ccd] mb-10 text-center font-serif">
             How It Works
           </h1>
 
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-8">
             {/* Large Image Section */}
             <div className="lg:w-1/2 w-full h-full">
               <img
@@ -410,7 +410,7 @@ const Home = () => {
 
             {/* Slider Section */}
             <div className="lg:w-1/2 w-full relative flex ">
-              <div className="h-[400px] bg-transparent overflow-hidden flex">
+              <div className="h-[600px] bg-transparent overflow-hidden flex">
                 {slides.map((slide, index) => (
                   <div
                     key={index}
@@ -441,40 +441,64 @@ const Home = () => {
           </div>
         </div>
 
-        <section className="benefits-section">
-          <h1 className="section-heading flex items-center justify-center">
-            Benefits of <br />
-            GenX Career
-          </h1>
-
-          <div className="floating-labels opacity-50">
-            <div className="label">
-              <span>Job Fetching</span>
+        <div className="mt-4">
+          <section className="benefits-section py-12 px-4">
+            {/* Heading */}
+            <h1 className="
+              section-heading 
+              text-center 
+              font-bold 
+              text-base              /* Base font size on the smallest screens */
+              sm:text-2xl 
+              md:text-4xl 
+              lg:text-5xl 
+              xl:text-6xl 
+              leading-tight         /* Adjust line height for better readability */
+            ">
+              Benefits of
+              <span className="block">GenX Career</span> 
+              {/* Using .block places "GenX Career" on a new line automatically */}
+            </h1>
+            {/* Grid Container */}
+            <div className="
+              floating-labels 
+              opacity-70 
+              mt-8 
+              grid 
+              grid-cols-1 
+              sm:grid-cols-2 
+              md:grid-cols-4 
+              gap-4
+            ">
+              {/* Each item */}
+              <div className="label p-4 border rounded text-center">
+                <span>Job Fetching</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Platform Integration</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Periodic Updates</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Data Storage</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Advanced Filters</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Job Recommendations</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Resume Matching</span>
+              </div>
+              <div className="label p-4 border rounded text-center">
+                <span>Job Fit</span>
+              </div>
             </div>
-            <div className="label">
-              <span>Platform Integration</span>
-            </div>
-            <div className="label">
-              <span>Periodic Updates</span>
-            </div>
-            <div className="label">
-              <span>Data Storage</span>
-            </div>
-            <div className="label">
-              <span>Advanced Filters</span>
-            </div>
-            <div className="label">
-              <span>Job Recommendations</span>
-            </div>
-            <div className="label">
-              <span>Resume Matching</span>
-            </div>
-            <div className="label">
-              <span>Job Fit</span>
-            </div>
-          </div>
-        </section>
-        <section className="h-screen flex items-center justify-center bg-opacity-25  ">
+          </section>
+        </div>
+        <section className="flex items-center justify-center bg-opacity-25  ">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
             <figure className="max-w-screen-md mx-auto p-8 bg-white bg-opacity-40 rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
               <svg

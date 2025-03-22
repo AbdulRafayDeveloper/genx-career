@@ -201,7 +201,7 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="relative h-screen flex items-center justify-center mt-8 mb-4">
+        <div className="relative md:h-[500px] h-[600px] flex items-center justify-center mt-8 mb-4">
           {/* Background Video */}
           <video
             className="absolute top-0 left-0 w-full h-full object-cover z-[-1] opacity-50"
@@ -218,10 +218,11 @@ const Page = () => {
 
           {/* Content */}
           <div className="flex flex-col items-center w-full h-full bg-[#7c53a380] bg-opacity-50 flex-wrap justify-center">
-            <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
+            <div className="p-4">
+            <h1 className="text-2xl md:text-5xl lg:text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
               Our Vision : Empowering Careers,<br></br> Simplifying Job Search
             </h1>
-            <p className="text-center text-white mt-4 font-medium">
+            <p className="text-center text-white md:mt-4 font-medium">
               Empowering job seekers with a seamless platform that bridges the{" "}
               <br />
               gap between opportunities and talents. By leveraging cutting-edge{" "}
@@ -232,10 +233,11 @@ const Page = () => {
               <br />
               search filters for precision job hunting.
             </p>
+            </div>
           </div>
         </div>
 
-        <div className="h-screen items-center justify-center flex flex-col mt-20 mb-20  ">
+        <div className="items-center justify-center flex flex-col mt-20 mb-20  ">
           <h1 className="text-5xl font-extralight text-purple-900 mb-2 text-center mt-4 font-serif">
             Why Choose Us
           </h1>

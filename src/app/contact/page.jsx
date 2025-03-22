@@ -124,7 +124,7 @@ const Home = () => {
                       id="name"
                       name="name"
                       placeholder="Arooba Zaman"
-                      className="mt-1 block w-full rounded-md border border-gray-600 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
                     />
                   </div>
@@ -142,7 +142,7 @@ const Home = () => {
                       id="email"
                       name="email"
                       placeholder="abc@gmail.com"
-                      className="mt-1 block w-full rounded-md border border-gray-600 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
                     />
                   </div>
@@ -160,7 +160,7 @@ const Home = () => {
                       name="message"
                       placeholder="Write a message here..."
                       rows="4"
-                      className="mt-1 block w-full rounded-md border border-gray-600 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
                     ></textarea>
                   </div>

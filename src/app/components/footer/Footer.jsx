@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="relative  bg-purple-700 bg-opacity-50 text-gray-600 py-10">
-      <div className="container mx-auto">
+    <footer className="container-fluid relative bg-purple-700 bg-opacity-50 text-gray-600 ">
+      <div className="container mx-auto p-6">
         <div className="flex justify-center items-center max-w-[1150px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10 font-mono">
           {/* Left Section */}

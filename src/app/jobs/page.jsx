@@ -385,7 +385,7 @@ const Page = () => {
                                 ? toggleModalCalender
                                 : undefined
                         }
-                        className={`px-3 py-2 border rounded-full shadow ${filter === "Remote only" && formData.remote
+                        className={`md:px-3 md:py-2 p-1 border md:text-md text-sm rounded-full shadow ${filter === "Remote only" && formData.remote
                           ? "bg-purple-500 text-white" // Active state styles
                           : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
                           }`}
@@ -467,13 +467,13 @@ const Page = () => {
               <div className="flex-grow lg:w-2/3 max-h-screen overflow-y-auto border rounded-lg p-4 shadow bg-white bg-opacity-80 pr-12 pb-12 scrollbar-hidden">
                 {selectedJob ? (
                   <div className="p-4 pb-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <h2 className="font-bold text-2xl pb-2">
                         {selectedJob.title}
                       </h2>
                       <div className="flex justify-end space-x-2">
                         <button
-                          className="flex items-center justify-center w-32 h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
+                          className="flex items-center p-2 justify-center w-36 h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
                           onClick={() => {
                             setMatchJob(selectedJob._id);
                             toggleMatch();
@@ -483,7 +483,7 @@ const Page = () => {
                         </button>
                         <Link
                           href={selectedJob.applyUrl}
-                          className="flex items-center justify-center w-32 h-10 text-sm border rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
+                          className="flex items-center justify-center md:w-32 w-[320px]  h-10 md:text-sm rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
