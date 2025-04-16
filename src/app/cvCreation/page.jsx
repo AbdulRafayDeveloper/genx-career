@@ -6,9 +6,11 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import Footer from "../components/footer/Footer";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const router = useRouter();
 
   const [token, setToken] = useState(null);
   useEffect(() => {
@@ -56,9 +58,16 @@ const Page = () => {
                   you a resume that works.
                 </p>
 
-                <div className="scoped-container  bg-opacity-40 rounded-2xl w-fit p-4">
-                  <button className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white">
-                    Build my cv
+                <div className="scoped-container bg-opacity-40 rounded-2xl w-fit p-4">
+                  <button
+                    onClick={() => {
+                      const section =
+                        document.getElementById("cvCreationSection");
+                      section?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
+                  >
+                    Build my CV
                   </button>
                 </div>
               </div>
@@ -72,7 +81,7 @@ const Page = () => {
             </div>
           </div>
           {/*Next section */}
-          <div className="w-full h-8">
+          <div className="w-full h-8" id="cvCreationSection">
             {/* Section with Background Image */}
             <div
               className=" bg-cover bg-center flex flex-col text-white"
@@ -102,9 +111,12 @@ const Page = () => {
                     />
 
                     {/* Button Overlay */}
-                    <button className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100">
+                    <Link
+                      href={`/cvCreation/1`}
+                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
+                    >
                       Build My CV
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Card 2 */}
@@ -117,9 +129,12 @@ const Page = () => {
                     />
 
                     {/* Button Overlay */}
-                    <button className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100">
+                    <Link
+                      href={`/cvCreation/2`}
+                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
+                    >
                       Build My CV
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Card 3 */}
@@ -132,9 +147,12 @@ const Page = () => {
                     />
 
                     {/* Button Overlay */}
-                    <button className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100">
+                    <Link
+                      href={`/cvCreation/3`}
+                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
+                    >
                       Build My CV
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 <div class="w-full h-8 mt-6">
