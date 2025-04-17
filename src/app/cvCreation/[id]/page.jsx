@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, use, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Stepper,
   Step,
@@ -10,11 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
 const Page = ({ params }) => {
   const resolvedParams = use(params);
+  const router = useRouter();
   const id = resolvedParams?.id;
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -34,9 +37,9 @@ const Page = ({ params }) => {
     interests: [""],
     languages: [{ language: "", proficiency: "" }],
     education: [{ degree: "", institute: "", cgpa: "", year: "" }],
-    certificates: [{ institute: "", title: "", startDate: "", endDate: "" }],
+    certificates: [{ name: "", date: "" }],
     experience: [{ title: "", company: "", description: "" }],
-    projects: [{ name: "", technology: "", link: "" }],
+    projects: [{ name: "", technologies: [], link: "" }],
     skills: [""],
     imageUrl: "",
     templateName: "",
@@ -65,7 +68,7 @@ const Page = ({ params }) => {
     skills: "",
   });
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const newErrors = {
       imageUrl: "",
       name: "",
@@ -83,7 +86,7 @@ const Page = ({ params }) => {
     let isValid = true;
 
     // Step 0: Personal Info
-    /*if (activeStep === 0) {
+    if (activeStep === 0) {
       if (!formData.imageUrl) {
         newErrors.imageUrl = "Profile image is required.";
         isValid = false;
@@ -156,12 +159,42 @@ const Page = ({ params }) => {
         isValid = false;
       }
     }
-*/
+    // Add this inside your handleNext function under step 2 validation:
+    if (activeStep === 2) {
+      // Validate Experience
+      formData.experience.forEach((exp) => {
+        if (
+          !exp.title.trim() ||
+          !exp.company.trim() ||
+          !exp.description.trim()
+        ) {
+          isValid = false;
+        }
+      });
+
+      // Validate Projects
+      formData.projects.forEach((proj) => {
+        if (
+          !proj.name.trim() ||
+          proj.technologies.some((tech) => !tech.trim())
+        ) {
+          isValid = false;
+        }
+      });
+
+      // Validate Certificates
+      formData.certificates.forEach((cert) => {
+        if (!cert.name.trim() || !cert.date.trim()) {
+          isValid = false;
+        }
+      });
+    }
+
     setErrors(newErrors);
 
     if (isValid) {
       if (activeStep === steps.length - 1) {
-        Swal.fire({
+        const result = await Swal.fire({
           title: "Ready to generate your resume?",
           width: 600,
           padding: "3em",
@@ -172,19 +205,33 @@ const Page = ({ params }) => {
             url("/images/cat-space.gif")
             left top
             no-repeat
-            
           `,
           confirmButtonText: "Yes, generate it!",
           cancelButtonText: "Cancel",
           showCancelButton: true,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setIsGenerating(true);
-            setTimeout(() => {
-              window.location.href = "/generate";
-            }, 2000);
-          }
         });
+
+        if (result.isConfirmed) {
+          setIsGenerating(true);
+
+          try {
+            const response = await axios.post(
+              "http://localhost:8000/api/generate",
+              formData
+            );
+            console.log(response);
+            const { downloadUrl } = response.data;
+            router.push(`/cvDownload?url=${encodeURIComponent(downloadUrl)}`);
+          } catch (error) {
+            console.error("Error generating CV:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops!",
+              text: "Something went wrong while generating your resume.",
+            });
+            setIsGenerating(false);
+          }
+        }
       } else {
         setActiveStep((prev) => prev + 1);
       }
@@ -447,7 +494,7 @@ const Page = ({ params }) => {
 
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Interest
+                  Interest <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -609,7 +656,7 @@ const Page = ({ params }) => {
                       placeholder="Year (e.g. 2019 - 2023)"
                       className="p-2 rounded-xl border border-gray-300 shadow-sm bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
                       value={edu.year}
-                      maxLength={10}
+                      maxLength={11}
                       onChange={(e) =>
                         handleChange("education", index, "year", e.target.value)
                       }
@@ -716,7 +763,7 @@ const Page = ({ params }) => {
             <div className="grid grid-cols-1 gap-6 bg-white/90 rounded-2xl pt-12 pb-12 px-10 shadow-xl backdrop-blur-md">
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Experience
+                  Experience <span className="text-red-500">*</span>
                 </label>
 
                 {formData.experience.map((exp, index) => (
@@ -807,50 +854,97 @@ const Page = ({ params }) => {
               </div>
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Projects
+                  Projects <span className="text-red-500">*</span>
                 </label>
 
                 {formData.projects.map((proj, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4  p-4"
+                    className="grid grid-cols-1 gap-4 mb-6 p-4  bg-white "
                   >
                     <input
                       type="text"
                       placeholder="Project Name"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
+                      className="p-2 rounded-xl border border-gray-300  bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200"
                       value={proj.name}
-                      maxLength={50}
                       onChange={(e) =>
                         handleChange("projects", index, "name", e.target.value)
                       }
                     />
-                    <input
-                      type="text"
-                      placeholder="Technologies Used"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={proj.technology}
-                      maxLength={30}
-                      onChange={(e) =>
-                        handleChange(
-                          "projects",
-                          index,
-                          "technology",
-                          e.target.value
-                        )
-                      }
-                    />
+
+                    {/* Technologies - Multiple inputs */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-600 mb-1">
+                        Technologies Used
+                      </label>
+                      {proj.technologies?.map((tech, techIndex) => (
+                        <div
+                          key={techIndex}
+                          className="flex items-center gap-2 mb-2"
+                        >
+                          <input
+                            type="text"
+                            placeholder={`Technology ${techIndex + 1}`}
+                            className="p-2 rounded-xl border border-gray-300 w-full  bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200"
+                            value={tech}
+                            onChange={(e) => {
+                              const updatedProjects = [...formData.projects];
+                              updatedProjects[index].technologies[techIndex] =
+                                e.target.value;
+                              setFormData({
+                                ...formData,
+                                projects: updatedProjects,
+                              });
+                            }}
+                          />
+                          {proj.technologies.length > 1 && (
+                            <button
+                              type="button"
+                              className="text-red-500 text-sm"
+                              onClick={() => {
+                                const updatedProjects = [...formData.projects];
+                                updatedProjects[index].technologies.splice(
+                                  techIndex,
+                                  1
+                                );
+                                setFormData({
+                                  ...formData,
+                                  projects: updatedProjects,
+                                });
+                              }}
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        className="text-blue-600 text-sm mt-1"
+                        onClick={() => {
+                          const updatedProjects = [...formData.projects];
+                          updatedProjects[index].technologies.push("");
+                          setFormData({
+                            ...formData,
+                            projects: updatedProjects,
+                          });
+                        }}
+                      >
+                        + Add Technology
+                      </button>
+                    </div>
+
                     <input
                       type="text"
                       placeholder="Project Link (Optional)"
-                      className="p-2 rounded-xl border border-gray-300 col-span-2 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
+                      className="p-2 rounded-xl border border-gray-300  bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200"
                       value={proj.link}
-                      maxLength={200}
                       onChange={(e) =>
                         handleChange("projects", index, "link", e.target.value)
                       }
                     />
-                    <div className="col-span-2 flex justify-end">
+
+                    <div className="flex justify-end">
                       {formData.projects.length > 1 && (
                         <button
                           type="button"
@@ -864,7 +958,7 @@ const Page = ({ params }) => {
                             }));
                           }}
                         >
-                          Remove
+                          Remove Project
                         </button>
                       )}
                     </div>
@@ -879,84 +973,55 @@ const Page = ({ params }) => {
                       ...prev,
                       projects: [
                         ...prev.projects,
-                        { name: "", technology: "", link: "" },
+                        { name: "", technologies: [""], link: "" },
                       ],
                     }))
                   }
                 >
-                  + Add project
+                  + Add Project
                 </button>
               </div>
+
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Certificates
+                  Certificates <span className="text-red-500">*</span>
                 </label>
 
                 {formData.certificates.map((cert, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4  p-4 "
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4"
                   >
                     <input
                       type="text"
-                      placeholder="Certificate Title"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={cert.title}
-                      maxLength={50}
+                      placeholder="Certificate Title (e.g. Full Stack Web Dev - Coursera)"
+                      className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
+                      value={cert.name}
+                      maxLength={100}
                       onChange={(e) =>
                         handleChange(
                           "certificates",
                           index,
-                          "title",
+                          "name",
                           e.target.value
                         )
                       }
                     />
+
                     <input
-                      type="text"
-                      placeholder="Issuing Institute"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={cert.institute}
-                      maxLength={50}
+                      type="month"
+                      className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
+                      value={cert.date}
                       onChange={(e) =>
                         handleChange(
                           "certificates",
                           index,
-                          "institute",
+                          "date",
                           e.target.value
                         )
                       }
                     />
-                    <input
-                      type="date"
-                      placeholder="Start Date"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={cert.startDate}
-                      maxLength={50}
-                      onChange={(e) =>
-                        handleChange(
-                          "certificates",
-                          index,
-                          "startDate",
-                          e.target.value
-                        )
-                      }
-                    />
-                    <input
-                      type="date"
-                      placeholder="End Date"
-                      className="p-2 rounded-xl border border-gray-300 bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={cert.endDate}
-                      maxLength={50}
-                      onChange={(e) =>
-                        handleChange(
-                          "certificates",
-                          index,
-                          "endDate",
-                          e.target.value
-                        )
-                      }
-                    />
+
                     <div className="col-span-2 flex justify-end">
                       {formData.certificates.length > 1 && (
                         <button
@@ -986,12 +1051,7 @@ const Page = ({ params }) => {
                       ...prev,
                       certificates: [
                         ...prev.certificates,
-                        {
-                          title: "",
-                          institute: "",
-                          startDate: "",
-                          endDate: "",
-                        },
+                        { name: "", date: "" },
                       ],
                     }))
                   }
