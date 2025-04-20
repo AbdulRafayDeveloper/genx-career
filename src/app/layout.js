@@ -13,8 +13,24 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "GenX Career",
-  description: "GenX Career is a career development platform for GenXers.",
+  title: "GenX Career – Find Jobs, Match Your CV & Build Resumes Instantly",
+  description:
+    "GenX Career is your all‑in‑one career hub: search thousands of job listings, automatically match your CV to roles, and create stunning resumes in minutes.",
+  keywords: [
+    "job search",
+    "CV matching",
+    "resume builder",
+    "job matching",
+    "career development",
+    "applicant tracking",
+    "GenX Career platform",
+    "professional resume",
+    "CV creation"
+  ],
+  robots: {
+    index: true,
+    follow: true
+  },
 };
 
 export default function RootLayout({ children }) {

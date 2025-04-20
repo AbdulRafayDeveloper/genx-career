@@ -53,7 +53,7 @@ const App = () => {
 
   const handleYearChange = (newYear) => {
     if (!monthlyData[newYear]) {
-      console.error(`Data for the year ${newYear} is not available.`);
+      console.log(`Data for the year ${newYear} is not available.`);
       return;
     }
 

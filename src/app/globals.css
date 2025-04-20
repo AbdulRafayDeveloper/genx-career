@@ -227,7 +227,9 @@ body {
   fill: #7d0dbe !important;
 }*/
 
-.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+/* ============ Arooba Css Start ===================== */
+
+/* .css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
   fill: #7d0dbe !important;
 }
 
@@ -236,7 +238,7 @@ body {
 }
 
 
-/* From Uiverse.io by mobinkakei */ 
+
 .wrapper {
   width: 200px;
   height: 60px;
@@ -318,10 +320,13 @@ body {
 .shadow:nth-child(4) {
   left: 45%;
   animation-delay: .2s
-}
+} */
 
+/* ============ Arooba Css Finish ===================== */
+
+/* 
 .shadow:nth-child(5) {
   left: auto;
   right: 15%;
   animation-delay: .3s;
-}
+} */

@@ -1,35 +1,126 @@
 "use client";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import axios from 'axios';
 import Swal from "sweetalert2";
+import Image from "next/image";
+import defaultProfile from "../../../../public/images/profile avatar.png";
 
 const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
+  // const router = useRouter();
+  // console.log("Header Props:", { isCheckingAuth, setIsCheckingAuth });
+  // const [showData, setShowData] = useState(false);
+
+  // const handleChange = () => {
+  //   setShowData(!showData);
+  // };
+
+  // const handleLogout = () => {
+  //   const token = Cookies.get("token");
+
+  //   if (token) {
+  //     Cookies.remove("token");
+
+  //     Swal.fire({
+  //       icon: "success",
+  //       title: "Success",
+  //       text: "Your Account Logout",
+  //     });
+
+  //     router.push("/auth/login");
+  //   }
+  // };
+
   const router = useRouter();
-  console.log("Header Props:", { isCheckingAuth, setIsCheckingAuth });
+  const dropdownRef = useRef(null);
   const [showData, setShowData] = useState(false);
+  const [image, setImage] = useState(null);
+  const [formData, setFormData] = useState({
+    name: ""
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = Cookies.get("token");
+        const userId = Cookies.get("userId");
+
+        if (!token) {
+          console.log("Token not found");
+          return;
+        }
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("User data response:", response);
+
+        if (response.status !== 200) {
+          console.log("Error fetching user data:", response.data.message);
+          return;
+        }
+
+        const { name, profileImage } = response.data.data || {};
+
+        setFormData({
+          name: name || ""
+        });
+
+        if (profileImage) {
+          setImage(profileImage);
+        }
+      } catch (error) {
+        console.log("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleChange = () => {
     setShowData(!showData);
   };
 
-  const handleLogout = () => {
-    const token = Cookies.get("token");
-
-    if (token) {
-      Cookies.remove("token");
-
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Your Account Logout",
-      });
-
-      router.push("/auth/login");
+  const handleClickOutside = useCallback((event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowData(false);
     }
+  }, []);
+
+  useEffect(() => {
+    // Changed from "mousedown" to "click"
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [handleClickOutside]);
+
+  const handleLogout = (e) => {
+    // Prevent any parent click events from interfering
+    e.stopPropagation();
+    console.log("Call logout API here");
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8e44ad',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Cookies.remove('token');
+        router.push('/auth/login');
+      }
+    });
   };
 
   return (
@@ -96,47 +187,44 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                         onClick={handleChange}
                       >
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="w-7 h-7 rounded-full"
-                          src="https://i.pravatar.cc/150?img=35"
-                          alt="User avatar"
+                        <Image
+                          src={
+                            image
+                              ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
+                              : defaultProfile
+                          }
+                          alt="Profile"
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full object-cover"
                         />
                       </button>
                       {showData && (
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-44 bg-white rounded-lg shadow-lg whitespace-nowrap">
-                          <Link
-                            href={"../update_profile"}
-                            className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100"
+                        <div className="absolute w-44 right-0 mt-2 p-4 bg-white border border-gray-400 rounded-lg shadow-lg z-50">
+                          <button
+                            type="button"
+                            onClick={() => router.push('/user/profile-update')}
+                            className="flex items-center gap-2 w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
                           >
-                            <MdOutlineTipsAndUpdates
-                              className="mt-1"
-                              color="purple"
-                            />
-                            <p className="text-sm font-normal">
-                              Update Profile
-                            </p>
-                          </Link>
-                          <Link
-                            href={"../change_password"}
-                            className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100"
+                            <MdOutlineTipsAndUpdates color="purple" />
+                            Update Profile
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => router.push('/user/password-update')}
+                            className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
                           >
-                            <IoSettingsOutline
-                              className="mt-1"
-                              color="purple"
-                            />
-                            <p className="text-sm font-normal">
-                              Change Password
-                            </p>
-                          </Link>
-                          <div className="flex gap-2 p-2 cursor-pointer hover:bg-gray-100">
-                            <IoLogOutOutline className="mt-1" color="purple" />
-                            <button
-                              onClick={handleLogout}
-                              className="text-sm font-normal"
-                            >
-                              Logout
-                            </button>
-                          </div>
+                            <IoSettingsOutline color="purple" />
+                            Change Password
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                          >
+                            <IoLogOutOutline color="purple" />
+                            Logout
+                          </button>
                         </div>
                       )}
                     </div>

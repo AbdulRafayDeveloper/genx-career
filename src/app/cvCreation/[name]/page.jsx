@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, use, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import {
   Stepper,
   Step,
@@ -15,13 +15,15 @@ import axios from "axios";
 
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
-const Page = ({ params }) => {
-  const resolvedParams = use(params);
+const Page = () => {
+  // const resolvedParams = use(params);
   const router = useRouter();
-  const id = resolvedParams?.id;
+  // const id = resolvedParams?.id;
+  const { name } = useParams();
+  console.log("Name :", name);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const isImageInputEnabled = id === "1" || id === "3";
+  const isImageInputEnabled = name === "template1" || name === "template3";
   console.log(isImageInputEnabled);
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -48,11 +50,11 @@ const Page = ({ params }) => {
   });
 
   useEffect(() => {
-    if (id) {
-      setFormData((prev) => ({ ...prev, templateName: `template${id}` }));
-      console.log(`template${id}`);
+    if (name) {
+      setFormData((prev) => ({ ...prev, templateName: `${name}` }));
+      console.log(`template${name}`);
     }
-  }, [id]);
+  }, [name]);
 
   const [errors, setErrors] = useState({
     imageUrl: "",
@@ -216,14 +218,14 @@ const Page = ({ params }) => {
 
           try {
             const response = await axios.post(
-              "http://localhost:8000/api/generate",
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/generate`,
               formData
             );
             console.log(response);
             const { downloadUrl } = response.data;
             router.push(`/cvDownload?url=${encodeURIComponent(downloadUrl)}`);
           } catch (error) {
-            console.error("Error generating CV:", error);
+            console.log("Error generating CV:", error);
             Swal.fire({
               icon: "error",
               title: "Oops!",

@@ -4,21 +4,49 @@ import Header from "../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
+import axios from 'axios';
 import Link from "next/link";
 import Footer from "../components/footer/Footer";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Image from "next/image";
 
 const Page = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
-
+  const [templates, setTemplates] = useState([]);
   const [token, setToken] = useState(null);
+
   useEffect(() => {
     const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
     setIsCheckingAuth(false);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplates`);
+
+        console.log("Data response:", response);
+
+        if (response.status !== 200) {
+          console.log("Error fetching tendata:", response.data.message);
+          toast.error("Some Issue in Loading the templates right now. Please try again later");
+          return;
+        }
+
+        setTemplates(response.data.data || []);
+      } catch (error) {
+        console.log("Error fetching template data:", error);
+        toast.error("Some Issue in Loading the templates right now. Please try again later");
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -42,12 +70,12 @@ const Page = () => {
             {/* Left Column (Rating) */}
             <div className="flex-grow lg:w-[700px] max-h-screen overflow-y-auto p-4 pr-12 pb-12 scrollbar-hidden pl-12 mt-28">
               <div className="flex flex-col gap-4">
-                <div className="flex flex-row gap-2 items-center">
+                {/* <div className="flex flex-row gap-2 items-center">
                   <div className="w-2 h-2 bg-purple-900 rounded-full animate-ping">
                     {" "}
                   </div>
                   <p className="font-light">10 cvs created today</p>
-                </div>
+                </div> */}
 
                 <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black">
                   Professional cv builder
@@ -101,61 +129,67 @@ const Page = () => {
 
                 {/* Cards Section */}
                 <div className="flex flex-row justify-center gap-6 mt-10">
-                  {/* Card 1 */}
+                  <div className="flex flex-wrap justify-center gap-6 mt-10">
+                    {templates?.records && templates.records.length > 0 ? (
+                      templates.records.map((template, index) => (
+                        <div
+                          key={index}
+                          className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative"
+                        >
+                          <Image
+                            className="rounded-t-lg w-full h-[450px] object-cover"
+                            width={400}
+                            height={450}
+                            src={
+                              template.imageUrl
+                                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${template.imageUrl}`
+                                : "/images/resume1.png"
+                            }
+                            alt={template.name}
+                          />
+                          <Link
+                            href={`/cvCreation/${template.name}`}
+                            className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border bg-opacity-70 bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
+                          >
+                            Build My CV
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex flex-col items-center justify-center bg-white bg-opacity-70 rounded-lg p-8 w-[500px] shadow-lg mt-10">
+                        <img
+                          src="/images/B.png"
+                          alt="No templates"
+                          className="w-52 h-64 mb-4"
+                        />
+                        <h2 className="text-2xl font-semibold text-purple-900">
+                          No CV Templates Available
+                        </h2>
+                        <p className="text-gray-600 mt-2 text-center">
+                          Currently, there are no resume templates available. <br /> Please check
+                          back later or contact support if you think this is an error.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card 1
                   <div className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative">
-                    {/* Image */}
                     <img
                       className="rounded-t-lg w-full h-[450px] object-cover"
                       src="/images/resume1.png"
                       alt="Resume Template"
                     />
 
-                    {/* Button Overlay */}
                     <Link
                       href={`/cvCreation/1`}
                       className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
                     >
                       Build My CV
                     </Link>
-                  </div>
-
-                  {/* Card 2 */}
-                  <div className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative">
-                    {/* Image */}
-                    <img
-                      className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume2.png"
-                      alt="Resume Template"
-                    />
-
-                    {/* Button Overlay */}
-                    <Link
-                      href={`/cvCreation/2`}
-                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
-                    >
-                      Build My CV
-                    </Link>
-                  </div>
-
-                  {/* Card 3 */}
-                  <div className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative">
-                    {/* Image */}
-                    <img
-                      className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume3.png"
-                      alt="Resume Template"
-                    />
-
-                    {/* Button Overlay */}
-                    <Link
-                      href={`/cvCreation/3`}
-                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
-                    >
-                      Build My CV
-                    </Link>
-                  </div>
+                  </div> */}
                 </div>
-                <div class="w-full h-8 mt-6">
+                <div className="w-full h-8 mt-6">
                   <svg
                     viewBox="0 0 1440 100"
                     fill="none"
@@ -163,7 +197,7 @@ const Page = () => {
                   >
                     <path
                       d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-                      class="fill-current text-gray-50"
+                      className="fill-current text-gray-50"
                     ></path>
                   </svg>
                   <div className="bg-gray-50 pt-6 pb-20 flex flex-col items-center justify-center">
