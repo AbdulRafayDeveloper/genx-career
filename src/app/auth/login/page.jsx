@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const Page = () => {
   const router = useRouter();
@@ -140,12 +141,12 @@ const Page = () => {
 
               {/* Forget Password Link */}
               <div className="text-right mt-2">
-                <a
-                  href="../forget_password/email_verification"
+                <Link
+                  href="/auth/forget-password/verify-email"
                   className="text-sm text-purple-600 font-semibold hover:underline"
                 >
                   Forget Password?
-                </a>
+                </Link>
               </div>
 
               <div className="!mt-8">

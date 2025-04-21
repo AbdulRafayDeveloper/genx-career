@@ -89,7 +89,7 @@ const Page = () => {
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-extrabold text-purple-900 font-serif ">
-            Forgot Password?
+            Forget Password?
           </h1>
           <p className="mt-2 text-sm text-gray-600">
             Enter your email address to reset your password.
@@ -134,7 +134,7 @@ const Page = () => {
           <p className="text-sm text-gray-600">
             Remember your password?{" "}
             <Link
-              href="../../auth/login"
+              href="../login"
               className="text-purple-700 hover:underline font-medium"
             >
               Login here
