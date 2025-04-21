@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const VerifyOtpPage = () => {
+const Page = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
@@ -163,4 +163,4 @@ const VerifyOtpPage = () => {
     );
 };
 
-export default VerifyOtpPage;
+export default Page;
