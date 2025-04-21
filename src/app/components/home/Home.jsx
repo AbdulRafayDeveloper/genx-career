@@ -6,9 +6,11 @@ import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../footer/Footer";
 import Cookies from "js-cookie";
 import Link from "next/link";
+
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
   useEffect(() => {
     const labels = document.querySelectorAll(".label");
     const section = document.querySelector(".benefits-section");
@@ -288,7 +290,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="mt-5">
-                  <a
+                  <Link
                     href="/jobs"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
@@ -304,7 +306,7 @@ const Home = () => {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -328,7 +330,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="mt-5">
-                  <a
+                  <Link
                     href="/cvMatching"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
@@ -344,7 +346,7 @@ const Home = () => {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -370,7 +372,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="mt-5">
-                  <a
+                  <Link
                     href="/jobs"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
@@ -386,7 +388,7 @@ const Home = () => {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -414,9 +416,8 @@ const Home = () => {
                 {slides.map((slide, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${
-                      currentSlide === index ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${currentSlide === index ? "opacity-100" : "opacity-0"
+                      }`}
                   >
                     <h2 className="text-3xl font-semibold text-white mb-4">
                       {slide.title}
@@ -456,7 +457,7 @@ const Home = () => {
               leading-tight         /* Adjust line height for better readability */
             ">
               Benefits of
-              <span className="block">GenX Career</span> 
+              <span className="block">GenX Career</span>
               {/* Using .block places "GenX Career" on a new line automatically */}
             </h1>
             {/* Grid Container */}
@@ -539,9 +540,8 @@ const Home = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)} // Function to set the current slide
-                  className={`w-3 h-3 mx-2 rounded-full ${
-                    currentSlide === index ? "bg-purple-900" : "bg-gray-400"
-                  } transition-all duration-300`}
+                  className={`w-3 h-3 mx-2 rounded-full ${currentSlide === index ? "bg-purple-900" : "bg-gray-400"
+                    } transition-all duration-300`}
                 />
               ))}
             </div>

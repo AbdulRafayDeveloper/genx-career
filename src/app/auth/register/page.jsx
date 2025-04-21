@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const Page = () => {
   const router = useRouter();
@@ -206,12 +207,12 @@ const Page = () => {
               </div>
               <p className="text-sm mt-4 text-gray-800 ">
                 Already have an account?{" "}
-                <a
+                <Link
                   href="/auth/login"
                   className="text-purple-600 font-semibold hover:underline ml-1"
                 >
                   Login here
-                </a>
+                </Link>
               </p>
             </form>
           </div>

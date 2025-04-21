@@ -5,6 +5,7 @@ import { data1 } from "./data";
 import Header from "./header";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "lucide-react";
 
 const JobDetail = () => {
   const [jobDetails, setJobDetails] = useState();
@@ -157,14 +158,14 @@ const JobDetail = () => {
               <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Company Website:
               </span>
-              <a
+              <Link
                 href={jobDetails.companyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline text-sm"
               >
                 Visit Site
-              </a>
+              </Link>
             </div>
           </div>
         </div>

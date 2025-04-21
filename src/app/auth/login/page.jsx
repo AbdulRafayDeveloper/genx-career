@@ -159,13 +159,13 @@ const Page = () => {
                 </button>
               </div>
               <p className="text-sm mt-4 text-gray-800 ">
-                If you don't have an account?{" "}
-                <a
+                If you don&apos;t have an account?{" "}
+                <Link
                   href="/auth/register"
                   className="text-purple-600 font-semibold hover:underline ml-1"
                 >
                   Register here
-                </a>
+                </Link>
               </p>
             </form>
           </div>

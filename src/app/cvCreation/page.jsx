@@ -122,9 +122,9 @@ const Page = () => {
                   LANDING A PERFECT JOB
                 </p>
                 <p className="text-center text-lg font-normal pt-6">
-                  Just pick a template and enter your data. It's THAT easy to
+                  Just pick a template and enter your data. It&apos;s THAT easy to
                   use, <br />
-                  even if you've never made a resume in your life before!
+                  even if you&apos;ve never made a resume in your life before!
                 </p>
 
                 {/* Cards Section */}
