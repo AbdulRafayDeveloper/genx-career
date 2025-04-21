@@ -1,38 +1,12 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { Suspense } from "react";
+import CVDownload from "./CVDownload.js"; // Assuming your actual component is in the same folder
 
-export default function PreviewCV() {
-  const searchParams = useSearchParams();
-  const url = searchParams.get("url");
-  const [pdfUrl, setPdfUrl] = useState("");
-
-  useEffect(() => {
-    if (url) {
-      setPdfUrl(`http://localhost:8000${url}`);
-    }
-  }, [url]);
-
-  if (!pdfUrl) return <p>Loading...</p>;
-
+const Page = () => {
   return (
-    <div className="min-h-screen bg-[url('/images/Generate.jpg')] bg-cover bg-no-repeat bg-fixed">
-      <div className="backdrop-blur-sm bg-white/30 min-h-screen p-10 flex flex-col items-center">
-        <h1 className="text-5xl font-bold mb-6 text-purple-950">
-          Your Resume Preview
-        </h1>
-        <iframe
-          src={pdfUrl}
-          width="100%"
-          height="700px"
-          className="border rounded-xl shadow-lg max-w-4xl"
-        >
-          <p>
-            Your browser does not support PDFs. Please download the file to view
-            it.
-          </p>
-        </iframe>
-      </div>
-    </div>
+    <Suspense fallback={<div className="text-center mt-10 text-gray-500">Loading...</div>}>
+      <CVDownload />
+    </Suspense>
   );
-}
+};
+
+export default Page;
