@@ -188,23 +188,12 @@ export default function SettingForm() {
               {/* Profile Picture Section */}
               <div className="flex flex-col items-center mb-6">
                 <div className="relative w-24 h-24">
-                  {/* <Image
-                    src={
-                      image
-                        ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
-                        : defaultProfile // Put this image inside your `/public` folder
-                    }
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover rounded-full border bg-gray-200 p-1"
-                  /> */}
                   <Image
                     src={
                       imageFile
                         ? image // Temporary preview for newly uploaded image
                         : image
-                          ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
+                          ? `${image}`
                           : defaultProfile
                     }
                     alt="Profile"

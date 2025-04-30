@@ -158,23 +158,12 @@ const ProfileUpdatePage = () => {
 
           <div className="flex flex-col items-center relative">
             <div className="relative w-32 h-32">
-              {/* <img
-                src={
-                  image
-                    ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
-                    : defaultProfile
-                }
-                alt="Profile"
-                width={120}  // Updated to give enough space for the image
-                height={120} // Same here
-                className="w-full h-full object-cover rounded-full border bg-gray-200 p-1"
-              /> */}
               <Image
                 src={
                   imageFile
                     ? image // Temporary preview for newly uploaded image
                     : image
-                      ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
+                      ? `${image}`
                       : defaultProfile
                 }
                 alt="Profile"

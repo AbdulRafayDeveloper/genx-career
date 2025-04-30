@@ -142,7 +142,7 @@ const Page = () => {
                             height={450}
                             src={
                               template.imageUrl
-                                ? `${process.env.NEXT_PUBLIC_BASE_URL}/${template.imageUrl}`
+                                ? `${template.imageUrl}`
                                 : "/images/resume1.png"
                             }
                             alt={template.name}

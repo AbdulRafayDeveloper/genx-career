@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
 import { RiEdit2Line, RiDeleteBin6Line } from "react-icons/ri";
 import Header from "./header";
 import Link from "next/link";
@@ -143,7 +142,8 @@ const CVTemplates = () => {
                         <td className="px-6 py-4 items-center">{item.name}</td>
                         <td className="px-6 py-4 items-center">
                           <Image
-                            src={`${process.env.NEXT_PUBLIC_BASE_URL}/${item.imageUrl}`}
+                            // src={`${process.env.NEXT_PUBLIC_BASE_URL}/${item.imageUrl}`}
+                            src={item.imageUrl}
                             alt="Template"
                             width={120}
                             height={120}
