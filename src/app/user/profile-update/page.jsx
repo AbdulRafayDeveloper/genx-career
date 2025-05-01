@@ -98,6 +98,9 @@ const ProfileUpdatePage = () => {
       console.log("Update data name:", formData.name);
       console.log("Update data image:", imageFile);
 
+      console.log("Profile Token:", token);
+      console.log("Profile User ID:", userId);
+
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/user-profile-update/${userId}`,
         updateData,

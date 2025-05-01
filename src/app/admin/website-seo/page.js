@@ -39,7 +39,7 @@ export default function SeoFormPage() {
         if (!pageName) return;
         const fetch = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/?pageName=${pageName}`);
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/seo-page?pageName=${pageName}`);
                 if (res.data.status === 200 && res.data.data) {
                     const e = res.data.data;
                     setTitle(e.title);
