@@ -39,7 +39,7 @@ export default function SeoFormPage() {
         if (!pageName) return;
         const fetch = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getWebsiteSeoByPageName?pageName=${pageName}`);
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/?pageName=${pageName}`);
                 if (res.data.status === 200 && res.data.data) {
                     const e = res.data.data;
                     setTitle(e.title);
@@ -98,11 +98,11 @@ export default function SeoFormPage() {
             console.log('Response:', res.data);
             console.log('Response:', res.data.data);
             if (res.data.status === 200) {
-                toast.success(res.data.message);
+                toast.success(res.data.message || 'Saved successfully.');
                 // redirect back to list after a moment
                 setTimeout(() => router.push('/admin/website-seo'), 1500);
             } else {
-                toast.error(res.data.message);
+                toast.error(res.data.message || 'Save failed.');
             }
         } catch (err) {
             console.log(err);

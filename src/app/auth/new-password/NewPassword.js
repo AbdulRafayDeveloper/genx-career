@@ -69,7 +69,7 @@ const NewPassword = () => {
 
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/resetpassword`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/reset-password`,
                 { newPassword: formData.newPassword, confirmPassword: formData.confirmNewPassword },
                 {
                     headers: {
@@ -83,7 +83,7 @@ const NewPassword = () => {
             console.log("Password : ", response.data.data);
 
             if (response.status === 200) {
-                toast.success("Password updated successfully!");
+                toast.success(response.data.message || "Password updated successfully!");
                 setTimeout(() => {
                     setLoading(false);
                     router.push("/auth/login");
@@ -93,7 +93,7 @@ const NewPassword = () => {
                 setLoading(false);
             }
         } catch (err) {
-            toast.error( err.response.data.message || "Invalid OTP or expired. Please try again.");
+            toast.error(err.response.data.message || "Invalid OTP or expired. Please try again.");
             setLoading(false);
         }
     };

@@ -50,6 +50,12 @@ const Page = () => {
             router.push("/jobs");
           }
         });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error!",
+          text: response.data.message || "Something went wrong.",
+        });
       }
     } catch (error) {
       Swal.fire({

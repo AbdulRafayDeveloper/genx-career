@@ -29,7 +29,7 @@ const UserQueries = () => {
     const fetchusers = async () => {
       const token = Cookies.get('token');
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contactus?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -41,6 +41,10 @@ const UserQueries = () => {
       if (data.status == 200) {
         setusers(data.data.records);
         setTotalusers(data.data.pagination.totalRecords);
+      } else {
+        setusers([]);
+        setTotalusers(0);
+        toast.error(data.message || "Failed to fetch users. Please try again later.");
       }
     };
     fetchusers();
@@ -57,7 +61,7 @@ const UserQueries = () => {
     try {
       const token = Cookies.get('token');
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contactus/${selectedUserId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us/${selectedUserId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -97,7 +101,7 @@ const UserQueries = () => {
   const downloadusersExcel = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/contactUsList/export`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us-list/export`, {
         responseType: "blob",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -112,12 +116,7 @@ const UserQueries = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to download Users Excel file. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+      toast.error(error.response.data.message || 'Failed to download Users Queries Excel file. Please try again later.');
     }
   };
 

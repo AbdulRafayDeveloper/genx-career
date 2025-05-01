@@ -34,6 +34,11 @@ const RightSide = () => {
         console.log("response stats: ", response);
         const data = response.data?.data || [];
 
+        if (!data) {
+          toast.error(response.data.message || "Failed to fetch stats. Please try again later.");
+          return;
+        }
+
         setTotalJobs(data.totalJobs);
         setTotalUsers(data.totalUsers);
         setTotalQueries(data.totalQueries);
@@ -56,6 +61,11 @@ const RightSide = () => {
           }
         );
         const data = response.data?.data?.monthlyData || [];
+
+        if (!data) {
+          toast.error(response.data.message || "Failed to fetch monthly user data. Please try again later.");
+          return;
+        }
 
         setMonthlyData(data);
 

@@ -200,6 +200,12 @@ const App = () => {
           }
         );
 
+        if (response.status !== 200) {
+          console.error("Error fetching monthly data:", response.data.message);
+          toast.error(response.data.message || "Failed to fetch monthly data. Please try again later.");
+          return;
+        }
+
         const data = response.data?.data?.monthlyData || [];
         setMonthlyData(data);
       } catch (err) {

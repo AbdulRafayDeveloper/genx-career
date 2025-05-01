@@ -21,7 +21,7 @@ const CVTemplates = () => {
     const fetchusers = async () => {
       const token = Cookies.get('token');
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplates`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,6 +32,8 @@ const CVTemplates = () => {
       console.log(data.data.records);
       if (data.status == 200) {
         setTemplates(data.data.records);
+      } else {
+        toast.error(data.message);
       }
     };
     fetchusers();
@@ -48,7 +50,7 @@ const CVTemplates = () => {
     try {
       const token = Cookies.get('token');
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplate/${selectedUserId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${selectedUserId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,

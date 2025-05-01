@@ -41,6 +41,10 @@ const CvMatchers = () => {
       if (data.status == 200) {
         setusers(data.data.matchers);
         setTotalusers(data.data.totalMatchersCount);
+      } else {
+        setusers([]);
+        setTotalusers(0);
+        toast.error(data.message);
       }
     };
     fetchusers();
@@ -112,12 +116,7 @@ const CvMatchers = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to download Cv Matchers Excel file. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+      toast.error(error.response.data.message || 'Failed to download Cv Matchers Excel file. Please try again later.');
     }
   };
 

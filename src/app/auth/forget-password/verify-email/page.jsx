@@ -24,7 +24,7 @@ const Page = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/forgetpassword`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/forget-password`,
         { email }
       );
 
@@ -34,10 +34,13 @@ const Page = () => {
       console.log("Status:", response.status);
 
       if (response.status === 200) {
-        toast.success(response.data.message);
+        toast.success(response.data.message || "Email sent successfully.");
         setLoading(false);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
-      };
+      } else {
+        toast.error(response.data.message || "Failed to send email. Please try again.");
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       console.error("Error sending email:", error);

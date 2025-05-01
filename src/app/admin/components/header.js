@@ -42,6 +42,7 @@ const Header = () => {
 
         if (response.status !== 200) {
           console.log("Error fetching user data:", response.data.message);
+          toast.error(response.data.message || "Profile Information not found currently. Please try again later");
           return;
         }
 
@@ -56,6 +57,7 @@ const Header = () => {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
+        toast.error(error.message || "Profile Information not found currently. Please try again later");
       }
     };
 

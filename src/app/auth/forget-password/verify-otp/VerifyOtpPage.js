@@ -9,7 +9,7 @@ import { jwtVerify } from 'jose';
 const VerifyOtpPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    
+
     const [token, setToken] = useState(() => searchParams.get("token") || "");
     const JWT_SECRET = new TextEncoder().encode(process.env.NEXT_PUBLIC_RESEND_TOKEN_SECRET_KEY);
     const [email, setEmail] = useState("");
@@ -101,7 +101,7 @@ const VerifyOtpPage = () => {
 
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/verifyotp`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-otp`,
                 { userOtp: enteredOtp },
                 {
                     headers: {
@@ -116,7 +116,7 @@ const VerifyOtpPage = () => {
             }
 
             const otpVerifiedToken = response.data.data;
-            toast.success("OTP verified! Redirecting...");
+            toast.success(response.data.message || "OTP verified! Redirecting...");
 
             setTimeout(() => {
                 router.push(`/auth/new-password?token=${otpVerifiedToken}`);

@@ -118,8 +118,7 @@ const Page = () => {
 
         router.push(`/cv-matching/${matchJob}`);
       } else {
-        toast.error(response.data.message);
-        // alert(response.data.message);
+        toast.error(response.data.message || "There is some error in uploading this file. Please try with a correct CV!");
       }
     } catch (error) {
       if (
@@ -127,13 +126,9 @@ const Page = () => {
         error.response.data &&
         error.response.data.message
       ) {
-        toast.error(error.response.data.message);
-        // alert(error.response.data.message);
+        toast.error(error.response.data.message || "There is some error in uploading this file. Please try with a correct CV!");
       } else {
         toast.error("There is some error in uploading this file. Please try with a correct CV!");
-        // alert(
-        //   "There is some error in uploading this file. Please try with a correct CV!"
-        // );
       }
     } finally {
       setIsMatching(false);

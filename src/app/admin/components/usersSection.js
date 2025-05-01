@@ -40,6 +40,11 @@ const UserSection = () => {
       if (data.status == 200) {
         setusers(data.data.records);
         setTotalusers(data.data.pagination.totalRecords);
+      }else
+      {
+        setusers([]);
+        setTotalusers(0);
+        toast.error(data.message || "Failed to fetch users. Please try again later.");
       }
     };
     fetchusers();
@@ -96,7 +101,7 @@ const UserSection = () => {
   const downloadusersExcel = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/usersList/export`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users-list/export`, {
         responseType: "blob",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -111,12 +116,7 @@ const UserSection = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to download Users Excel file. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+      toast.error(error.response.data.message || 'Failed to download Users Excel file. Please try again later.');
     }
   };
 

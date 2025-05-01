@@ -29,20 +29,20 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplates`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`);
 
         console.log("Data response:", response);
 
         if (response.status !== 200) {
           console.log("Error fetching tendata:", response.data.message);
-          toast.error("Some Issue in Loading the templates right now. Please try again later");
+          toast.error(response.data.message || "Some Issue in Loading the templates right now. Please try again later");
           return;
         }
 
         setTemplates(response.data.data || []);
       } catch (error) {
         console.log("Error fetching template data:", error);
-        toast.error("Some Issue in Loading the templates right now. Please try again later");
+        toast.error(error.message || "Some Issue in Loading the templates right now. Please try again later");
       }
     };
 

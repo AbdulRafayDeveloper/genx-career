@@ -4,7 +4,7 @@ import axios from "axios";
 export async function generateMetadata() {
     try {
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/getWebsiteSeoByPageName?pageName=About`
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/seo-page?pageName=About`
         );
         const data = res.data;
         console.log("Data for Seo:", data);

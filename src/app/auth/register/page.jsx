@@ -61,6 +61,12 @@ const Page = () => {
         }).then(() => {
           router.push("/auth/login");
         });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Error!",
+          text: response.data.message || "Something went wrong.",
+        });
       }
     } catch (error) {
       Swal.fire({
@@ -77,7 +83,7 @@ const Page = () => {
     <div className="relative">
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        // style={{ backgroundImage: "url('/images/design.png')" }}
+      // style={{ backgroundImage: "url('/images/design.png')" }}
       ></div>
       <div className="font-calibri relative z-10">
         <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">

@@ -105,7 +105,7 @@ export default function ApplianceForm() {
       // console.log("Form data:", updateData.get("newPassword"));
 
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/userPasswordUpdate/${userId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user-password-update/${userId}`,
         updateData,
         {
           headers: {
@@ -117,10 +117,10 @@ export default function ApplianceForm() {
       console.log("User data response:", response);
       if (response.status !== 200) {
         console.log("Error fetching user data:", response.data.message);
-        toast.error("Error updating password: " + response.data.message);
+        toast.error(response.data.message || "An error occurred. Please try again.");
+        return;
       } else {
-        toast.success("Password updated successfully");
-
+        toast.success(response.data.message || "Password updated successfully");
         setFormData(initialFormData);
         setErrors({});
         setShowPassword(false);

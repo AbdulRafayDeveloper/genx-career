@@ -21,6 +21,8 @@ const JobDetail = () => {
       console.log(data.status);
       if (data.status == 200) {
         setJobDetails(data.data);
+      } else {
+        toast.error(data.message);
       }
     };
     fetchOneJob();

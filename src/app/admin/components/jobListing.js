@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { RiEyeLine, RiDeleteBin6Line  } from "react-icons/ri";
+import { RiEyeLine, RiDeleteBin6Line } from "react-icons/ri";
 import { FiUpload } from "react-icons/fi";
 import Pagination from "./pagination";
 import Header from "./header";
@@ -22,8 +22,8 @@ const JobListing = () => {
   const [selectedJobId, setSelectedJobId] = useState(null);
   const totalPages = Math.ceil(totalJobs / itemsPerPage);
   // loading table
-  const [loading,setLoading]=useState(true);
-  
+  const [loading, setLoading] = useState(true);
+
   const handleViewDetails = (id) => {
     router.push(`/admin/jobs/details/${id}`);
   };
@@ -34,7 +34,7 @@ const JobListing = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      try{
+      try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`
         );
@@ -44,13 +44,16 @@ const JobListing = () => {
           setJobs(data.data.getAllJobs);
           setTotalJobs(data.data.totalJobsCount);
         }
-  
-      }catch(error){
-        console.log("error",error)
-      }finally{
+        else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        console.log("error", error)
+        toast.error(error.response.data.message || "Failed to fetch jobs. Please try again later.");
+      } finally {
         setLoading(false);
-    }
-  };
+      }
+    };
     fetchJobs();
   }, [currentPage, itemsPerPage, searchStatus]);
 
@@ -116,12 +119,7 @@ const JobListing = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to download jobs Excel file. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+      toast.error(error.response.data.message || 'Failed to download Jobs Excel file. Please try again later.');
     }
   };
 
@@ -278,29 +276,29 @@ const JobListing = () => {
               className="text-purple-600
               ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center inline-flex 
               items-center"
-              >
+            >
               {loading && (
                 <>
-                <div className="flex flex-col text-lg justify-center items-center">
-                <svg
-                  aria-hidden="true"
-                  role="status"
-                  className="inline w-8 h-8 text-purple-600 animate-spin "
-                  viewBox="0 0 100 101"
-                  fill="#7D0A0A"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                    fill="CurrentColor"
-                  />
-                </svg>
-                <p className="mt-3">Loading...</p>
-                </div>
+                  <div className="flex flex-col text-lg justify-center items-center">
+                    <svg
+                      aria-hidden="true"
+                      role="status"
+                      className="inline w-8 h-8 text-purple-600 animate-spin "
+                      viewBox="0 0 100 101"
+                      fill="#7D0A0A"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                        fill="CurrentColor"
+                      />
+                    </svg>
+                    <p className="mt-3">Loading...</p>
+                  </div>
                 </>
               )}
             </button>

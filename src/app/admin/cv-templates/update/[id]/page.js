@@ -33,7 +33,7 @@ export default function ApplianceForm() {
                 }
 
                 const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplate/${id}`,
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export default function ApplianceForm() {
 
                 if (response.status !== 200) {
                     console.log("Error fetching user data:", response.data.message);
-                    toast.error("{Profile Information not found currently. Please try again later}");
+                    toast.error(response.data.message || "Profile Information not found currently. Please try again later");
                     return;
                 }
 
@@ -54,7 +54,7 @@ export default function ApplianceForm() {
                 setSelectedTemplate(data.name);
             } catch (error) {
                 console.log("Error fetching user data:", error);
-                toast.error("{Profile Information not found currently. Please try again later}");
+                toast.error(error.message || "Profile Information not found currently. Please try again later");
             }
         };
 
@@ -109,7 +109,7 @@ export default function ApplianceForm() {
         console.log("Token:", token);
 
         try {
-            const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplate/${id}`, formData, {
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -117,12 +117,12 @@ export default function ApplianceForm() {
 
             if (res.status === 200) {
                 setFile(null);
-                toast.success(res.data.message);
+                toast.success(res.data.message || "Template updated successfully.");
                 setTimeout(() => {
                     router.push("/admin/cv-templates");
                 }, 2500);
             } else {
-                toast.error(res.data.message);
+                toast.error(res.data.message || "An error occurred. Please try again.");
             }
         } catch (err) {
             if (err.response) {

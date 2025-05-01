@@ -27,7 +27,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contactus`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us`,
         formData
       );
 
@@ -42,6 +42,12 @@ const Home = () => {
           text: response.data.message,
         });
         e.target.reset();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: response.data.message || "Something went wrong!",
+        });
       }
     } catch (error) {
       Swal.fire({
@@ -169,8 +175,8 @@ const Home = () => {
                   <button
                     type="submit"
                     className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
-                        ? "cursor-not-allowed bg-purple-300"
-                        : "hover:bg-purple-800"
+                      ? "cursor-not-allowed bg-purple-300"
+                      : "hover:bg-purple-800"
                       }`}
                     disabled={loading}
                   >

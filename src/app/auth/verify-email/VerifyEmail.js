@@ -34,7 +34,7 @@ const VerifyEmail = () => {
                 );
 
                 if (res.status === 200) {
-                    toast.success("Email verified successfully!");
+                    toast.success( res.data.message || "Email verified successfully!");
                     setIsVerified(true);
                 } else {
                     toast.error(res.data.message || "Verification failed.");

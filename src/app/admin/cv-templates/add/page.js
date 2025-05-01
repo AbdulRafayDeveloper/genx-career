@@ -67,7 +67,7 @@ export default function ApplianceForm() {
         console.log("Token:", token);
 
         try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cvTemplate`, formData, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -76,12 +76,12 @@ export default function ApplianceForm() {
             if (res.status === 200) {
                 setFile(null);
                 setSelectedTemplate("");
-                toast.success(res.data.message);
+                toast.success(res.data.message || "Template uploaded successfully.");
                 setTimeout(() => {
                     router.push("/admin/cv-templates");
                 }, 2500);
             } else {
-                toast.error(res.data.message);
+                toast.error(res.data.message || "Failed to upload template. Please try again.");
             }
         } catch (err) {
             if (err.response) {

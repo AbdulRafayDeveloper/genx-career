@@ -221,6 +221,7 @@ const Page = () => {
               `${process.env.NEXT_PUBLIC_BASE_URL}/api/generate`,
               formData
             );
+            
             console.log(response);
             const { downloadUrl } = response.data;
             router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
