@@ -176,42 +176,42 @@ const Home = () => {
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-1.svg"
-                alt="Feature 1"
+                alt="GenX Career feature icon"
                 className="h-28 w-28 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-2.svg"
-                alt="Feature 2"
+                alt="GenX Career feature icon"
                 className="h-20 w-20 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-3.svg"
-                alt="Feature 3"
+                alt="GenX Career feature icon"
                 className="h-36 w-36 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-4.svg"
-                alt="Feature 4"
+                alt="GenX Career feature icon"
                 className="h-48 w-48 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-1">
               <img
                 src="/images/image-5.png"
-                alt="Feature 5"
+                alt="GenX Career feature icon"
                 className="h-40 w-40 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-6.svg"
-                alt="Feature 6"
+                alt="GenX Career feature icon"
                 className="h-48 w-48 object-contain m-12"
               />
             </div>
@@ -219,42 +219,42 @@ const Home = () => {
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-1.svg"
-                alt="Feature Duplicate 1"
+                alt="GenX Career feature icon"
                 className="h-28 w-28 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-2.svg"
-                alt="Feature Duplicate 2"
+                alt="GenX Career feature icon"
                 className="h-20 w-20 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-3.svg"
-                alt="Feature Duplicate 3"
+                alt="GenX Career feature icon"
                 className="h-36 w-36 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-4.svg"
-                alt="Feature Duplicate 4"
+                alt="GenX Career feature icon"
                 className="h-48 w-48 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-5.png"
-                alt="Feature Duplicate 5"
+                alt="GenX Career feature icon"
                 className="h-40 w-40 object-contain m-12"
               />
             </div>
             <div className="marquee-item mx-2">
               <img
                 src="/images/image-6.svg"
-                alt="Feature Duplicate 6"
+                alt="GenX Career feature icon"
                 className="h-48 w-48 object-contain m-12"
               />
             </div>
@@ -274,9 +274,6 @@ const Home = () => {
             <div className="p-4 max-w-sm">
               <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
                 <div className="flex items-center mb-5">
-                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
-                    <img src="/images/briefcase.png" alt="" />
-                  </div>*/}
                   <h2 className="text-[#595959] text-xl font-medium">
                     Job Finding
                   </h2>
@@ -313,9 +310,6 @@ const Home = () => {
             <div className="p-4 max-w-sm">
               <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
                 <div className="flex items-center mb-5">
-                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
-                    <img src="/images/cv.png" alt="" />
-                  </div>*/}
                   <h2 className="text-[#595959] text-xl font-medium">
                     CV Matching
                   </h2>
@@ -331,7 +325,7 @@ const Home = () => {
                 </div>
                 <div className="mt-5">
                   <Link
-                    href="/cvMatching"
+                    href="/cv-matching"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
                     Get Started
@@ -355,9 +349,6 @@ const Home = () => {
             <div className="p-4 max-w-sm">
               <div className="relative feature-card h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
                 <div className="flex items-center mb-5">
-                  {/*<div className="w-10 h-10 mr-4 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
-                    <img src="/images/curriculum-vitae.png" alt="" />
-                  </div>*/}
                   <h2 className="text-[#595959] text-xl font-medium">
                     CV Generation
                   </h2>

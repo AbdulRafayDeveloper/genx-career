@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:col-span-2">
             <div className="flex flex-row gap-2">
               <Link href='/' className="flex flex-row gap-2">
-                <img src="/logo.png" alt="logo" className="w-12 h-12 rounded-xl object-fill "/>
+                <img src="/logo.png" alt="GenX Career Logo" className="w-12 h-12 rounded-xl object-fill "/>
                 <h5 className="text-2xl font-bold text-white mt-2">GenX Career</h5></Link>
             </div>
             <p className="mt-4 text-white">

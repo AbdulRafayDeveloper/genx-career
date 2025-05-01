@@ -116,7 +116,7 @@ const Page = () => {
           JSON.stringify(data.message.CvMatchingResult)
         );
 
-        router.push(`/cvMatching/${matchJob}`);
+        router.push(`/cv-matching/${matchJob}`);
       } else {
         toast.error(response.data.message);
         // alert(response.data.message);

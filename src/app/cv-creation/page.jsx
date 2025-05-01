@@ -104,7 +104,7 @@ const Page = () => {
               <img
                 src="/images/B.png"
                 className="w-[1000px] h-100 object-cover right-40 scale-110"
-                alt=""
+                alt="Decorative background with abstract design"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ const Page = () => {
                             alt={template.name}
                           />
                           <Link
-                            href={`/cvCreation/${template.name}`}
+                            href={`/cv-creation/${template.name}`}
                             className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border bg-opacity-70 bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
                           >
                             Build My CV
@@ -159,7 +159,7 @@ const Page = () => {
                       <div className="flex flex-col items-center justify-center bg-white bg-opacity-70 rounded-lg p-8 w-[500px] shadow-lg mt-10">
                         <img
                           src="/images/B.png"
-                          alt="No templates"
+                          alt="No templates available image"
                           className="w-52 h-64 mb-4"
                         />
                         <h2 className="text-2xl font-semibold text-purple-900">
@@ -173,21 +173,6 @@ const Page = () => {
                     )}
                   </div>
 
-                  {/* Card 1
-                  <div className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative">
-                    <img
-                      className="rounded-t-lg w-full h-[450px] object-cover"
-                      src="/images/resume1.png"
-                      alt="Resume Template"
-                    />
-
-                    <Link
-                      href={`/cvCreation/1`}
-                      className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-8 py-2 border  bg-opacity-70  bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
-                    >
-                      Build My CV
-                    </Link>
-                  </div> */}
                 </div>
                 <div className="w-full h-8 mt-6">
                   <svg
@@ -210,7 +195,7 @@ const Page = () => {
                           className="w-24 h-24
                            object-cover"
                           src="/images/kite.png"
-                          alt="Free"
+                          alt="Kite Logo"
                         />
                         <p className="text-2xl font-light text-purple-950 text-center mt-4">
                           Free and premium
@@ -220,7 +205,7 @@ const Page = () => {
                         <img
                           className="w-24 h-24 object-cover"
                           src="/images/creative.png"
-                          alt="Creative"
+                          alt="Creative Logo" 
                         />
                         <p className="text-2xl font-light text-purple-950 text-center mt-4">
                           Creative and stylish <br /> templates
@@ -230,7 +215,7 @@ const Page = () => {
                         <img
                           className="w-24 h-24 object-cover"
                           src="/images/fee.png"
-                          alt="Fee"
+                          alt="Fee Logo"
                         />
                         <p className="text-2xl font-light text-purple-950 text-center mt-4">
                           No hidden fees

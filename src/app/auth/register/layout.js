@@ -16,6 +16,9 @@ export async function generateMetadata() {
                 description: seo.description,
                 keywords: seo.keywords.join(", "),
                 robots: seo.index ? "index, follow" : "noindex, nofollow",
+                alternates: {
+                    canonical: "/register",
+                },
             };
         }
     } catch (error) {
@@ -29,6 +32,9 @@ export async function generateMetadata() {
         description: "Register",
         keywords: "Register",
         robots: "index, follow",
+        alternates: {
+            canonical: "/register",
+        },
     };
 }
 

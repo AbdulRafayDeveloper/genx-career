@@ -223,7 +223,7 @@ const Page = () => {
             );
             console.log(response);
             const { downloadUrl } = response.data;
-            router.push(`/cvDownload?url=${encodeURIComponent(downloadUrl)}`);
+            router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
           } catch (error) {
             console.log("Error generating CV:", error);
             Swal.fire({

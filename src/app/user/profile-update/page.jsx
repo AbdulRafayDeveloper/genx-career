@@ -166,7 +166,7 @@ const ProfileUpdatePage = () => {
                       ? `${image}`
                       : defaultProfile
                 }
-                alt="Profile"
+                alt="Avatar"
                 width={40}
                 height={40}
                 className="w-full h-full object-cover rounded-full border bg-gray-200 p-1"

@@ -11,30 +11,6 @@ import Image from "next/image";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 
 const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
-  // const router = useRouter();
-  // console.log("Header Props:", { isCheckingAuth, setIsCheckingAuth });
-  // const [showData, setShowData] = useState(false);
-
-  // const handleChange = () => {
-  //   setShowData(!showData);
-  // };
-
-  // const handleLogout = () => {
-  //   const token = Cookies.get("token");
-
-  //   if (token) {
-  //     Cookies.remove("token");
-
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Success",
-  //       text: "Your Account Logout",
-  //     });
-
-  //     router.push("/auth/login");
-  //   }
-  // };
-
   const router = useRouter();
   const dropdownRef = useRef(null);
   const [showData, setShowData] = useState(false);
@@ -157,7 +133,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                 </li>
                 <li>
                   <Link
-                    href="/cvCreation"
+                    href="/cv-creation"
                     className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#9866C7] md:p-0"
                   >
                     Cv Creation
@@ -190,10 +166,10 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                         <Image
                           src={
                             image
-                              ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
+                              ? `${image}`
                               : defaultProfile
                           }
-                          alt="Profile"
+                          alt="user profile"
                           width={40}
                           height={40}
                           className="w-10 h-10 rounded-full object-cover"

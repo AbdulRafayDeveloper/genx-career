@@ -90,9 +90,11 @@ const NewPassword = () => {
                 }, 2000);
             } else {
                 toast.error(response.data.message || "Failed to update password. Please try again.");
+                setLoading(false);
             }
         } catch (err) {
-            toast.error("Invalid OTP or expired. Please try again.");
+            toast.error( err.response.data.message || "Invalid OTP or expired. Please try again.");
+            setLoading(false);
         }
     };
 

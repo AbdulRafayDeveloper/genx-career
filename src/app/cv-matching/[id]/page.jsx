@@ -87,7 +87,7 @@ const Page = () => {
         emoji: (
           <img
             src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f972/512.webp"
-            alt="🥲"
+            alt="Face holding back tears"
             width="100"
             height="100"
           />
@@ -98,7 +98,7 @@ const Page = () => {
         emoji: (
           <img
             src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f642/512.webp"
-            alt="🙂"
+            alt="Smiling face"
             width="100"
             height="100"
           />
@@ -109,7 +109,7 @@ const Page = () => {
         emoji: (
           <img
             src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f929/512.webp"
-            alt="🤩"
+            alt="Star-struck face"
             width="100"
             height="100"
           />
@@ -193,7 +193,7 @@ const Page = () => {
                 {/* Image */}
                 <img
                   src="/images/image.png"
-                  alt="Description"
+                  alt="CV Image"
                   className="absolute bottom-0 transform translate-x-[-50%] left-1/2 w-1/2 z-0 mt-20"
                 />
               </div>

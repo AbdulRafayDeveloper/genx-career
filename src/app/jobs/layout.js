@@ -16,6 +16,9 @@ export async function generateMetadata() {
                 description: seo.description,
                 keywords: seo.keywords.join(", "),
                 robots: seo.index ? "index, follow" : "noindex, nofollow",
+                alternates: {
+                    canonical: "/jobs",
+                },
             };
         }
     } catch (error) {
@@ -29,6 +32,9 @@ export async function generateMetadata() {
         description: "Jobs",
         keywords: "Jobs",
         robots: "index, follow",
+        alternates: {
+            canonical: "/jobs",
+        },
     };
 }
 

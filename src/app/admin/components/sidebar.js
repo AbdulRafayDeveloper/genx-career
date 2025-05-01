@@ -69,7 +69,7 @@ const LeftSideBar = () => {
           }`}
       >
         <div className="mt-3 px-5">
-          <Image src="/logo1.png" alt="Logo" width={110} height={40} />
+          <Image src="/logo1.png" alt="Genx Career Logo" width={110} height={40} />
         </div>
         <div className="h-full px-3 py-4 overflow-y-auto mt-6">
           <ul className="space-y-2 font-medium">
@@ -103,7 +103,7 @@ const LeftSideBar = () => {
             </li>
             <li>
               <Link
-                href="/admin/user_queries"
+                href="/admin/user-queries"
                 className="flex items-center p-2 rounded-lg hover:bg-gray-100 group"
               >
                 <GoQuestion color="purple" size={20} />

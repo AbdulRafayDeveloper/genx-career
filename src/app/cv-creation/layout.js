@@ -4,7 +4,7 @@ import axios from "axios";
 export async function generateMetadata() {
     try {
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/getWebsiteSeoByPageName?pageName=CvMatching`
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/getWebsiteSeoByPageName?pageName=CvCreation`
         );
         const data = res.data;
         console.log("Data for Seo:", data);
@@ -16,6 +16,9 @@ export async function generateMetadata() {
                 description: seo.description,
                 keywords: seo.keywords.join(", "),
                 robots: seo.index ? "index, follow" : "noindex, nofollow",
+                alternates: {
+                    canonical: "/cv-creation",
+                },
             };
         }
     } catch (error) {
@@ -25,14 +28,17 @@ export async function generateMetadata() {
     console.log("Falling back to default metadata");
     // Fallback metadata if API call fails
     return {
-        title: "CvMatching Page",
-        description: "CvMatching",
-        keywords: "CvMatching",
+        title: "CvCreation Page",
+        description: "CvCreation",
+        keywords: "CvCreation",
         robots: "index, follow",
+        alternates: {
+            canonical: "/cv-creation",
+        },
     };
 }
 
-const AboutLayout = ({ children }) => {
+const Layout = ({ children }) => {
     return (
         <div>
             <main>{children}</main>
@@ -40,4 +46,4 @@ const AboutLayout = ({ children }) => {
     );
 };
 
-export default AboutLayout;
+export default Layout;

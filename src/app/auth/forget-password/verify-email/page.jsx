@@ -37,39 +37,6 @@ const Page = () => {
         toast.success(response.data.message);
         setLoading(false);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
-        //     setTimeout(() => {
-        //       setLoading(false);
-        //       Swal.fire({
-        //         iconHtml: `
-        // <div style="display: flex; align-items: center; justify-content: center; width: 100%; background: transparent; padding: 0; margin: 0;">
-        //   <img 
-        // 	src="/images/check_5610944.png" 
-        // 	alt="Email Sent" 
-        // 	style="width: 100px; height: 100px; object-fit: contain; border: none; box-shadow: none; outline: none;"
-        //   >
-        // </div>
-        // `,
-
-        //         title: "Check Your Inbox",
-        //         html: `
-        // 	<div style="font-size: 15px; line-height: 1.6; color: #4B5563; text-align: center; padding: 0 15px;">
-        // 	  We've sent a password reset link to: <br>
-        // 	  <strong style="color: #1D4ED8;">${email}</strong><br><br>
-        // 	  Please check your email and follow the instructions to reset your password.
-        // 	</div>
-        //   `,
-        //         showConfirmButton: true,
-        //         confirmButtonText: "Go to Login",
-        //         confirmButtonColor: "#4F46E5", // Nice shade of purple
-        //         customClass: {
-        //           popup: "rounded-xl shadow-lg", // Optional: Better rounded corners
-        //           confirmButton:
-        //             "px-6 py-2 text-white font-semibold text-sm rounded-lg",
-        //         },
-        //       }).then(() => {
-        //         // router.push("/forget_password/new_password");
-        //       });
-        //     }, 1500);
       };
     } catch (error) {
       setLoading(false);

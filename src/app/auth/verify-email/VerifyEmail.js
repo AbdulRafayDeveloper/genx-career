@@ -82,7 +82,7 @@ const VerifyEmail = () => {
                             <div className="mb-6">
                                 <img
                                     src="/images/check_5610944.png"
-                                    alt="Verified"
+                                    alt="Success Icon"
                                     className="mx-auto w-24 h-24 animate-fade-in"
                                 />
                             </div>

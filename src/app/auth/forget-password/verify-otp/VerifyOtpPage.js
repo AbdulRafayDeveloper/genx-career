@@ -4,18 +4,34 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { jwtVerify } from 'jose';
 
 const VerifyOtpPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const token = searchParams.get("token");
-
-    console.log("Token from query:", token);
-
+    
+    const [token, setToken] = useState(() => searchParams.get("token") || "");
+    const JWT_SECRET = new TextEncoder().encode(process.env.NEXT_PUBLIC_RESEND_TOKEN_SECRET_KEY);
+    const [email, setEmail] = useState("");
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-    const [timer, setTimer] = useState(60);
+    const [timer, setTimer] = useState(15);
     const [otpExpired, setOtpExpired] = useState(false);
     const inputRefs = useRef([]);
+
+    useEffect(() => {
+        const getEmailFromToken = async () => {
+            try {
+                const { payload } = await jwtVerify(token, JWT_SECRET);
+                console.log("payload:", payload);
+                setEmail(payload.email);
+                console.log("Email from token:", payload.email);
+            } catch (err) {
+                console.error("JWT Verify error:", err);
+                toast.error("Invalid or expired token.");
+            }
+        };
+        if (token) getEmailFromToken();
+    }, [token]);
 
     useEffect(() => {
         if (timer === 0) {
@@ -36,26 +52,42 @@ const VerifyOtpPage = () => {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        if (value && index < 5) {
+        if (value && index < 15) {
             inputRefs.current[index + 1].focus();
         }
     };
 
     const handleResendOtp = async () => {
         try {
-            // Call your resend OTP API here using the token
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resend-otp`, { token });
+            // console.log("Token:", token);
+            // console.log("JWT_SECRET:", JWT_SECRET);
+            // const { payload } = await jwtVerify(token, JWT_SECRET);
+            // console.log("payload:", payload);
+            // email = payload.email;
+            console.log("Email from token:", email);
 
-            if (response.status !== 200) {
-                toast.error("Failed to resend OTP. Please try again.");
+            if (!email) {
+                toast.error("Email is required.");
                 return;
             }
-            toast.success("OTP resent successfully!");
-            setTimer(60);
+
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resend-otp`, { email });
+
+            if (response.status !== 200) {
+                toast.error(response.data.message || "Failed to resend OTP. Please try again.");
+                return;
+            }
+
+            const newToken = response.data.data;
+            setToken(newToken);
+            router.replace(`/auth/forget-password/verify-otp?token=${newToken}`, { scroll: false });
+
+            toast.success(response.data.message || "OTP resent successfully!");
+            setTimer(15);
             setOtpExpired(false);
             setOtp(["", "", "", "", "", ""]);
         } catch (err) {
-            toast.error("Failed to resend OTP.");
+            toast.error(err.response?.data?.message || "Failed to resend OTP.");
         }
     };
 
@@ -66,9 +98,6 @@ const VerifyOtpPage = () => {
             toast.error("Please enter the complete 6-digit OTP.");
             return;
         }
-
-        console.log("Entered OTP: ", enteredOtp);
-        console.log("Token: ", token);
 
         try {
             const response = await axios.post(
@@ -82,22 +111,18 @@ const VerifyOtpPage = () => {
             );
 
             if (response.status !== 200) {
-                toast.error("Invalid OTP or expired. Please try again.");
+                toast.error(response.data.message || "Invalid OTP or expired. Please try again.");
                 return;
             }
 
-            console.log("OTP verified successfully: ", response);
-            console.log("OTP verified successfully: ", response.data);
-            console.log("OTP verified successfully: ", response.data.data);
-
             const otpVerifiedToken = response.data.data;
-
             toast.success("OTP verified! Redirecting...");
+
             setTimeout(() => {
                 router.push(`/auth/new-password?token=${otpVerifiedToken}`);
             }, 2000);
         } catch (err) {
-            toast.error("Invalid OTP or expired. Please try again.");
+            toast.error(err.response?.data?.message || "Invalid OTP or expired. Please try again.");
         }
     };
 
@@ -126,7 +151,6 @@ const VerifyOtpPage = () => {
                             ))}
                         </div>
 
-                        {/* Timer and Expiry Message */}
                         <div className="mt-4 text-sm text-gray-600 text-center">
                             {otpExpired ? (
                                 <span className="text-red-500 font-medium">OTP expired!</span>
@@ -138,7 +162,6 @@ const VerifyOtpPage = () => {
                             )}
                         </div>
 
-                        {/* Resend OTP */}
                         {otpExpired && (
                             <button
                                 type="button"
@@ -151,7 +174,10 @@ const VerifyOtpPage = () => {
 
                         <button
                             type="submit"
-                            className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-md"
+                            className={`mt-6 w-full font-semibold py-3 rounded-md transition ${otpExpired
+                                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                                : "bg-purple-600 hover:bg-purple-700 text-white"
+                                }`}
                             disabled={otpExpired}
                         >
                             Verify OTP

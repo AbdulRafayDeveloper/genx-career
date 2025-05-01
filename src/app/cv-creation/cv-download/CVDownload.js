@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function PreviewCV() {
+export default function CVDownload() {
     const searchParams = useSearchParams();
     const url = searchParams.get("url");
     const [pdfUrl, setPdfUrl] = useState("");

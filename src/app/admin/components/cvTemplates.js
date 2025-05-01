@@ -142,9 +142,8 @@ const CVTemplates = () => {
                         <td className="px-6 py-4 items-center">{item.name}</td>
                         <td className="px-6 py-4 items-center">
                           <Image
-                            // src={`${process.env.NEXT_PUBLIC_BASE_URL}/${item.imageUrl}`}
                             src={item.imageUrl}
-                            alt="Template"
+                            alt="Template preview"
                             width={120}
                             height={120}
                             className="w-[120px] h-[120px] object-cover rounded-md"

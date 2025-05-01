@@ -196,7 +196,7 @@ export default function SettingForm() {
                           ? `${image}`
                           : defaultProfile
                     }
-                    alt="Profile"
+                    alt="User Profile"
                     width={40}
                     height={40}
                     className="w-full h-full object-cover rounded-full border bg-gray-200 p-1"
@@ -205,7 +205,7 @@ export default function SettingForm() {
                     htmlFor="imageUpload"
                     className="absolute bottom-0 right-0 bg-purple-600 border border-white p-1 rounded-full cursor-pointer shadow-md"
                   >
-                    <img src="/icons/camera.png" alt="Upload" className="w-5 h-5" />
+                    <img src="/icons/camera.png" alt="Camera Icon" className="w-5 h-5" />
                   </label>
                   <input
                     type="file"

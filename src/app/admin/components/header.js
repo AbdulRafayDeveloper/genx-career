@@ -119,10 +119,10 @@ const Header = () => {
             <Image
               src={
                 image
-                  ? `${process.env.NEXT_PUBLIC_BASE_URL}/public/profileImages/${image}`
+                  ? `${image}`
                   : defaultProfile
               }
-              alt="Profile"
+              alt="user profile"
               width={40}
               height={40}
               className="w-10 h-10 rounded-full object-cover"
