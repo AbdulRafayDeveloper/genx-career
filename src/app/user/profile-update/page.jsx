@@ -10,6 +10,9 @@ import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ProfileUpdatePage = () => {
   const [loading, setLoading] = useState(false);
@@ -140,15 +143,19 @@ const ProfileUpdatePage = () => {
         pauseOnHover
         theme="light"
       />
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative overflow-hidden">
+      <div
+        className="min-h-screen flex flex-col items-center justify-center p-5 "
+      >
         {/* Background */}
-        <div
+        {/* <div
           className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: "url('/images/design.png')" }}
-        ></div>
-
-        <main className="w-full max-w-lg p-8  z-10 relative">
+        ></div> */}
+        <main className="w-full max-w-lg p-8 shadow-xl mb-4 shadow-purple-300">
           {/* Avatar Upload */}
+          <div className="flex justify-center items-center text-center m-7 ">
+            <p className="text-4xl font-bold text-purple-800 ">Update Profile</p>
+          </div>
           <button
             onClick={() => router.push("/")}
             className="fixed top-4 left-4 p-2 bg-white bg-opacity-80 rounded-full text-purple-600 shadow-md hover:bg-opacity-100 transition z-50"
@@ -172,11 +179,11 @@ const ProfileUpdatePage = () => {
                 alt="Avatar"
                 width={40}
                 height={40}
-                className="w-full h-full object-cover rounded-full border bg-gray-200 p-1"
+                className="w-full h-full object-cover rounded-full border bg-purple-700 "
               />
               <label
                 htmlFor="avatar-upload"
-                className="absolute bottom-0 right-0 bg-purple-600 text-white rounded-full p-2 cursor-pointer hover:bg-purple-700 transition"
+                className="absolute bottom-0 right-0 bg-purple-700 text-white rounded-full p-2 cursor-pointer hover:bg-purple-700 transition"
                 title="Change Avatar"
               >
                 <svg
@@ -205,15 +212,19 @@ const ProfileUpdatePage = () => {
               <label className="block text-sm font-medium text-gray-700">
                 Name
               </label>
-              <input
-                name="name"
-                placeholder="Enter your name"
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="mt-1 block w-full px-4 py-3 rounded-md shadow-sm border border-gray-300 focus:ring-purple-500 focus:border-purple-500 text-sm bg-gray-50"
-                required
-              />
+              <div className="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
+                  <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" /></svg>
+                <input
+                  name="name"
+                  placeholder="Enter your name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-md border border-purple-700 outline-none text-sm"
+                  required
+                />
+              </div>
             </div>
 
             {/* Email Field (non-editable) */}
@@ -221,29 +232,46 @@ const ProfileUpdatePage = () => {
               <label className="block text-sm font-medium text-gray-700">
                 Email Address
               </label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled
-                className="mt-1 block w-full px-4 py-3 rounded-md shadow-sm border border-white text-sm bg-gray-300 cursor-not-allowed"
-              />
+              <div className="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
+                  <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+                </svg>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="abcd@gmail.com"
+                  disabled
+                  className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-sm border border-purple-700 text-sm bg-gray-100 cursor-not-allowed"
+                />
+              </div>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading}
-              className={`w-full py-3 px-4 rounded-md text-white font-semibold transition ${loading
-                ? "bg-purple-400 cursor-not-allowed"
-                : "bg-purple-600 hover:bg-purple-700"
+              className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading ? "cursor-not-allowed bg-purple-300" : "hover:bg-purple-800"
                 }`}
+              disabled={loading}
             >
-              {loading ? "Updating..." : "Update Profile"}
+              <div className="flex items-center justify-center space-x-2">
+                {loading ? (
+                  <>
+                    <p className="text-white text-sm">Please wait...</p>
+                    <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
+
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faPaperPlane} className="text-white size-4" />
+                    <p className="text-white text-lg font-semibold">Update Profile</p>
+                  </>
+                )}
+              </div>
             </button>
           </form>
         </main>
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
+        {/* <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
           <svg
             viewBox="0 0 1440 320"
             fill="none"
@@ -255,7 +283,7 @@ const ProfileUpdatePage = () => {
               d="M0,192L80,176C160,160,320,128,480,138.7C640,149,800,203,960,192C1120,181,1280,107,1360,69.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
             ></path>
           </svg>
-        </div>
+        </div> */}
       </div>
     </>
   );
