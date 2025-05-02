@@ -259,7 +259,6 @@ const ProfileUpdatePage = () => {
                   <>
                     <p className="text-white text-sm">Please wait...</p>
                     <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
-
                   </>
                 ) : (
                   <>

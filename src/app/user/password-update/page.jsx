@@ -99,7 +99,7 @@ const Page = () => {
       // console.log("Form data:", updateData.get("newPassword"));
 
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/userPasswordUpdate/${userId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user-password-update/${userId}`,
         updateData,
         {
           headers: {
