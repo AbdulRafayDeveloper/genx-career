@@ -271,6 +271,7 @@ const Page = () => {
             isCheckingAuth={isCheckingAuth}
             setIsCheckingAuth={setIsCheckingAuth}
           />
+          
           <div className="flex flex-col justify-center items-center">
             <div className="w-screen flex justify-center mt-24">
               <form
@@ -336,7 +337,7 @@ const Page = () => {
               </form>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center relative z-20 bg-opacity-75 p-4 rounded ">
+          <div className="flex flex-col justify-center items-center relative z-50 bg-opacity-75 p-4 rounded ">
             <div className="flex items-center gap-2">
               <svg
                 className="w-6 h-6 text-purple-900"
@@ -380,7 +381,7 @@ const Page = () => {
                                 ? toggleModalCalender
                                 : undefined
                         }
-                        className={`md:px-3 md:py-2 p-1 border md:text-md text-sm rounded-full shadow ${filter === "Remote only" && formData.remote
+                        className={`md:px-3 md:py-2 p-2 border md:text-md lg:text-md xl:text-md text-[10px] rounded-full shadow ${filter === "Remote only" && formData.remote
                           ? "bg-purple-500 text-white" // Active state styles
                           : "bg-white text-black bg-opacity-80 hover:bg-purple-100" // Default styles
                           }`}
@@ -463,12 +464,12 @@ const Page = () => {
                 {selectedJob ? (
                   <div className="p-4 pb-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <h2 className="font-bold text-2xl pb-2">
+                      <h2 className="font-bold xl:text-xl text-md pb-2">
                         {selectedJob.title}
                       </h2>
-                      <div className="flex justify-end space-x-2">
+                      <div className="flex flex-col xl:flex-row md:flex-row lg:flex-row justify-end gap-4">
                         <button
-                          className="flex items-center p-2 justify-center w-36 h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
+                          className="flex items-center p-2 justify-center md:w-32 w-[220px] h-10 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
                           onClick={() => {
                             setMatchJob(selectedJob._id);
                             toggleMatch();
@@ -478,7 +479,7 @@ const Page = () => {
                         </button>
                         <Link
                           href={selectedJob.applyUrl}
-                          className="flex items-center justify-center md:w-32 w-[320px]  h-10 md:text-sm rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
+                          className="flex items-center justify-center md:w-32 w-[220px]  h-10 md:text-sm rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -506,7 +507,7 @@ const Page = () => {
                         className="w-12 h-12 rounded-full mr-4"
                       />
                       <div>
-                        <p className="text-lg font-semibold text-gray-800">
+                        <p className="lg:text-md md:text-md sm:text-sm text-[11px] font-semibold text-gray-800">
                           {selectedJob.companyName}
                         </p>
                         <p className="text-sm text-gray-500">

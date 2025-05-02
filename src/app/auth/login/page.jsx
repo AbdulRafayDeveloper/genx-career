@@ -7,6 +7,8 @@ import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Page = () => {
   const router = useRouter();
@@ -36,148 +38,152 @@ const Page = () => {
       );
 
       if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Login Successful!",
-          text: "Welcome back! You have successfully logged in.",
-        }).then(() => {
-          Cookies.set("token", response.data.data.token);
-          Cookies.set("userId", response.data.data.user._id);
+        toast.success(response.data.message || "Login successful!");
+        Cookies.set("token", response.data.data.token);
+        Cookies.set("userId", response.data.data.user._id);
 
-          if (response.data.data.user.role === "admin") {
-            router.push("/admin/dashboard");
-          } else {
-            router.push("/jobs");
-          }
-        });
+        if (response.data.data.user.role === "admin") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/jobs");
+        }
+
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Login Error!",
-          text: response.data.message || "Something went wrong.",
-        });
+        toast.error(response.data.message || "Something went wrong.");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Login Error!",
-        text: error.response?.data?.message || "Something went wrong.",
-      });
+      console.log("Login error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="relative">
-      <div className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"></div>
-      <div className="font-calibri relative z-10">
-        <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
-          <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
-            <button
-              onClick={() => router.push("/")}
-              className="absolute top-6 left-6 p-3 bg-purple-200 bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline"
-            >
-              <FontAwesomeIcon
-                icon={faArrowLeft}
-                className="w-5 h-5"
-              ></FontAwesomeIcon>
-            </button>
-            <div
-              style={{ backgroundImage: "url('/images/logoreg.jpg')" }}
-              className="flex justify-center  p-4 object-fit bg-cover h-[400px]"
-            ></div>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
-            <form
-              onSubmit={handleSubmit}
-              className="max-w-md md:ml-auto w-full  p-4"
-            >
-              <h3 className="text-purple-900 font-calibri text-5xl font-extrabold mb-8 text-center">
-                Login<br></br>
-                <span className="text-sm text-center font-medium">
-                  Continue to your account!
-                </span>
-              </h3>
+      <div className="relative">
+        <div className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"></div>
+        <div className="font-calibri relative z-10">
+          <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
+            <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
+              <button
+                onClick={() => router.push("/")}
+                className="absolute top-6 left-6 p-3 bg-purple-200 bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline"
+              >
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  className="w-5 h-5"
+                ></FontAwesomeIcon>
+              </button>
+              <div
+                style={{ backgroundImage: "url('/images/logoreg.jpg')" }}
+                className="flex justify-center  p-4 object-fit bg-cover h-[400px]"
+              ></div>
 
-              <div className="space-y-4">
-                <div className="relative">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5"
-                  >
-                    <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                  </svg>
-                  <input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Email address"
-                  />
+              <form
+                onSubmit={handleSubmit}
+                className="max-w-md md:ml-auto w-full  p-4"
+              >
+                <h3 className="text-purple-900 font-calibri text-5xl font-extrabold mb-8 text-center">
+                  Login<br></br>
+                  <span className="text-sm text-center font-medium">
+                    Continue to your account!
+                  </span>
+                </h3>
+
+                <div className="space-y-4">
+                  <div className="relative">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5"
+                    >
+                      <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+                    </svg>
+                    <input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md outline-purple-600 focus:bg-transparent"
+                      placeholder="Email address"
+                    />
+                  </div>
+                  <div className="relative">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute left-3 top-1/2 tranform -translate-y-1/2 fill-gray-400 w-4 h-5"
+                    >
+                      <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
+                    </svg>
+                    <input
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md outline-purple-600 focus:bg-transparent"
+                      placeholder="Password"
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-5"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "👁️" : "👁‍🗨"}
+                    </button>
+                  </div>
                 </div>
-                <div className="relative">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512"
-                    className="absolute left-3 top-1/2 tranform -translate-y-1/2 fill-gray-400 w-4 h-5"
+
+                {/* Forget Password Link */}
+                <div className="text-right mt-2">
+                  <Link
+                    href="/auth/forget-password/verify-email"
+                    className="text-sm text-purple-600 font-semibold hover:underline"
                   >
-                    <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
-                  </svg>
-                  <input
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="bg-gray-50 w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md outline-purple-600 focus:bg-transparent"
-                    placeholder="Password"
-                  />
+                    Forget Password?
+                  </Link>
+                </div>
+
+                <div className="!mt-8">
                   <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-5"
-                    onClick={() => setShowPassword(!showPassword)}
+                    type="submit"
+                    className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded bg-purple-600 text-white hover:text-purple-500 focus:outline-none"
+                    disabled={loading}
                   >
-                    {showPassword ? "👁️" : "👁‍🗨"}
+                    {loading ? "Loading..." : "Login"}
                   </button>
                 </div>
-              </div>
-
-              {/* Forget Password Link */}
-              <div className="text-right mt-2">
-                <Link
-                  href="/auth/forget-password/verify-email"
-                  className="text-sm text-purple-600 font-semibold hover:underline"
-                >
-                  Forget Password?
-                </Link>
-              </div>
-
-              <div className="!mt-8">
-                <button
-                  type="submit"
-                  className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded bg-purple-600 text-white hover:text-purple-500 focus:outline-none"
-                  disabled={loading}
-                >
-                  {loading ? "Loading..." : "Login"}
-                </button>
-              </div>
-              <p className="text-sm mt-4 text-gray-800 ">
-                If you don&apos;t have an account?{" "}
-                <Link
-                  href="/auth/register"
-                  className="text-purple-600 font-semibold hover:underline ml-1"
-                >
-                  Register here
-                </Link>
-              </p>
-            </form>
+                <p className="text-sm mt-4 text-gray-800 ">
+                  If you don&apos;t have an account?{" "}
+                  <Link
+                    href="/auth/register"
+                    className="text-purple-600 font-semibold hover:underline ml-1"
+                  >
+                    Register here
+                  </Link>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

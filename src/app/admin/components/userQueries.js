@@ -7,6 +7,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiUpload } from "react-icons/fi";
 import Pagination from "./pagination";
 import Header from "./header";
+import { toast } from "react-toastify";
 
 const UserQueries = () => {
   const [users, setusers] = useState([]);
@@ -18,6 +19,7 @@ const UserQueries = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);
   const totalPages = Math.ceil(totalusers / itemsPerPage);
+  const [loading,setLoading]=useState(false);
 
   const [expandedMessage, setExpandedMessage] = useState(null);
 
@@ -27,7 +29,9 @@ const UserQueries = () => {
 
   useEffect(() => {
     const fetchusers = async () => {
-      const token = Cookies.get('token');
+      setLoading(true);
+      try{
+        const token = Cookies.get('token');
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
         {
@@ -46,6 +50,12 @@ const UserQueries = () => {
         setTotalusers(0);
         toast.error(data.message || "Failed to fetch users. Please try again later.");
       }
+      }catch(error){
+        toast.error("error occur while fetching the user")
+      }finally{
+        setLoading(false)
+      }
+      
     };
     fetchusers();
   }, [currentPage, itemsPerPage, searchStatus]);
@@ -138,6 +148,30 @@ const UserQueries = () => {
         {/* Header Section */}
         <Header />
 
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+            <div className="flex flex-col items-center justify-center text-lg">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline w-8 h-8 text-purple-600 animate-spin "
+                viewBox="0 0 100 101"
+                fill="#7D0A0A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                  fill="CurrentColor"
+                />
+              </svg>
+              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            </div>
+          </div>
+        )}
         {/* User Records Section */}
         <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
           <div className="flex flex-wrap justify-between items-center gap-4">

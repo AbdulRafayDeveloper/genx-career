@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import VerifyOtpPage from "./VerifyOtpPage"; // Assuming your actual component is in the same folder
+import VerifyOtpPage from "./VerifyOtpPage";
 
 const Page = () => {
     return (

@@ -128,6 +128,30 @@ const JobListing = () => {
       <div className="p-2">
         {/* Header Section */}
         <Header />
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+            <div className="flex flex-col items-center justify-center text-lg">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline w-8 h-8 text-purple-600 animate-spin "
+                viewBox="0 0 100 101"
+                fill="#7D0A0A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                  fill="CurrentColor"
+                />
+              </svg>
+              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            </div>
+          </div>
+        )}
 
         {/* User Records Section */}
         <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
@@ -269,40 +293,7 @@ const JobListing = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          <div className="flex justify-center items-center p-2">
-            <button
-
-              disabled={loading}
-              className="text-purple-600
-              ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center inline-flex 
-              items-center"
-            >
-              {loading && (
-                <>
-                  <div className="flex flex-col text-lg justify-center items-center">
-                    <svg
-                      aria-hidden="true"
-                      role="status"
-                      className="inline w-8 h-8 text-purple-600 animate-spin "
-                      viewBox="0 0 100 101"
-                      fill="#7D0A0A"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                        fill="CurrentColor"
-                      />
-                    </svg>
-                    <p className="mt-3">Loading...</p>
-                  </div>
-                </>
-              )}
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>

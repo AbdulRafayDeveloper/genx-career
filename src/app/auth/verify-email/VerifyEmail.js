@@ -54,16 +54,16 @@ const VerifyEmail = () => {
         <>
             <ToastContainer position="top-right" autoClose={5000} theme="light" />
 
-            <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-100">
-                {/* Background Image */}
-                <div
-                    className="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-10"
-                    style={{ backgroundImage: "url('/images/design.png')" }}
-                ></div>
+            <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        {/* Background Image */}
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBsicscfPq6Fw86u6OmNdPhhRt5WV8o-gS1A&s')" }}
+        ></div>
 
                 {/* Main Container */}
-                <main className="w-full max-w-xl p-8 relative z-10 bg-white rounded-xl shadow-lg border border-gray-200">
-                    <div className="text-center mb-8">
+                <main className="w-full max-w-xl p-8 m-3 relative z-10 bg-white rounded-xl shadow-lg border border-gray-200 bg-opacity-50">
+                    <div className="text-center mb-8 ">
                         <h1 className="text-4xl font-extrabold text-purple-800 font-serif">
                             Email Verification
                         </h1>
@@ -98,7 +98,7 @@ const VerifyEmail = () => {
                 </main>
 
                 {/* Decorative Waves */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
+                {/* <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
                     <svg
                         viewBox="0 0 1440 320"
                         fill="none"
@@ -111,7 +111,7 @@ const VerifyEmail = () => {
                             d="M0,192L80,176C160,160,320,128,480,138.7C640,149,800,203,960,192C1120,181,1280,107,1360,69.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
                         ></path>
                     </svg>
-                </div>
+                </div> */}
             </div>
 
             {/* Optional: Add fade-in animation */}

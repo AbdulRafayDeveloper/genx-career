@@ -21,10 +21,13 @@ const RightSide = () => {
   const [totalCvTemplates, setTotalCvTemplates] = useState(0);
   const [totalCvCreators, setTotalCvCreators] = useState(0);
   const [totalCvMatchers, setTotalCvMatchers] = useState(0);
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [monthlyStatsLoading, setMonthlyStatsLoading] = useState(false);
   const token = Cookies.get("token");
 
   useEffect(() => {
     const fetchStats = async () => {
+      setStatsLoading(true);
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard`, {
           headers: {
@@ -48,10 +51,13 @@ const RightSide = () => {
         console.log("stats: ", data);
       } catch (error) {
         console.error("Error fetching monthly user data:", error);
+      } finally {
+        setStatsLoading(false);
       }
     };
 
     const fetchMonthlyUsers = async () => {
+      setMonthlyStatsLoading(true);
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard/users-monthly`,
           {
@@ -74,7 +80,10 @@ const RightSide = () => {
         setTotalUsers(total);
       } catch (error) {
         console.error("Error fetching monthly user data:", error);
+      } finally {
+        setMonthlyStatsLoading(false);
       }
+
     };
 
     fetchMonthlyUsers();
@@ -88,6 +97,31 @@ const RightSide = () => {
       <div className="p-2">
         {/* Header */}
         <Header />
+        {(statsLoading || monthlyStatsLoading) && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+            <div className="flex flex-col items-center justify-center text-lg">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline w-8 h-8 text-purple-600 animate-spin "
+                viewBox="0 0 100 101"
+                fill="#7D0A0A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                  fill="CurrentColor"
+                />
+              </svg>
+              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            </div>
+          </div>
+        )}
+
         {/* Body */}
         <div className="mt-10 rounded-xl p-4">
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

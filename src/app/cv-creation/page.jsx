@@ -17,7 +17,7 @@ const Page = () => {
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [token, setToken] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const storedToken = Cookies.get("token");
     if (storedToken) {
@@ -28,6 +28,7 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`);
 
@@ -43,6 +44,8 @@ const Page = () => {
       } catch (error) {
         console.log("Error fetching template data:", error);
         toast.error(error.message || "Some Issue in Loading the templates right now. Please try again later");
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -64,12 +67,36 @@ const Page = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+            <div className="flex flex-col text-lg justify-center items-center">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline w-8 h-8 text-purple-600 animate-spin "
+                viewBox="0 0 100 101"
+                fill="#7D0A0A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                  fill="CurrentColor"
+                />
+              </svg>
+              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            </div>
+          </div>
+        )}
 
         <div className="flex h-screen w-screen flex-col">
-          <div className="flex flex-col lg:flex-row px-4 w-full bg-opacity-50 justify-center pl-12 pr-12">
+          <div className="flex flex-col md:flex-row lg:flex-row p-6 w-full bg-opacity-50 justify-center mt-10 ">
             {/* Left Column (Rating) */}
-            <div className="flex-grow lg:w-[700px] max-h-screen overflow-y-auto p-4 pr-12 pb-12 scrollbar-hidden pl-12 mt-28">
-              <div className="flex flex-col gap-4">
+            <div className="flex flex-col justify-center items-center text-center">
+              <div className="flex flex-col justify-center items-center text-center gap-4">
                 {/* <div className="flex flex-row gap-2 items-center">
                   <div className="w-2 h-2 bg-purple-900 rounded-full animate-ping">
                     {" "}
@@ -77,7 +104,7 @@ const Page = () => {
                   <p className="font-light">10 cvs created today</p>
                 </div> */}
 
-                <h1 className="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black">
+                <h1 className="xl:text-7xl lg:text-6xl md:text-4xl text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black">
                   Professional cv builder
                 </h1>
 
@@ -100,7 +127,7 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-grow lg:w-[850px] max-h-screen overflow-hidden p-4 pr-12 pb-12 scrollbar-hidden pl-12 relative mt-12">
+            <div className="flex-grow lg:w-[850px] min-h-screen overflow-hidden p-4 pr-12 pb-4 scrollbar-hidden pl-12 relative mt-12">
               <img
                 src="/images/B.png"
                 className="w-[1000px] h-100 object-cover right-40 scale-110"
@@ -117,24 +144,24 @@ const Page = () => {
             >
               {/* Section Content */}
               <div className="flex flex-col pt-12 items-center h-full bg-black bg-opacity-30 pb-12">
-                <p className="text-5xl font-bold text-purple-100 text-center">
+                <p className="xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-bold text-purple-100 text-center">
                   CV TEMPLATES FOR <br />
                   LANDING A PERFECT JOB
                 </p>
-                <p className="text-center text-lg font-normal pt-6">
+                <p className="text-center xl:text-lg md:text-lg text-md font-normal pt-6">
                   Just pick a template and enter your data. It&apos;s THAT easy to
                   use, <br />
                   even if you&apos;ve never made a resume in your life before!
                 </p>
 
                 {/* Cards Section */}
-                <div className="flex flex-row justify-center gap-6 mt-10">
-                  <div className="flex flex-wrap justify-center gap-6 mt-10">
+                <div className="flex flex-row justify-center gap-6 mt-10 ">
+                  <div className="flex flex-wrap justify-center gap-6 mt-10 ">
                     {templates?.records && templates.records.length > 0 ? (
                       templates.records.map((template, index) => (
                         <div
                           key={index}
-                          className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative"
+                          className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative p-2"
                         >
                           <Image
                             className="rounded-t-lg w-full h-[450px] object-cover"
@@ -186,10 +213,10 @@ const Page = () => {
                     ></path>
                   </svg>
                   <div className="bg-gray-50 pt-6 pb-20 flex flex-col items-center justify-center">
-                    <p className="text-5xl font-bold text-purple-950 text-center pb-6">
+                    <p className="xl:text-5xl lg:text-4xl md:text-3xl text-3xl font-bold text-purple-950 text-center pb-6">
                       WHY CHOOSE US?
                     </p>
-                    <div className="flex justify-center items-start gap-12 mt-10">
+                    <div className="flex xl:flex-row lg:flex-row md:flex-row flex-col justify-center items-start gap-12 mt-10">
                       <div className="flex flex-col items-center">
                         <img
                           className="w-24 h-24
@@ -205,7 +232,7 @@ const Page = () => {
                         <img
                           className="w-24 h-24 object-cover"
                           src="/images/creative.png"
-                          alt="Creative Logo" 
+                          alt="Creative Logo"
                         />
                         <p className="text-2xl font-light text-purple-950 text-center mt-4">
                           Creative and stylish <br /> templates

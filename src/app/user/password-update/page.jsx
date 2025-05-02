@@ -155,13 +155,13 @@ const Page = () => {
               >
                 <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6" />
               </button>
-              <div>
+              <div className="hidden xl:block md:block lg:block">
                 <img src="/images/logoImg.jpg" className="rounded object-cover" />
               </div>
 
               <form
                 onSubmit={handleSubmit}
-                className="max-w-md md:ml-auto w-full"
+                className="max-w-md md:ml-auto w-full mt-12"
               >
                 <h3 className="flex justify-center text-center items-center text-purple-900 font-serif text-3xl font-extrabold mb-8">
                   Update Password

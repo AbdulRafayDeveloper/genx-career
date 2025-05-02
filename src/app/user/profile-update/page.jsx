@@ -154,7 +154,7 @@ const ProfileUpdatePage = () => {
         <main className="w-full max-w-lg p-8 shadow-xl mb-4 shadow-purple-300">
           {/* Avatar Upload */}
           <div className="flex justify-center items-center text-center m-7 ">
-            <p className="text-4xl font-bold text-purple-800 ">Update Profile</p>
+            <p className="text-xl xl:text-4xl md:text-2xl lg:text-3xl font-bold text-purple-800 ">Update Profile</p>
           </div>
           <button
             onClick={() => router.push("/")}

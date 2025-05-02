@@ -129,8 +129,8 @@ const VerifyOtpPage = () => {
     return (
         <>
             <ToastContainer />
-            <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-                <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+            <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBsicscfPq6Fw86u6OmNdPhhRt5WV8o-gS1A&s')" }}>
+                <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md bg-opacity-50">
                     <h1 className="text-2xl font-bold text-center text-purple-900">Verify OTP</h1>
                     <p className="text-center text-sm text-gray-600 mt-2">
                         An OTP has been sent to your email. Please enter the 6-digit code below.
@@ -175,8 +175,8 @@ const VerifyOtpPage = () => {
                         <button
                             type="submit"
                             className={`mt-6 w-full font-semibold py-3 rounded-md transition ${otpExpired
-                                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                : "bg-purple-600 hover:bg-purple-700 text-white"
+                                ? "bg-purple-800 text-white cursor-not-allowed"
+                                : "bg-purple-800 hover:bg-purple-700 text-white"
                                 }`}
                             disabled={otpExpired}
                         >

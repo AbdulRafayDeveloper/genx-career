@@ -268,10 +268,14 @@ const App = () => {
 
   return (
     <div className="my-8 p-4">
-      <h2 className="text-xl font-bold text-purple-600 mb-4">
-        Users created in {currentYear}
-      </h2>
-      <Line data={data} options={options} />
+      <div className="flex justify-center items-center text-center">
+        <button className="flex w-full justify-center text-center items-center text-sm xl:text-2xl md:text-xl  bg-purple-200 p-2 rounded-full  font-bold text-purple-900 mb-4">
+          Registration Activity Throughout  {currentYear}
+        </button>
+      </div>
+      <div className="mt-6">
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };
