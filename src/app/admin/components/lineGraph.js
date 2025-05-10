@@ -273,9 +273,13 @@ const App = () => {
           Registration Activity Throughout  {currentYear}
         </button>
       </div>
-      <div className="mt-6">
-        <Line data={data} options={options} />
+      <div className="mt-6 w-full h-64 sm:h-80 md:h-96">
+        <Line data={data} options={{
+          ...options,
+          maintainAspectRatio: false
+        }} />
       </div>
+
     </div>
   );
 };

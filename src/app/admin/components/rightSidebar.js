@@ -1,7 +1,7 @@
 "use client";
 import App from "./lineGraph";
 import Header from "./header";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineAccountBalance } from "react-icons/md";
 import { BsPercent } from "react-icons/bs";
@@ -10,6 +10,7 @@ import { RiMoneyPoundCircleLine } from "react-icons/ri";
 import { BsBullseye } from "react-icons/bs";
 import axios from "axios";
 import Cookies from "js-cookie";
+import LeftSideBar from "./sidebar";
 
 const RightSide = () => {
   const [monthlyData, setMonthlyData] = useState([]);
@@ -24,6 +25,12 @@ const RightSide = () => {
   const [statsLoading, setStatsLoading] = useState(false);
   const [monthlyStatsLoading, setMonthlyStatsLoading] = useState(false);
   const token = Cookies.get("token");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+  const buttonRef = useRef(null);
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -89,6 +96,17 @@ const RightSide = () => {
     fetchMonthlyUsers();
     fetchStats();
   }, []);
+  const handleClickOutside = (event) => {
+    if (
+      sidebarRef.current &&
+      !sidebarRef.current.contains(event.target) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target)
+    ) {
+      setIsSidebarOpen(false);
+    }
+  };
+  const section = "Dashboard";
 
   // const incrementCount = () => setCount(count + 1);
 
@@ -96,7 +114,22 @@ const RightSide = () => {
     <div className="sm:ml-64 rounded-lg max-w-full lg:max-w-[1200px]">
       <div className="p-2">
         {/* Header */}
-        <Header />
+        <div className="p-2 w-full">
+          <div className="flex items-center justify-between">
+            {/* Mobile: Show sidebar toggle */}
+            <LeftSideBar/>
+
+            {/* Title */}
+            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+              Welcome Back!
+            </p>
+
+            {/* Header component */}
+            <div className="ml-auto">
+              <Header appear={true} />
+            </div>
+          </div>
+        </div>
         {(statsLoading || monthlyStatsLoading) && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
             <div className="flex flex-col items-center justify-center text-lg">

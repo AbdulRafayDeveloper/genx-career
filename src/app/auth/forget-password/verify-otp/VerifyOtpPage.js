@@ -14,7 +14,7 @@ const VerifyOtpPage = () => {
     const JWT_SECRET = new TextEncoder().encode(process.env.NEXT_PUBLIC_RESEND_TOKEN_SECRET_KEY);
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-    const [timer, setTimer] = useState(15);
+    const [timer, setTimer] = useState(120);
     const [otpExpired, setOtpExpired] = useState(false);
     const inputRefs = useRef([]);
 
@@ -52,7 +52,7 @@ const VerifyOtpPage = () => {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        if (value && index < 15) {
+        if (value && index < 120) {
             inputRefs.current[index + 1].focus();
         }
     };
@@ -83,7 +83,7 @@ const VerifyOtpPage = () => {
             router.replace(`/auth/forget-password/verify-otp?token=${newToken}`, { scroll: false });
 
             toast.success(response.data.message || "OTP resent successfully!");
-            setTimer(15);
+            setTimer(120);
             setOtpExpired(false);
             setOtp(["", "", "", "", "", ""]);
         } catch (err) {
@@ -146,7 +146,7 @@ const VerifyOtpPage = () => {
                                     maxLength="1"
                                     value={digit}
                                     onChange={(e) => handleChange(e, index)}
-                                    className="w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-50"
+                                    className="xl:w-12 xl:h-12 lg:w-10 lg:w-10 md:w-10 md:w-10 w-8 h-8  text-center text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-50"
                                 />
                             ))}
                         </div>
@@ -175,7 +175,7 @@ const VerifyOtpPage = () => {
                         <button
                             type="submit"
                             className={`mt-6 w-full font-semibold py-3 rounded-md transition ${otpExpired
-                                ? "bg-purple-800 text-white cursor-not-allowed"
+                                ? "bg-gray-300 hover:bg-gray-400 text-white cursor-not-allowed"
                                 : "bg-purple-800 hover:bg-purple-700 text-white"
                                 }`}
                             disabled={otpExpired}

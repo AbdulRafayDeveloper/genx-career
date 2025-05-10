@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { FaUpload } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 export default function ApplianceForm() {
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function ApplianceForm() {
     const [selectedTemplate, setSelectedTemplate] = useState("");
     const [file, setFile] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const handleSidebarToggle = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -29,7 +30,7 @@ export default function ApplianceForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         const token = Cookies.get("token");
         if (!token) {
             console.log("Token not found");
@@ -89,6 +90,8 @@ export default function ApplianceForm() {
             } else {
                 toast.error("An error occurred. Please try again.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -107,62 +110,46 @@ export default function ApplianceForm() {
                 theme="light"
             />
             <div className="overflow-y-auto scrollbar-hidden">
-                <button
-                    ref={buttonRef}
-                    onClick={handleSidebarToggle}
-                    aria-controls="separator-sidebar"
-                    type="button"
-                    className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                >
-                    <span className="sr-only">Open sidebar</span>
-                    <svg
-                        className="w-6 h-6"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            clipRule="evenodd"
-                            fillRule="evenodd"
-                            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                        ></path>
-                    </svg>
-                </button>
+                <div className="p-2 w-full">
+          <div className="flex items-center justify-between">
+            {/* Mobile: Show sidebar toggle */}
+            <LeftSideBar/>
 
-                <aside
-                    ref={sidebarRef}
-                    id="separator-sidebar"
-                    className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-                        } sm:translate-x-0`}
-                    aria-label="Sidebar"
-                >
-                    <LeftSideBar section="Password Update" />
-                </aside>
+            {/* Title */}
+            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              Welcome Back!
+            </p>
+
+            {/* Header component */}
+            <div className="ml-auto">
+              <Header appear={true} />
+            </div>
+          </div>
+        </div>
 
                 {/* Main Content */}
                 <div className="lg:ml-64 md:ml-64 sm:ml-0 flex flex-col flex-grow h-screen overflow-hidden">
                     {/* header */}
-                    <Header />
+                    {/* <Header /> */}
                     <main className="flex-1">
                         {/* Form Section */}
                         <section className="p-8">
                             <form
                                 onSubmit={handleSubmit}
-                                className="max-w-xl mx-auto bg-white p-8 shadow-md rounded-xl space-y-6"
+                                className="max-w-xl mx-auto bg-gray-100 p-8 shadow-lg shadow-purple-300 rounded-xl space-y-6"
                             >
                                 <h2 className="text-2xl font-semibold text-center mb-4">Upload CV Template</h2>
                                 <div>
-                                    <label className="block mb-2 text-gray-700 font-medium">
+                                    <label className="block mb-2 text-lg font-bold">
                                         Select Template
                                     </label>
                                     <select
                                         value={selectedTemplate}
                                         onChange={(e) => setSelectedTemplate(e.target.value)}
                                         required
-                                        className="w-full p-3 border rounded-md outline-none focus:ring-2 focus:ring-gray-300"
+                                        className="w-full p-3 border-2 rounded-md outline-none border-purple-400"
                                     >
-                                        <option value="" disabled>
+                                        <option value="" disabled >
                                             -- Choose Template --
                                         </option>
                                         <option value="template1">Template 1</option>
@@ -172,12 +159,12 @@ export default function ApplianceForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 text-gray-700 font-medium">
+                                    <label className="block mb-2 text-lg font-bold">
                                         Upload Template Image
                                     </label>
                                     <div className="flex items-center justify-center w-full">
-                                        <label className="flex flex-col items-center w-full px-4 py-8 text-gray-600 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400">
-                                            <FaUpload size={24} className="mb-2" />
+                                        <label className="flex flex-col items-center w-full px-4 py-8 text-gray-600 bg-gray-50 border-2 border-dashed border-purple-400 rounded-lg cursor-pointer hover:border-gray-400">
+                                            <Image src={"/upload-cv.png"} height={45} width={45} />
                                             <span className="text-sm">Click to upload image</span>
                                             <input
                                                 id="file"
@@ -200,9 +187,46 @@ export default function ApplianceForm() {
                                 <div className="flex justify-end">
                                     <button
                                         type="submit"
-                                        className="p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300"
+                                        className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${loading
+                                            ? "cursor-not-allowed bg-purple-600"
+                                            : "hover:bg-purple-800"
+                                            }`}
+                                        disabled={loading}
                                     >
-                                        Submit
+                                        <div className="flex items-center justify-center space-x-4">
+                                            {loading ? (
+                                                <>
+
+                                                    <p className="text-white text-lg font-semibold">Please wait</p>
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        role="status"
+                                                        className="inline size-4 text-purple-600 animate-spin "
+                                                        viewBox="0 0 100 101"
+                                                        fill="#7D0A0A"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                                                            fill="currentColor"
+                                                        />
+                                                        <path
+                                                            d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                                                            fill="CurrentColor"
+                                                        />
+                                                    </svg>
+
+                                                </>
+                                            ) : (
+                                                <>
+
+                                                    <p className="text-white text-lg font-semibold">
+                                                        Submit
+                                                    </p>
+                                                </>
+                                            )}
+
+                                        </div>
                                     </button>
                                 </div>
 

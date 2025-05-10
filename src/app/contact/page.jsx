@@ -12,11 +12,10 @@ import {
 import Footer from "../components/footer/Footer";
 import Cookies from "js-cookie";
 
-const Home = () => {
+const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [errors, setErrors] = useState({});
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -267,4 +266,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Contact;

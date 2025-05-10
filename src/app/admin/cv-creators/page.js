@@ -5,7 +5,7 @@ import CvCreators from "../components/cvCreators";
 const Create_CV = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <CvCreators />
     </>
   );

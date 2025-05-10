@@ -9,6 +9,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pagination from "./pagination";
+import LeftSideBar from "./sidebar";
 
 
 const CVTemplates = () => {
@@ -16,34 +18,41 @@ const CVTemplates = () => {
   const [searchStatus, setSearchStatus] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
+  const [totalusers, setTotalusers] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage=8;
+  const totalPages = Math.ceil(totalusers / itemsPerPage);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
     const fetchusers = async () => {
       setLoading(true);
-      try{
+      try {
         const token = Cookies.get('token');
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.data;
+        console.log(data.data.records);
+        if (data.status == 200) {
+          setTemplates(data.data.records);
+        } else {
+          toast.error(data.message);
         }
-      );
-      const data = await response.data;
-      console.log(data.data.records);
-      if (data.status == 200) {
-        setTemplates(data.data.records);
-      } else {
+      } catch (error) {
         toast.error(data.message);
-      }
-      }catch(error){
-        toast.error(data.message);
-      }finally{
+      } finally {
         setLoading(false);
       }
-      
+
     };
     fetchusers();
   }, []);
@@ -106,31 +115,47 @@ const CVTemplates = () => {
         <div className="sm:ml-64 rounded-lg">
           <div className="p-2">
             {/* Header Section */}
-            <Header />
-            {loading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-            <div className="flex flex-col items-center justify-center text-lg">
-              <svg
-                aria-hidden="true"
-                role="status"
-                className="inline w-8 h-8 text-purple-600 animate-spin "
-                viewBox="0 0 100 101"
-                fill="#7D0A0A"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                  fill="CurrentColor"
-                />
-              </svg>
-              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            {/* <Header /> */}
+            <div className="p-2 w-full">
+          <div className="flex items-center justify-between">
+            {/* Mobile: Show sidebar toggle */}
+            <LeftSideBar/>
+
+            {/* Title */}
+            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+              Welcome Back
+            </p>
+
+            {/* Header component */}
+            <div className="ml-auto">
+              <Header appear={true} />
             </div>
           </div>
-        )}
+        </div>
+            {loading && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+                <div className="flex flex-col items-center justify-center text-lg">
+                  <svg
+                    aria-hidden="true"
+                    role="status"
+                    className="inline w-8 h-8 text-purple-600 animate-spin "
+                    viewBox="0 0 100 101"
+                    fill="#7D0A0A"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                      fill="CurrentColor"
+                    />
+                  </svg>
+                  <p className="mt-4 text-lg text-purple-600">Loading...</p>
+                </div>
+              </div>
+            )}
             {/* User Records Section */}
             <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
               <div className="flex flex-wrap justify-between items-center gap-4">
@@ -148,7 +173,7 @@ const CVTemplates = () => {
                 <div className="flex flex-wrap justify-between items-center  w-full lg:w-auto space-y-3 md:space-y-0">
                   <Link
                     href="/admin/cv-templates/add"
-                    className="flex items-center text-sm w-full sm:w-auto font-medium text-gray-700 bg-gray-200 border rounded-lg p-2 px-4 hover:bg-gray-200 transition duration-300 h-8"
+                    className="flex items-center text-sm w-full sm:w-auto font-medium text-white bg-gray-600 border rounded-lg p-2 px-4 hover:text-black hover:bg-gray-200 transition duration-300 h-8"
                     style={{ border: "1px solid grey" }}
                     aria-label="Export Records"
                   >
@@ -159,7 +184,7 @@ const CVTemplates = () => {
 
               {/* Table */}
               <div className="overflow-x-auto mt-6">
-                <table className="min-w-full text-sm text-left text-gray-500">
+                <table className="min-w-full text-sm text-center text-gray-500">
                   <thead className="bg-gray-50 text-sm  text-gray-700">
                     <tr>
                       <th className="px-5 py-3">Sr #</th>
@@ -171,7 +196,7 @@ const CVTemplates = () => {
                   </thead>
                   <tbody>
                     {templates && templates.map((item, index) => (
-                      <tr key={item._id} className="bg-white border-b text-left">
+                      <tr key={item._id} className="bg-white border-b text-center">
                         <td className="px-6 py-4 items-center">{index + 1}</td>
                         <td className="px-6 py-4 items-center">{item.name}</td>
                         <td className="px-6 py-4 items-center">
@@ -203,7 +228,7 @@ const CVTemplates = () => {
                             </div>
                           </div>
                           {isDialogOpen && (
-                            <div className="fixed inset-0 bg-opacity-50 z-50 flex items-center justify-center">
+                            <div className="fixed inset-0 bg-black bg-opacity-20 z-50 flex items-center justify-center">
                               <div className="bg-white rounded-lg p-8 shadow-lg w-[350px]">
                                 <h1 className="text-xl font-bold">
                                   Delete Confirmation
@@ -231,14 +256,53 @@ const CVTemplates = () => {
                         </td>
                       </tr>
                     ))}
-                    {!templates && (
+                    {templates.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="text-center">No data found</td>
+                        <td colSpan={6} className="py-12">
+                          <div className="flex flex-col items-center justify-center space-y-3">
+                            {/* Icon: folder or document */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-10 h-10 text-gray-500"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H12l-2-2H5a2 2 0 00-2 2z"
+                              />
+                            </svg>
+
+                            {/* Main message */}
+                            <h3 className="text-xl font-medium text-gray-700">No records found</h3>
+
+                            {/* Help text */}
+                            <p className="text-sm text-gray-500">
+                              There’s nothing to display here yet.
+                            </p>
+
+                            {/* Optional action */}
+                            {/* <button
+                          onClick={handleAddNew}
+                          className="mt-2 inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        >
+                          Add New Entry
+                        </button> */}
+                          </div>
+                        </td>
                       </tr>
                     )}
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                          totalPages={totalPages}
+                          currentPage={currentPage}
+                          onPageChange={handlePageChange}
+                        />
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import LeftSideBar from "@/app/admin/components/sidebar";
 const Details = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <JobDetail />
     </>
   );

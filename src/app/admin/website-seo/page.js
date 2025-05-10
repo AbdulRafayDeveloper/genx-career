@@ -116,40 +116,42 @@ export default function SeoFormPage() {
             <ToastContainer position="top-right" />
             <div className="overflow-y-auto min-h-screen">
                 {/* Mobile toggle */}
-                <button
-                    ref={buttonRef}
-                    onClick={toggleSidebar}
-                    className="p-2 m-2 text-gray-600 sm:hidden"
-                >
-                    ☰
-                </button>
+                <div className="p-2 w-full">
+                    <div className="flex items-center justify-between">
+                        {/* Mobile: Show sidebar toggle */}
+                        <LeftSideBar />
 
-                {/* Sidebar */}
-                <aside
-                    ref={sidebarRef}
-                    className={`fixed top-0 left-0 w-64 h-full bg-white shadow transform transition-transform
-            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0`}
-                >
-                    <LeftSideBar section="Website SEO" />
-                </aside>
+                        {/* Title */}
+                        <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                            Website SEO
+                        </p>
 
+                        {/* Header component */}
+                        <div className="ml-auto">
+                            <Header appear={true} />
+                        </div>
+                    </div>
+                </div>
                 {/* Main */}
                 <div className="sm:ml-64">
-                    <Header title={isEdit ? 'Edit SEO' : 'Add SEO'} toggleSidebar={toggleSidebar} />
+                    {/* <Header title={isEdit ? 'Edit SEO' : 'Add SEO'} toggleSidebar={toggleSidebar} /> */}
 
-                    <main className="p-6 my-12">
+                    <main className="px-4 sm:px-6 md:px-10 py-12 bg-white min-h-screen">
                         <form
                             onSubmit={handleSubmit}
-                            className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow"
+                            className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl transition-shadow duration-300 hover:shadow-purple-300"
                         >
-                            <div className="grid grid-cols-1 gap-4">
-                                <div>
-                                    <label className="block font-medium mb-1">Page</label>
+                            <h2 className="text-2xl font-bold text-purple-700 mb-6 text-center">SEO Configuration</h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Page Select */}
+                                <div className="col-span-1 md:col-span-2">
+                                    <label className="block font-semibold text-gray-700 mb-1">Page</label>
                                     <select
                                         value={pageName}
                                         onChange={(e) => setPageName(e.target.value)}
                                         required
-                                        className="w-full p-2 border rounded"
+                                        className="w-full p-3 border border-purple-400 focus:ring-2 focus:ring-purple-500 rounded-lg outline-none"
                                     >
                                         <option value="" disabled>
                                             — Select page —
@@ -161,27 +163,23 @@ export default function SeoFormPage() {
                                         ))}
                                     </select>
                                 </div>
+
+                                {/* Title */}
                                 <div>
-                                    <label className="block font-medium mb-1">Title</label>
+                                    <label className="block font-semibold text-gray-700 mb-1">Title</label>
                                     <input
                                         type="text"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         required
-                                        className="w-full p-2 border rounded"
+                                        placeholder="Enter the Title"
+                                        className="w-full p-3 border border-purple-400 focus:ring-2 focus:ring-purple-500 rounded-lg outline-none"
                                     />
                                 </div>
+
+                                {/* Keywords */}
                                 <div>
-                                    <label className="block font-medium mb-1">Description</label>
-                                    <textarea
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        required
-                                        className="w-full p-2 border rounded"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block font-medium mb-1">
+                                    <label className="block font-semibold text-gray-700 mb-1">
                                         Keywords <span className="text-sm text-gray-500">(comma‑separated)</span>
                                     </label>
                                     <input
@@ -189,34 +187,52 @@ export default function SeoFormPage() {
                                         value={keywords}
                                         onChange={(e) => setKeywords(e.target.value)}
                                         required
-                                        className="w-full p-2 border rounded"
+                                        placeholder="Enter the Keywords"
+                                        className="w-full p-3 border border-purple-400 focus:ring-2 focus:ring-purple-500 rounded-lg outline-none"
                                     />
                                 </div>
-                                <div className="flex items-center space-x-2">
+
+                                {/* Description */}
+                                <div className="col-span-1 md:col-span-2">
+                                    <label className="block font-semibold text-gray-700 mb-1">Description</label>
+                                    <textarea
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        required
+                                        placeholder="Enter the Description"
+                                        rows="4"
+                                        className="w-full p-3 border border-purple-400 focus:ring-2 focus:ring-purple-500 rounded-lg outline-none resize-none"
+                                    />
+                                </div>
+
+                                {/* Indexable Checkbox */}
+                                <div className="col-span-1 md:col-span-2 flex items-center space-x-3">
                                     <input
                                         id="indexable"
                                         type="checkbox"
                                         checked={indexable}
                                         onChange={(e) => setIndexable(e.target.checked)}
-                                        className="h-4 w-4"
+                                        className="h-5 w-5 text-purple-600 rounded border-gray-300 focus:ring-purple-500"
                                     />
-                                    <label htmlFor="indexable" className="font-medium">
+                                    <label htmlFor="indexable" className="text-gray-700 font-medium">
                                         Index this page?
                                     </label>
                                 </div>
                             </div>
 
-                            <div className="mt-6 flex justify-end space-x-2">
+                            {/* Submit Button */}
+                            <div className="mt-8 flex justify-end">
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
+                                    className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all disabled:opacity-50"
                                 >
                                     {loading ? 'Please wait…' : isEdit ? 'Update SEO' : 'Add SEO'}
                                 </button>
                             </div>
                         </form>
                     </main>
+
                 </div>
             </div>
         </>

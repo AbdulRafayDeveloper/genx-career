@@ -5,7 +5,7 @@ import LeftSideBar from "../components/sidebar";
 const Match_CV = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <CVTemplates />
     </>
   );

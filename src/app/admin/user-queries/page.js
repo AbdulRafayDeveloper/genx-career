@@ -5,7 +5,7 @@ import UserQueries from "../components/userQueries";
 const Queries = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <UserQueries />
     </>
   );

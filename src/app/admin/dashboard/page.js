@@ -5,7 +5,7 @@ import LeftSideBar from "../components/sidebar";
 const Dashboard = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <RigthSide />
     </>
   );

@@ -6,6 +6,7 @@ import Header from "./header";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "lucide-react";
+import LeftSideBar from "./sidebar";
 
 const JobDetail = () => {
   const [jobDetails, setJobDetails] = useState();
@@ -34,7 +35,23 @@ const JobDetail = () => {
 
   return (
     <div className="p-2 sm:ml-64 rounded-lg">
-      <Header />
+      {/* <Header /> */}
+      <div className="p-2 w-full">
+          <div className="flex items-center justify-between">
+            {/* Mobile: Show sidebar toggle */}
+            <LeftSideBar/>
+
+            {/* Title */}
+            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+              Job Details
+            </p>
+
+            {/* Header component */}
+            <div className="ml-auto">
+              <Header appear={true} />
+            </div>
+          </div>
+        </div>
       <div className="p-6 bg-gray-50 shadow-md rounded-md max-w-5xl mx-auto mt-4">
         {/* Job Title */}
         <h1 className="text-2xl font-bold " style={{ color: "purple" }}>

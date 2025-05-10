@@ -149,14 +149,17 @@ const Page = () => {
         <div className="font-[sans-serif] relative z-10">
           <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
             <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
-              <button
-                onClick={() => router.push("/")}
-                className="absolute top-6 left-6 p-4 bg-white bg-opacity-80 rounded-full text-purple-600 font-semibold hover:underline"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6" />
-              </button>
+            <button
+            onClick={() => router.push("/")}
+            className="fixed top-4 left-4 p-2 bg-white bg-opacity-80 rounded-full text-purple-600 shadow-md hover:bg-opacity-100 transition z-50"
+          >
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className="w-8 h-8"
+            ></FontAwesomeIcon>
+          </button>
               <div className="hidden xl:block md:block lg:block">
-                <img src="/images/logoImg.jpg" className="rounded object-cover" />
+                <img src="https://img.freepik.com/free-vector/my-password-concept-illustration_114360-4294.jpg?semt=ais_hybrid&w=740" className="rounded object-cover" />
               </div>
 
               <form

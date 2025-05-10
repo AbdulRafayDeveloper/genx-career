@@ -5,7 +5,7 @@ import CvMatchers from "../components/cvMatchers";
 const Match_CV = () => {
   return (
     <>
-      <LeftSideBar />
+      {/* <LeftSideBar /> */}
       <CvMatchers />
     </>
   );

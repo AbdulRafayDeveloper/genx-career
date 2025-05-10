@@ -5,7 +5,7 @@ import UserSection from "../components/usersSection";
 const User=()=>{
     return (
         <>
-            <LeftSideBar/>
+            {/* <LeftSideBar/> */}
             <UserSection/>
         </>
     )

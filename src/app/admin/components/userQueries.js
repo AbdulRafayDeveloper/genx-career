@@ -8,6 +8,8 @@ import { FiUpload } from "react-icons/fi";
 import Pagination from "./pagination";
 import Header from "./header";
 import { toast } from "react-toastify";
+import LeftSideBar from "./sidebar";
+import Image from "next/image";
 
 const UserQueries = () => {
   const [users, setusers] = useState([]);
@@ -15,11 +17,11 @@ const UserQueries = () => {
   const [totalusers, setTotalusers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);
   const totalPages = Math.ceil(totalusers / itemsPerPage);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [expandedMessage, setExpandedMessage] = useState(null);
 
@@ -30,32 +32,32 @@ const UserQueries = () => {
   useEffect(() => {
     const fetchusers = async () => {
       setLoading(true);
-      try{
+      try {
         const token = Cookies.get('token');
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.data;
+        console.log(data.data.pagination.totalRecords);
+        if (data.status == 200) {
+          setusers(data.data.records);
+          setTotalusers(data.data.pagination.totalRecords);
+        } else {
+          setusers([]);
+          setTotalusers(0);
+          toast.error(data.message || "Failed to fetch users. Please try again later.");
         }
-      );
-      const data = await response.data;
-      console.log(data.data.pagination.totalRecords);
-      if (data.status == 200) {
-        setusers(data.data.records);
-        setTotalusers(data.data.pagination.totalRecords);
-      } else {
-        setusers([]);
-        setTotalusers(0);
-        toast.error(data.message || "Failed to fetch users. Please try again later.");
-      }
-      }catch(error){
+      } catch (error) {
         toast.error("error occur while fetching the user")
-      }finally{
+      } finally {
         setLoading(false)
       }
-      
+
     };
     fetchusers();
   }, [currentPage, itemsPerPage, searchStatus]);
@@ -146,7 +148,23 @@ const UserQueries = () => {
     <div className="sm:ml-64 rounded-lg">
       <div className="p-2">
         {/* Header Section */}
-        <Header />
+        {/* <Header /> */}
+        <div className="p-2 w-full">
+          <div className="flex items-center justify-between">
+            {/* Mobile: Show sidebar toggle */}
+            <LeftSideBar />
+
+            {/* Title */}
+            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+              Welcome Back!
+            </p>
+
+            {/* Header component */}
+            <div className="ml-auto">
+              <Header appear={true} />
+            </div>
+          </div>
+        </div>
 
         {loading && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
@@ -186,30 +204,26 @@ const UserQueries = () => {
             </div>
 
             {/* Search Form */}
-            <div className="flex flex-wrap justify-between items-center  w-full lg:w-auto space-y-3 md:space-y-0">
-              <button
-                className="flex items-center text-sm w-full sm:w-auto font-medium text-gray-700 bg-gray-200 border rounded-lg p-2 px-4 hover:bg-gray-200 transition duration-300 h-8"
-                style={{ border: "1px solid grey" }}
-                onClick={downloadusersExcel}
-                aria-label="Export Records"
-              >
-                <FiUpload className="text-md mr-2 text-gray-900" />
-                Export
-              </button>
-
-              <div className="w-full sm:w-auto mx-2">
-                <label htmlFor="simple-search" className="sr-only">
-                  Search
-                </label>
-                <input
-                  type="text"
-                  onChange={(e) => setSearch(e.target.value)}
-                  id="simple-search"
-                  className="py-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-[175px] pl-3"
-                  placeholder="Search by email..."
-                  aria-label="Search by email..."
-                  required
-                />
+            <div className="flex flex-col md:flex-row flex-wrap justify-between items-center w-full lg:w-auto gap-3">
+              <div className="w-full sm:w-auto flex justify-start gap-3">
+                <button
+                  onClick={downloadusersExcel}
+                  aria-label="Export Records"
+                  className="flex items-center justify-center gap-2 w-full bg-white p-1 rounded-lg border border-gray-300 transition duration-300"
+                >
+                  <p className="text-md ">Export </p> <Image src="/upload-icon.png" height={24} width={24} alt="Export" />
+                </button>
+                <div className="w-full  flex justify-start">
+                  <input
+                    type="text"
+                    onChange={e => setSearch(e.target.value)}
+                    id="simple-search"
+                    placeholder="Search by title..."
+                    className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
+                    aria-label="Search by title"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="w-full sm:w-auto">
@@ -230,7 +244,7 @@ const UserQueries = () => {
 
           {/* Table */}
           <div className="overflow-x-auto mt-6">
-            <table className="min-w-full text-sm text-left text-gray-500">
+            <table className="min-w-full text-sm text-center text-gray-500">
               <thead className="bg-gray-50 text-sm text-gray-700">
                 <tr>
                   <th className="px-5 py-3">Sr #</th>
@@ -242,7 +256,7 @@ const UserQueries = () => {
               </thead>
               <tbody>
                 {users && users.map((item, index) => (
-                  <tr key={item._id} className="bg-white border-b text-left">
+                  <tr key={item._id} className="bg-white border-b text-center">
                     <td className="px-6 py-4">{index + 1}</td>
                     <td className="px-6 py-4">{item.email}</td>
                     <td className="px-6 py-4">
@@ -275,7 +289,7 @@ const UserQueries = () => {
 
                         {/* Dialog Box */}
                         {isDialogOpen && (
-                          <div className="fixed inset-0 bg-opacity-50 z-50 flex items-center justify-center">
+                          <div className="fixed inset-0 bg-black bg-opacity-20 z-50 flex items-center justify-center">
                             <div className="bg-white rounded-lg p-8 shadow-lg w-[350px]">
                               <h1 className="text-xl font-bold">
                                 Delete Confirmation
@@ -304,9 +318,43 @@ const UserQueries = () => {
                     </td>
                   </tr>
                 ))}
-                {!users && (
+                {users.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="text-center">No data found</td>
+                    <td colSpan={6} className="py-12">
+                      <div className="flex flex-col items-center justify-center space-y-3">
+                        {/* Icon: folder or document */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-10 h-10 text-gray-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H12l-2-2H5a2 2 0 00-2 2z"
+                          />
+                        </svg>
+
+                        {/* Main message */}
+                        <h3 className="text-xl font-medium text-gray-700">No records found</h3>
+
+                        {/* Help text */}
+                        <p className="text-sm text-gray-500">
+                          There’s nothing to display here yet.
+                        </p>
+
+                        {/* Optional action */}
+                        {/* <button
+                        onClick={handleAddNew}
+                        className="mt-2 inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                      >
+                        Add New Entry
+                      </button> */}
+                      </div>
+                    </td>
                   </tr>
                 )}
               </tbody>

@@ -5,7 +5,6 @@ import LeftSideBar from "../components/sidebar";
 const JobsListing = () => {
   return (
     <>
-      <LeftSideBar />
       <JobListing />
     </>
   );

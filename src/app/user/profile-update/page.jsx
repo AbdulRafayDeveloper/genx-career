@@ -28,6 +28,7 @@ const ProfileUpdatePage = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setLoading(true);
       try {
         const token = Cookies.get("token");
         const userId = Cookies.get("userId");
@@ -68,6 +69,8 @@ const ProfileUpdatePage = () => {
       } catch (error) {
         console.log("Error fetching user data:", error);
         toast.error(error.message || "Profile Information not found currently. Please try again later");
+      }finally{
+        setLoading(false);
       }
     };
 
