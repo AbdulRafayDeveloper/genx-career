@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 import Link from "next/link";
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';

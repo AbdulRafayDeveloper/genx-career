@@ -37,7 +37,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contactus`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us`,
         formData
       );
 
@@ -54,6 +54,7 @@ const Contact = () => {
         e.target.reset();
       }
     } catch (error) {
+      console.log("error: ", error);
       Swal.fire({
         icon: "error",
         title: "Error!",

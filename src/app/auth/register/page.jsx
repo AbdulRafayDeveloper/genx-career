@@ -23,39 +23,88 @@ const Page = () => {
     confirmPassword: "",
   });
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  //   setErrors(prev => ({
+  //     ...prev,
+  //     [name]: undefined
+  //   }));
+  //   if (name === "password") {
+  //     // live password‐format validation
+  //     let pwError;
+  //     if (value && value.length < 8) {
+  //       pwError = "Password must be at least 8 characters.";
+  //     } else if (
+  //       value &&
+  //       !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
+  //     ) {
+  //       pwError = "Must include uppercase, lowercase, number & special character.";
+  //     }
+  //     setErrors(prev => ({ ...prev, password: pwError }));
+  //   }
+
+  //   if (name === "confirmPassword") {
+  //     // live match check
+  //     let cpError;
+  //     if (value && value !== formData.password) {
+  //       cpError = "Passwords do not match.";
+  //     }
+  //     setErrors(prev => ({ ...prev, confirmPassword: cpError }));
+  //   }
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    setErrors(prev => ({
-      ...prev,
-      [name]: undefined
-    }));
-    if (name === "password") {
-      // live password‐format validation
-      let pwError;
-      if (value && value.length < 8) {
-        pwError = "Password must be at least 8 characters.";
-      } else if (
-        value &&
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
-      ) {
-        pwError = "Must include uppercase, lowercase, number & special character.";
-      }
-      setErrors(prev => ({ ...prev, password: pwError }));
-    }
+    setFormData((prevData) => {
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
 
-    if (name === "confirmPassword") {
-      // live match check
-      let cpError;
-      if (value && value !== formData.password) {
-        cpError = "Passwords do not match.";
+      const newErrors = { ...errors };
+
+      // Clear error when the field is modified
+      delete newErrors[name];
+
+      // Password validation
+      if (name === "password") {
+        if (value.length < 8) {
+          newErrors.password = "Password must be at least 8 characters.";
+        } else if (
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(value)
+        ) {
+          newErrors.password = "Must include uppercase, lowercase, number & special character.";
+        } else {
+          delete newErrors.password;
+        }
+
+        // Confirm password validation if already filled
+        if (updatedData.confirmPassword && updatedData.confirmPassword !== value) {
+          newErrors.confirmPassword = "Passwords do not match.";
+        } else {
+          delete newErrors.confirmPassword;
+        }
       }
-      setErrors(prev => ({ ...prev, confirmPassword: cpError }));
-    }
+
+      // Confirm password live match
+      if (name === "confirmPassword") {
+        if (value !== updatedData.password) {
+          newErrors.confirmPassword = "Passwords do not match.";
+        } else {
+          delete newErrors.confirmPassword;
+        }
+      }
+
+      setErrors(newErrors);
+      return updatedData;
+    });
   };
+
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -134,6 +183,8 @@ const Page = () => {
         toast.error(response.data.message || "Something went wrong!");
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong!");
+      // Handle error response
       console.log("error is: ", error);
     } finally {
       setLoading(false);
