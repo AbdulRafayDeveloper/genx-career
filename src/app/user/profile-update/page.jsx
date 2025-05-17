@@ -18,6 +18,8 @@ const ProfileUpdatePage = () => {
   const router = useRouter();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [errors,setErrors]=useState({});
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,9 +27,30 @@ const ProfileUpdatePage = () => {
     password: "",
   });
 
+   const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setErrors(prev => ({ ...prev, [name]: undefined }));
+  };
+
+    const validateForm = () => {
+    const newError = {};  
+    if(formData.name.trim() === "") {
+      newError.name = "Name is required";
+    }else if(formData.name.length < 2) {
+      newError.name = "Name must be at least 2 characters"; 
+    }else if(formData.name.length > 35) {
+      newError.name = "Name must be less than 35 characters";
+    }
+    return newError;
+  }
+
   useEffect(() => {
     const fetchUserData = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const token = Cookies.get("token");
         const userId = Cookies.get("userId");
@@ -68,9 +91,8 @@ const ProfileUpdatePage = () => {
       } catch (error) {
         console.log("Error fetching user data:", error);
         toast.error(error.message || "Profile Information not found currently. Please try again later");
-      } finally {
-        setLoading(false);
-      }
+      } 
+      
     };
 
     fetchUserData();
@@ -90,6 +112,12 @@ const ProfileUpdatePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isValid=validateForm();
+    if(Object.keys(isValid).length>0){
+      setErrors(isValid);
+      return;
+    }
+    setLoading(true);
     try {
       const token = Cookies.get("token");
       const userId = Cookies.get("userId");
@@ -132,6 +160,8 @@ const ProfileUpdatePage = () => {
     } catch (error) {
       console.log("Update error:", error);
       toast.error(error.response.data.message || "Something went wrong while updating the profile.");
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -232,6 +262,7 @@ const ProfileUpdatePage = () => {
                   required
                 />
               </div>
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             {/* Email Field (non-editable) */}
@@ -264,7 +295,7 @@ const ProfileUpdatePage = () => {
               <div className="flex items-center justify-center space-x-2">
                 {loading ? (
                   <>
-                    <p className="text-white text-sm">Please wait...</p>
+                    <p className="text-white text-sm">Please wait</p>
                     <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                   </>
                 ) : (

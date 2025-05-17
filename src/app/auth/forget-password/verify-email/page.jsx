@@ -10,10 +10,29 @@ const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [errors,setErrors]=useState({});
+
+  const validateForm=()=>{
+    const newError={};
+    if(email.trim() === ""){
+      newError.email="Please provide an email. Email is not empty";
+    }
+    else if(typeof email !== "string"){
+      newError.email="Please provide an email that must be in a valid format";
+    }
+    else if(!email.includes("@")){
+      newError.email="Please provide an email that must be in a valid format";
+    }
+    return newError;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const isValid = validateForm();
+    if (Object.keys(isValid).length > 0) {
+      setErrors(isValid);
+      return; 
+    }
     if (!email) {
       toast.error("Email is required.");
       return;
@@ -34,14 +53,14 @@ const Page = () => {
 
       if (response.status === 200) {
         toast.success(response.data.message || "Email sent successfully.");
-        setLoading(false);
+        // setLoading(false);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
       } else {
         toast.error(response.data.message || "Failed to send email. Please try again.");
-        setLoading(false);
+        // setLoading(false);
       }
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
       console.error("Error sending email:", error);
       toast.error(
         error.response?.data?.message ||
@@ -126,6 +145,9 @@ const Page = () => {
                   required
                 />
               </div>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
 
             <button
@@ -138,7 +160,7 @@ const Page = () => {
             >
               {loading ? (<>
                     <div className="flex justify-center items-center gap-3">
-                      <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">Please wait...</p>
+                      <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">Please wait</p>
                       <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                     </div>
                     </>) :(
