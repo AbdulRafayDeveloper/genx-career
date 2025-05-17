@@ -243,7 +243,7 @@ const Contact = () => {
                     <div className="flex items-center justify-center space-x-4">
                       {loading ? (
                         <>
-                          <p className="text-white text-lg font-semibold">Please wait...</p>
+                          <p className="text-white text-lg font-semibold">Please wait</p>
                           <span className="animate-spin inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full"></span>
                         </>
                       ) : (
