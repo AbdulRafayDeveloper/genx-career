@@ -67,7 +67,7 @@ export default function SettingForm() {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
-        toast.error(error.message || "Profile Information not found currently. Please try again later");
+        toast.error(error.response.data.message || "Profile Information not found currently. Please try again later");
       } finally {
         setLoading(false);
       }
@@ -132,8 +132,8 @@ export default function SettingForm() {
       }
     } catch (error) {
       console.log("Update error:", error);
-      toast.error(error.message || "Something went wrong while updating the profile.");
-    }finally{
+      toast.error(error.response.data.message || "Something went wrong while updating the profile.");
+    } finally {
       setLoading(false);
     }
   };
@@ -157,7 +157,7 @@ export default function SettingForm() {
         <div className="p-2 w-full">
           <div className="flex items-center justify-between">
             {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar/>
+            <LeftSideBar />
 
             {/* Title */}
             <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">

@@ -30,7 +30,7 @@ export default function ApplianceForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+
         const token = Cookies.get("token");
         if (!token) {
             console.log("Token not found");
@@ -60,6 +60,14 @@ export default function ApplianceForm() {
             return;
         }
 
+        const allowedTemplates = ["template1", "template2", "template3"];
+
+        if (!allowedTemplates.includes(selectedTemplate)) {
+            toast.error("Invalid template selected.");
+            return;
+        }
+
+        setLoading(true);
         const formData = new FormData();
         formData.append("name", selectedTemplate);
         formData.append("template", file);
@@ -111,21 +119,21 @@ export default function ApplianceForm() {
             />
             <div className="overflow-y-auto scrollbar-hidden">
                 <div className="p-2 w-full">
-          <div className="flex items-center justify-between">
-            {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar/>
+                    <div className="flex items-center justify-between">
+                        {/* Mobile: Show sidebar toggle */}
+                        <LeftSideBar />
 
-            {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-              Welcome Back!
-            </p>
+                        {/* Title */}
+                        <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                            Welcome Back!
+                        </p>
 
-            {/* Header component */}
-            <div className="ml-auto">
-              <Header appear={true} />
-            </div>
-          </div>
-        </div>
+                        {/* Header component */}
+                        <div className="ml-auto">
+                            <Header appear={true} />
+                        </div>
+                    </div>
+                </div>
 
                 {/* Main Content */}
                 <div className="lg:ml-64 md:ml-64 sm:ml-0 flex flex-col flex-grow h-screen overflow-hidden">

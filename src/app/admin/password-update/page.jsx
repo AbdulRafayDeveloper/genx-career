@@ -99,6 +99,7 @@ export default function ApplianceForm() {
       const updateData = {
         password: formData.password,
         newPassword: formData.newPassword,
+        confirmNewPassword: formData.confirmPassword
       };
 
       console.log("Form data:", updateData);

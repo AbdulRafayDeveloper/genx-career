@@ -68,7 +68,7 @@ const ProfileUpdatePage = () => {
       } catch (error) {
         console.log("Error fetching user data:", error);
         toast.error(error.message || "Profile Information not found currently. Please try again later");
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -99,12 +99,17 @@ const ProfileUpdatePage = () => {
       updateData.append("name", formData.name);
       if (imageFile) updateData.append("profileImage", imageFile);
 
-      console.log("Update data:", updateData);
-      console.log("Update data name:", formData.name);
-      console.log("Update data image:", imageFile);
+      // console.log("Update data:", updateData);
+      // console.log("Update data name:", formData.name);
+      // console.log("Update data image:", imageFile);
 
-      console.log("Profile Token:", token);
-      console.log("Profile User ID:", userId);
+      // console.log("Profile Token:", token);
+      // console.log("Profile User ID:", userId);
+
+      for (let [key, value] of updateData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
 
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/user-profile-update/${userId}`,
@@ -126,7 +131,7 @@ const ProfileUpdatePage = () => {
       }
     } catch (error) {
       console.log("Update error:", error);
-      toast.error(error.message || "Something went wrong while updating the profile.");
+      toast.error(error.response.data.message || "Something went wrong while updating the profile.");
     }
   };
 

@@ -86,15 +86,24 @@ const Page = () => {
       // const updateData = new FormData();
       // updateData.append("password", formData.password);
       // updateData.append("newPassword", formData.newPassword);
+      
 
       const updateData = {
         password: formData.password,
         newPassword: formData.newPassword,
+        confirmNewPassword: formData.confirmNewPassword
       };
 
+      // console all values of updateData
+
       console.log("Form data:", updateData);
-      console.log("Token:", token);
-      console.log("User ID:", userId);
+      console.log("Form data:", updateData.password);
+      console.log("Form data:", updateData.newPassword);
+      console.log("Form data:", updateData.confirmNewPassword);
+
+      // console.log("Form data:", updateData);
+      // console.log("Token:", token);
+      // console.log("User ID:", userId);
       // console.log("Form data:", updateData.get("password"));
       // console.log("Form data:", updateData.get("newPassword"));
 

@@ -22,7 +22,7 @@ export default function ApplianceForm() {
     const [selectedTemplate, setSelectedTemplate] = useState("");
     const [file, setFile] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [loading,setLoading]=useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -73,7 +73,7 @@ export default function ApplianceForm() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        
+
         const token = Cookies.get("token");
         if (!token) {
             console.log("Token not found");
@@ -100,6 +100,13 @@ export default function ApplianceForm() {
 
         if (!selectedTemplate) {
             toast.error("Please select a template.");
+            return;
+        }
+
+        const allowedTemplates = ["template1", "template2", "template3"];
+
+        if (!allowedTemplates.includes(selectedTemplate)) {
+            toast.error("Invalid template selected.");
             return;
         }
 
