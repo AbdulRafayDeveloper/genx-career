@@ -76,7 +76,6 @@ export default function ApplianceForm() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
         const token = Cookies.get("token");
         if (!token) {
@@ -121,6 +120,8 @@ export default function ApplianceForm() {
         console.log("Form Data:", formData.get("name"), formData.get("file"));
         console.log("Token:", token);
 
+        setLoading(true);
+
         try {
             const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${id}`, formData, {
                 headers: {
@@ -138,11 +139,8 @@ export default function ApplianceForm() {
                 toast.error(res.data.message || "An error occurred. Please try again.");
             }
         } catch (err) {
-            if (err.response) {
-                toast.error(err.response.data.message);
-            } else {
-                toast.error("An error occurred. Please try again.");
-            }
+            toast.error(err.response?.data?.message || "An error occurred. Please try again.");
+            console.log("Error:", err);
         } finally {
             setLoading(false);
         }

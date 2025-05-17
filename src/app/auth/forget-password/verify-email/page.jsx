@@ -61,7 +61,7 @@ const Page = () => {
       }
     } catch (error) {
       // setLoading(false);
-      console.error("Error sending email:", error);
+      console.log("Error sending email:", error);
       toast.error(
         error.response?.data?.message ||
         "An error occurred. Please try again."

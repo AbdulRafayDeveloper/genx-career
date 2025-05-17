@@ -88,8 +88,11 @@ const Page = () => {
     const userId = Cookies.get("userId");
 
     if (!token) {
-      console.log("Token not found");
-      return;
+      toast.error("You need to login again.");
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 2500);
     }
 
     try {
@@ -133,6 +136,12 @@ const Page = () => {
         toast.error("Error updating password: " + response.data.message);
       } else {
         toast.success("Password updated successfully");
+        // empty the form
+        setFormData({
+          password: "",
+          newPassword: "",
+          confirmNewPassword: "",
+        });
         setTimeout(() => {
           router.push("/jobs");
         }, 2500);

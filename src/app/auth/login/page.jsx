@@ -76,7 +76,7 @@ const Page = () => {
         toast.error(response.data.message || "Something went wrong.");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.log("Login error:", error);
       toast.error(
         error.response?.data?.message || "Something went wrong."
       );

@@ -54,12 +54,9 @@ const NewPassword = () => {
         if (formData.confirmNewPassword == "") {
             newError.confirmNewPassword = "Confirm Password is required"
         } else if (formData.newPassword !== formData.confirmNewPassword) {
-            newError.confirmNewPassword = "Confirm Password should not be same as New Password"
+            newError.confirmNewPassword = "Confirm Password must be same as New Password"
         }
         return newError;
-
-
-
     };
 
     const handleSubmit = async (e) => {
@@ -259,7 +256,6 @@ const NewPassword = () => {
                                                 <>
                                                     <p className="text-white text-lg">Please wait</p>
                                                     <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
-
                                                 </>
                                             ) : (
                                                 <>

@@ -26,7 +26,7 @@ const VerifyOtpPage = () => {
                 setEmail(payload.email);
                 console.log("Email from token:", payload.email);
             } catch (err) {
-                console.error("JWT Verify error:", err);
+                console.log("JWT Verify error:", err);
                 toast.error("Invalid or expired token.");
             }
         };

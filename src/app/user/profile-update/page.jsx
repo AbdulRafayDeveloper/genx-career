@@ -257,7 +257,8 @@ const ProfileUpdatePage = () => {
                   placeholder="Enter your name"
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  // onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={handleChange}
                   className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-md border border-purple-700 outline-none text-sm"
                   required
                 />

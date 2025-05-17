@@ -40,7 +40,7 @@ const VerifyEmail = () => {
                     toast.error(res.data.message || "Verification failed.");
                 }
             } catch (err) {
-                console.error("Verification error:", err);
+                console.log("Verification error:", err);
                 toast.error(err.response?.data?.message || "Something went wrong!");
             } finally {
                 setLoading(false);
