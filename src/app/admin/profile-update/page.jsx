@@ -112,18 +112,22 @@ export default function SettingForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const isValid = validateForm();
     if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
+      setLoading(false);
       return;
     }
-    setLoading(true);
+
     try {
       const token = Cookies.get("token");
       const userId = Cookies.get("userId");
       if (!token) {
         console.log("Token not found");
         toast.error("You are not authorized to perform this action.");
+        setLoading(false);
         setTimeout(() => {
           router.push("/auth/login");
         }, 500);
@@ -153,11 +157,14 @@ export default function SettingForm() {
 
       if (response.status === 200) {
         toast.success(response.data.message || "Profile updated successfully!");
+        setLoading(false);
       } else {
         toast.error(response.data.message || "Failed to update profile.");
+        setLoading(false);
       }
     } catch (error) {
       console.log("Update error:", error);
+      setLoading(false);
       toast.error(error.response.data.message || "Something went wrong while updating the profile.");
     } finally {
       setLoading(false);

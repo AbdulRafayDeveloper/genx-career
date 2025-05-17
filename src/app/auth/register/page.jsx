@@ -114,10 +114,13 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     // validate before sending
     const formErrors = validateForm(formData);
     if (Object.keys(formErrors).length) {
       setErrors(formErrors);
+      setLoading(false);
       return;
     }
 
@@ -132,8 +135,7 @@ const Page = () => {
       email: formData.email,
       password: formData.password,
     };
-
-    setLoading(true);
+    
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,

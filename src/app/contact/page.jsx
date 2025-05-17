@@ -26,7 +26,9 @@ const Contact = () => {
       email: e.target.email.value,
       message: e.target.message.value,
     };
+
     const validationErrors = validateForm(formData);
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setLoading(false);
@@ -61,6 +63,7 @@ const Contact = () => {
         title: "Error!",
         text: error.response?.data?.message || "Something went wrong!",
       });
+      setLoading(false);
     } finally {
       setLoading(false);
     }

@@ -28,17 +28,20 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const isValid = validateForm();
     if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
-      return;
-    }
-    if (!email) {
-      toast.error("Email is required.");
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
+    if (!email) {
+      toast.error("Email is required.");
+      setLoading(false);
+      return;
+    }    
 
     try {
       const response = await axios.post(

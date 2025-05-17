@@ -93,13 +93,14 @@ const VerifyOtpPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
         const enteredOtp = otp.join("");
         if (enteredOtp.length !== 6) {
             toast.error("Please enter the complete 6-digit OTP.");
+            setLoading(false);
             return;
         }
-
-        setLoading(true);
 
         try {
             const response = await axios.post(

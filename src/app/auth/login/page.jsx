@@ -47,15 +47,17 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     // validate before sending
     const formErrors = validateForm(formData);
     if (Object.keys(formErrors).length) {
       setErrors(formErrors);
+      toast.error("Please fix the errors in the form.");
+      setLoading(false);
       return;
     }
-
-    setLoading(true);
+    
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
@@ -74,12 +76,14 @@ const Page = () => {
         }
       } else {
         toast.error(response.data.message || "Something went wrong.");
+        setLoading(false);
       }
     } catch (error) {
       console.log("Login error:", error);
       toast.error(
         error.response?.data?.message || "Something went wrong."
       );
+      setLoading(false);
     } finally {
       setLoading(false);
     }

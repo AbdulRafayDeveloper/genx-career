@@ -112,12 +112,15 @@ const ProfileUpdatePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const isValid = validateForm();
     if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
+      setLoading(false);
       return;
     }
-    setLoading(true);
+    
     try {
       const token = Cookies.get("token");
       const userId = Cookies.get("userId");
