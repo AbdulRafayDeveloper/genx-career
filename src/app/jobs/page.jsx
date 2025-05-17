@@ -22,7 +22,8 @@ const Page = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   // mobile view
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  // const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
   const [showJobDetail, setShowJobDetail] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -259,14 +260,26 @@ const Page = () => {
   }, []);
 
   // 
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth <= 768);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+
+    handleResize(); // set initial value
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
+
   return (
     <>
       {/* <ToastContainer></ToastContainer> */}
@@ -286,7 +299,7 @@ const Page = () => {
             isCheckingAuth={isCheckingAuth}
             setIsCheckingAuth={setIsCheckingAuth}
           />
-          
+
           <div className="flex flex-col justify-center items-center">
             <div className="w-screen flex justify-center mt-24">
               <form
@@ -370,188 +383,187 @@ const Page = () => {
 
           {/* Job Listing Section */}
           <div className="flex flex-col lg:flex-row xl:h-screen lg:h-screen min-h-screen w-screen mt-6">
-      {/* Left Column: Filters + Job List */}
-      <div className="flex-grow lg:w-1/3 max-h-[800px] overflow-y-auto scrollbar-hidden px-4">
-        {/* Filters */}
-        <div className="flex flex-wrap justify-start gap-2 pb-6">
-          <button className="px-3 py-2 border rounded-full text-black bg-purple-300 shadow hover:bg-purple-100 flex items-center gap-2">
-            <FontAwesomeIcon icon={faSliders} />
-          </button>
-          {["Remote only", "Salary Range", "Date Posted"].map((filter) => (
-            <button
-              key={filter}
-              onClick={
-                filter === "Remote only"
-                  ? () =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        remote: !prev.remote,
-                      }))
-                  : filter === "Salary Range"
-                  ? toggleModal
-                  : toggleModalCalender
-              }
-              className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${
-                filter === "Remote only" && formData.remote
-                  ? "bg-purple-500 text-white"
-                  : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
+            {/* Left Column: Filters + Job List */}
+            <div className="flex-grow lg:w-1/3 max-h-[800px] overflow-y-auto scrollbar-hidden px-4">
+              {/* Filters */}
+              <div className="flex flex-wrap justify-start gap-2 pb-6">
+                <button className="px-3 py-2 border rounded-full text-black bg-purple-300 shadow hover:bg-purple-100 flex items-center gap-2">
+                  <FontAwesomeIcon icon={faSliders} />
+                </button>
+                {["Remote only", "Salary Range", "Date Posted"].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={
+                      filter === "Remote only"
+                        ? () =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            remote: !prev.remote,
+                          }))
+                        : filter === "Salary Range"
+                          ? toggleModal
+                          : toggleModalCalender
+                    }
+                    className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
+                        ? "bg-purple-500 text-white"
+                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                      }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
 
-        {/* Loader */}
-        {loading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-          <div className="flex flex-col text-lg justify-center items-center">
-            <svg
-              aria-hidden="true"
-              role="status"
-              className="inline w-8 h-8 text-purple-600 animate-spin "
-              viewBox="0 0 100 101"
-              fill="#7D0A0A"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                fill="CurrentColor"
-              />
-            </svg>
-            <p className="mt-4 text-lg text-purple-600">Loading</p>
-          </div>
-        </div>
-        )}
+              {/* Loader */}
+              {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+                  <div className="flex flex-col text-lg justify-center items-center">
+                    <svg
+                      aria-hidden="true"
+                      role="status"
+                      className="inline w-8 h-8 text-purple-600 animate-spin "
+                      viewBox="0 0 100 101"
+                      fill="#7D0A0A"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                        fill="CurrentColor"
+                      />
+                    </svg>
+                    <p className="mt-4 text-lg text-purple-600">Loading</p>
+                  </div>
+                </div>
+              )}
 
-        <p className="pb-2 text-gray-800">{jobsPost.length} jobs fetched</p>
+              <p className="pb-2 text-gray-800">{jobsPost.length} jobs fetched</p>
 
-        {/* Job Cards (with mobile accordion) */}
-        {jobsPost.map((job) => (
-          <React.Fragment key={job._id}>
-            <div
-              onClick={() =>
-                setSelectedJob(selectedJob === job ? null : job)
-              }
-              className="p-4 mb-2 bg-white bg-opacity-80 rounded-lg cursor-pointer hover:shadow-lg transition"
-            >
-              <p className="text-gray-600">{job.companyName}</p>
-              <h3 className="font-semibold text-lg">{job.title}</h3>
-              <p className="text-gray-600">
-                {job.hybrid ? "Hybrid" : job.remote ? "Remote" : "On-site"}
-              </p>
-              <p className="text-gray-600">{job.salary}</p>
+              {/* Job Cards (with mobile accordion) */}
+              {jobsPost.map((job) => (
+                <React.Fragment key={job._id}>
+                  <div
+                    onClick={() =>
+                      setSelectedJob(selectedJob === job ? null : job)
+                    }
+                    className="p-4 mb-2 bg-white bg-opacity-80 rounded-lg cursor-pointer hover:shadow-lg transition"
+                  >
+                    <p className="text-gray-600">{job.companyName}</p>
+                    <h3 className="font-semibold text-lg">{job.title}</h3>
+                    <p className="text-gray-600">
+                      {job.hybrid ? "Hybrid" : job.remote ? "Remote" : "On-site"}
+                    </p>
+                    <p className="text-gray-600">{job.salary}</p>
+                  </div>
+
+                  {/* Mobile-only inline detail */}
+                  {isMobile && selectedJob === job && (
+                    <div className="mb-4 p-4 bg-gray-100 rounded-lg shadow-inner">
+                      <h4 className="font-bold text-xl mb-2">{job.title}</h4>
+                      <p className="text-gray-700 mb-2 text-[8px]">{job.description}</p>
+                      <div className="flex gap-1">
+                        <button
+                          className="mt-2 px-4 py-2 bg-white text-black rounded-full"
+                          onClick={() => {
+                            setMatchJob(selectedJob._id);
+                            toggleMatch();
+                          }}
+                        >
+                          Match CV
+                        </button>
+                        <Link href={job.applyUrl} target="_blank" rel="noopener">
+                          <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full">
+                            Easy Apply
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+
+              {jobsPost.length === 0 && (
+                <p className="text-gray-800">No jobs found</p>
+              )}
+
+              {shouldShowLoadMore && (
+                <button
+                  onClick={() => setPageNumber((p) => p + 1)}
+                  className="flex items-center justify-center w-full h-10 mt-4 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
+                >
+                  Load More Jobs
+                </button>
+              )}
             </div>
 
-            {/* Mobile-only inline detail */}
-            {isMobile && selectedJob === job && (
-              <div className="mb-4 p-4 bg-gray-100 rounded-lg shadow-inner">
-                <h4 className="font-bold text-xl mb-2">{job.title}</h4>
-                <p className="text-gray-700 mb-2 text-[8px]">{job.description}</p>
-                <div className="flex gap-1">
-                <button
-                    className="mt-2 px-4 py-2 bg-white text-black rounded-full"
+            {/* Right Column: Job Detail (only on tablet+ screens) */}
+            {(selectedJob && (!isMobile || showJobDetail)) && (
+              <div className="flex-grow lg:w-2/3 overflow-y-auto border rounded-lg p-4 shadow bg-white bg-opacity-80 pr-12 pb-12 scrollbar-hidden">
+
+                {/* Back button for mobile */}
+                {isMobile && (
+                  <button
                     onClick={() => {
-                      setMatchJob(selectedJob._id);
-                      toggleMatch();
+                      setShowJobDetail(false);
+                      setSelectedJob(null);
                     }}
+                    className="mb-4 text-purple-500 underline"
                   >
-                    Match CV
+                    ← Back to Jobs
                   </button>
-                <Link href={job.applyUrl} target="_blank" rel="noopener">
-                  <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full">
-                    Easy Apply
-                  </button>
-                </Link>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <h2 className="font-bold xl:text-xl text-md">
+                    {selectedJob.title}
+                  </h2>
+                  <div className="flex justify-end gap-4">
+                    <button
+                      className="px-4 py-2 border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
+                      onClick={() => {
+                        setMatchJob(selectedJob._id);
+                        toggleMatch();
+                      }}
+                    >
+                      Match CV
+                    </button>
+                    <Link
+                      href={selectedJob.applyUrl}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <button className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900">
+                        Easy Apply
+                      </button>
+                    </Link>
+                  </div>
                 </div>
+
+                <div className="flex items-center mb-4">
+                  <img
+                    src={selectedJob.companyLogoLink}
+                    alt={selectedJob.companyName}
+                    className="w-12 h-12 rounded-full mr-4"
+                  />
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {selectedJob.companyName}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {selectedJob.location}, {selectedJob.country}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 mb-4">Salary: {selectedJob.salary}</p>
+                <p className="text-gray-800">{selectedJob.description}</p>
               </div>
             )}
-          </React.Fragment>
-        ))}
 
-        {jobsPost.length === 0 && (
-          <p className="text-gray-800">No jobs found</p>
-        )}
-
-        {shouldShowLoadMore && (
-          <button
-            onClick={() => setPageNumber((p) => p + 1)}
-            className="flex items-center justify-center w-full h-10 mt-4 text-sm border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
-          >
-            Load More Jobs
-          </button>
-        )}
-      </div>
-
-      {/* Right Column: Job Detail (only on tablet+ screens) */}
-{(selectedJob && (!isMobile || showJobDetail)) && (
-        <div className="flex-grow lg:w-2/3 overflow-y-auto border rounded-lg p-4 shadow bg-white bg-opacity-80 pr-12 pb-12 scrollbar-hidden">
-
-          {/* Back button for mobile */}
-          {isMobile && (
-            <button
-              onClick={() => {
-                setShowJobDetail(false);
-                setSelectedJob(null);
-              }}
-              className="mb-4 text-purple-500 underline"
-            >
-              ← Back to Jobs
-            </button>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <h2 className="font-bold xl:text-xl text-md">
-              {selectedJob.title}
-            </h2>
-            <div className="flex justify-end gap-4">
-              <button
-                className="px-4 py-2 border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
-                onClick={() => {
-                  setMatchJob(selectedJob._id);
-                  toggleMatch();
-                }}
-              >
-                Match CV
-              </button>
-              <Link
-                href={selectedJob.applyUrl}
-                target="_blank"
-                rel="noopener"
-              >
-                <button className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900">
-                  Easy Apply
-                </button>
-              </Link>
-            </div>
           </div>
-
-          <div className="flex items-center mb-4">
-            <img
-              src={selectedJob.companyLogoLink}
-              alt={selectedJob.companyName}
-              className="w-12 h-12 rounded-full mr-4"
-            />
-            <div>
-              <p className="font-semibold text-gray-800">
-                {selectedJob.companyName}
-              </p>
-              <p className="text-sm text-gray-500">
-                {selectedJob.location}, {selectedJob.country}
-              </p>
-            </div>
-          </div>
-
-          <p className="text-gray-600 mb-4">Salary: {selectedJob.salary}</p>
-          <p className="text-gray-800">{selectedJob.description}</p>
-        </div>
-      )}
-
-    </div>
         </div>
         {isModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -804,7 +816,7 @@ const Page = () => {
         )}
 
         <div className="mt-4">
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>
