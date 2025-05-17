@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 
+
 export async function generateMetadata() {
     try {
         const res = await axios.get(
