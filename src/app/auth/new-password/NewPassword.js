@@ -61,16 +61,15 @@ const NewPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        
         const isValid = validateForm();
         if (Object.keys(isValid).length > 0) {
             setErrors(isValid);
+            setLoading(false);
             return;
         }
         setErrors({}); // Clear previous errors
-
-        // if (!validateForm()) return;
-
-        setLoading(true);
 
         try {
             const response = await axios.post(

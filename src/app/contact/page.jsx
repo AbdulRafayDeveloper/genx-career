@@ -52,6 +52,7 @@ const Contact = () => {
           text: response.data.message,
         });
         e.target.reset();
+        setLoading(false);
       }
     } catch (error) {
       console.log("error: ", error);
@@ -104,8 +105,6 @@ const Contact = () => {
 
     return newErrors;
   };
-
-
 
   return (
     <div className="relative">

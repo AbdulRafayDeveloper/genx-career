@@ -71,6 +71,7 @@ export default function ApplianceForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     let tempErrors = {
       newPassword: validatePassword(formData.newPassword),
@@ -80,6 +81,7 @@ export default function ApplianceForm() {
 
     if (Object.values(tempErrors).some((error) => error)) {
       toast.error("Please fix the errors before submitting.");
+      setLoading(false);
       return;
     }
 
@@ -88,16 +90,13 @@ export default function ApplianceForm() {
 
     if (!token) {
       console.log("Token not found");
+      toast.error("Token not found. Please log in again.");
+      router.push("/auth/login");
+      setLoading(false);
       return;
     }
 
     try {
-      // const updateData = new FormData();
-      // updateData.append("password", formData.password);
-      // updateData.append("newPassword", formData.newPassword);
-
-      setLoading(true);
-
       const updateData = {
         password: formData.password,
         newPassword: formData.newPassword,

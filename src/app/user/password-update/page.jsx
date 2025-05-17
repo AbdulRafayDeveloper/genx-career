@@ -74,15 +74,17 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     // if (!validateForm()) return;
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setLoading(false);
       return;
     }
+    
     setErrors({});
-    setLoading(true);
 
     const token = Cookies.get("token");
     const userId = Cookies.get("userId");

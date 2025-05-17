@@ -76,10 +76,12 @@ export default function ApplianceForm() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const token = Cookies.get("token");
         if (!token) {
             console.log("Token not found");
+            setLoading(false);
             toast.error("Please login again.");
             router.push("/auth/login");
             return;
@@ -87,6 +89,7 @@ export default function ApplianceForm() {
 
         if (!file) {
             toast.error("Please upload a file.");
+            setLoading(false);
             return;
         }
 
@@ -98,11 +101,13 @@ export default function ApplianceForm() {
         if (!allowedExtensions.includes(fileExtension)) {
             toast.error("Please upload a image file of type jpg, jpeg or png.");
             setFile(null);
+            setLoading(false);
             return;
         }
 
         if (!selectedTemplate) {
             toast.error("Please select a template.");
+            setLoading(false);
             return;
         }
 
@@ -110,6 +115,7 @@ export default function ApplianceForm() {
 
         if (!allowedTemplates.includes(selectedTemplate)) {
             toast.error("Invalid template selected.");
+            setLoading(false);
             return;
         }
 
@@ -119,8 +125,6 @@ export default function ApplianceForm() {
 
         console.log("Form Data:", formData.get("name"), formData.get("file"));
         console.log("Token:", token);
-
-        setLoading(true);
 
         try {
             const res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${id}`, formData, {

@@ -120,7 +120,6 @@ const Page = () => {
       setErrors(formErrors);
       return;
     }
-    setLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
       toast.error("Password and Confirm Password do not match.");
@@ -134,6 +133,7 @@ const Page = () => {
       password: formData.password,
     };
 
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,

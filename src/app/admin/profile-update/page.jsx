@@ -4,13 +4,14 @@ import LeftSideBar from "../components/sidebar";
 import Header from "../components/header";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { useParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SettingForm() {
+  const router = useRouter();
   const sidebarRef = useRef(null);
   const buttonRef = useRef(null);
   // const { id } = useParams();
@@ -26,12 +27,12 @@ export default function SettingForm() {
   });
 
   const validateForm = () => {
-    const newError = {};  
-    if(formData.name.trim() === "") {
+    const newError = {};
+    if (formData.name.trim() === "") {
       newError.name = "Name is required";
-    }else if(formData.name.length < 2) {
-      newError.name = "Name must be at least 2 characters"; 
-    }else if(formData.name.length > 35) {
+    } else if (formData.name.length < 2) {
+      newError.name = "Name must be at least 2 characters";
+    } else if (formData.name.length > 35) {
       newError.name = "Name must be less than 35 characters";
     }
     return newError;
@@ -114,13 +115,20 @@ export default function SettingForm() {
     const isValid = validateForm();
     if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
-      return; 
+      return;
     }
     setLoading(true);
     try {
       const token = Cookies.get("token");
       const userId = Cookies.get("userId");
-      if (!token) return toast.error("Token not found");
+      if (!token) {
+        console.log("Token not found");
+        toast.error("You are not authorized to perform this action.");
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 500);
+        return;
+      }
 
       const updateData = new FormData();
       updateData.append("name", formData.name);
