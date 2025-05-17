@@ -26,7 +26,6 @@ export default function ApplianceForm() {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            setLoading(true);
             try {
                 const token = Cookies.get("token");
 
@@ -58,8 +57,6 @@ export default function ApplianceForm() {
             } catch (error) {
                 console.log("Error fetching user data:", error);
                 toast.error(error.message || "Profile Information not found currently. Please try again later");
-            }finally{
-                setLoading(false);
             }
         };
 
@@ -76,7 +73,6 @@ export default function ApplianceForm() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
         const token = Cookies.get("token");
         if (!token) {
@@ -143,8 +139,6 @@ export default function ApplianceForm() {
             } else {
                 toast.error("An error occurred. Please try again.");
             }
-        }finally{
-            setLoading(false);
         }
     };
 

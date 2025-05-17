@@ -35,7 +35,7 @@ export default function ApplianceForm() {
 
   const validatePassword = (password) => {
     if (!password) return "Password is required";
-    if (password.length < 8) return "Password must be at least 8 characters";
+    if (password.length < 6) return "Password must be at least 6 characters";
     if (!/[A-Z]/.test(password))
       return "Password must contain at least one uppercase letter";
     if (!/[a-z]/.test(password))
@@ -183,11 +183,11 @@ export default function ApplianceForm() {
         <div className="p-2 w-full">
           <div className="flex items-center justify-between">
             {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar />
+            <LeftSideBar/>
 
             {/* Title */}
             <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-              Welcome Back!
+             Welcome Back!
             </p>
 
             {/* Header component */}
@@ -203,228 +203,163 @@ export default function ApplianceForm() {
           {/* <Header /> */}
           {/* Scrollable Content Area */}
           <main className="flex items-center justify-center min-h-screen bg-white p-4">
-            <div className="w-full max-w-lg bg-gray-50 rounded-xl shadow-lg overflow-hidden">
-              <div className="p-2 sm:p-6 lg:p-8">
-                <h1 className="text-2xl sm:text-3xl font-bold text-center text-purple-600 mb-6">
-                  Update Password
-                </h1>
-                <form
-                  className="space-y-6"
-                  onSubmit={handleSubmit}
+  <div className="w-full max-w-md bg-gray-50 rounded-xl shadow-lg overflow-hidden">
+    <div className="p-2 sm:p-6 lg:p-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-purple-600 mb-6">
+        Update Password
+      </h1>
+      <form
+        className="space-y-6"
+        onSubmit={handleSubmit}
+      >
+        {/* Current Password */}
+        <div className="relative">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            Current Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
+            placeholder="••••••••"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
+          >
+            {showPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="size-5 fill-purple-400 ">
+                          <path d="M0 208C0 104.4 75.7 18.5 174.9 2.6C184 1.2 192 8.6 192 17.9l0 63.3c0 8.4 6.5 15.3 14.7 16.5C307 112.5 384 199 384 303.4c0 103.6-75.7 189.5-174.9 205.4c-9.2 1.5-17.1-5.9-17.1-15.2l0-63.3c0-8.4-6.5-15.3-14.7-16.5C77 398.9 0 312.4 0 208zm288 48A96 96 0 1 0 96 256a96 96 0 1 0 192 0zm-96-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                       ): (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" className="size-5 fill-purple-400 ">
+                          <path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223 149.5c48.6-44.3 123-50.8 179.3-11.7c60.8 42.4 78.9 123.2 44.2 186.9L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3L223 149.5zm223.1 298L83.1 161.5c-11 14.4-20.5 28.7-28.4 42.2l339 265.7c18.7-5.5 36.2-13 52.6-21.8zM34.5 268.3c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c3.1 0 6.1-.1 9.2-.2L33.1 247.8c-1.8 6.8-1.3 14 1.4 20.5z"/></svg>
+                      )}
+          </button>
+          {errors.password && (
+            <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+          )}
+        </div>
+
+        {/* New Password */}
+        <div className="relative">
+          <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            New Password
+          </label>
+          <input
+            id="newPassword"
+            name="newPassword"
+            type={showNewPassword ? "text" : "password"}
+            className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
+            placeholder="••••••••"
+            value={formData.newPassword}
+            onChange={handleChange}
+          />
+          <button
+            type="button"
+            onClick={() => setShowNewPassword(!showNewPassword)}
+            className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
+          >
+            {showNewPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="size-5 fill-purple-400 ">
+                          <path d="M0 208C0 104.4 75.7 18.5 174.9 2.6C184 1.2 192 8.6 192 17.9l0 63.3c0 8.4 6.5 15.3 14.7 16.5C307 112.5 384 199 384 303.4c0 103.6-75.7 189.5-174.9 205.4c-9.2 1.5-17.1-5.9-17.1-15.2l0-63.3c0-8.4-6.5-15.3-14.7-16.5C77 398.9 0 312.4 0 208zm288 48A96 96 0 1 0 96 256a96 96 0 1 0 192 0zm-96-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                       ): (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" className="size-5 fill-purple-400 ">
+                          <path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223 149.5c48.6-44.3 123-50.8 179.3-11.7c60.8 42.4 78.9 123.2 44.2 186.9L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3L223 149.5zm223.1 298L83.1 161.5c-11 14.4-20.5 28.7-28.4 42.2l339 265.7c18.7-5.5 36.2-13 52.6-21.8zM34.5 268.3c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c3.1 0 6.1-.1 9.2-.2L33.1 247.8c-1.8 6.8-1.3 14 1.4 20.5z"/></svg>
+                      )}
+          </button>
+          {errors.newPassword && (
+            <p className="mt-1 text-xs text-red-500">{errors.newPassword}</p>
+          )}
+        </div>
+
+        {/* Confirm Password */}
+        <div className="relative">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            Confirm Password
+          </label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
+            placeholder="••••••••"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
+          >
+            {showConfirmPassword ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="size-5 fill-purple-400 ">
+                          <path d="M0 208C0 104.4 75.7 18.5 174.9 2.6C184 1.2 192 8.6 192 17.9l0 63.3c0 8.4 6.5 15.3 14.7 16.5C307 112.5 384 199 384 303.4c0 103.6-75.7 189.5-174.9 205.4c-9.2 1.5-17.1-5.9-17.1-15.2l0-63.3c0-8.4-6.5-15.3-14.7-16.5C77 398.9 0 312.4 0 208zm288 48A96 96 0 1 0 96 256a96 96 0 1 0 192 0zm-96-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                       ): (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" className="size-5 fill-purple-400 ">
+                          <path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223 149.5c48.6-44.3 123-50.8 179.3-11.7c60.8 42.4 78.9 123.2 44.2 186.9L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3L223 149.5zm223.1 298L83.1 161.5c-11 14.4-20.5 28.7-28.4 42.2l339 265.7c18.7-5.5 36.2-13 52.6-21.8zM34.5 268.3c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c3.1 0 6.1-.1 9.2-.2L33.1 247.8c-1.8 6.8-1.3 14 1.4 20.5z"/></svg>
+                      )}
+          </button>
+          {errors.confirmPassword && (
+            <p className="mt-1 text-xs text-red-500">{errors.confirmPassword}</p>
+          )}
+        </div>
+
+        {/* Submit */}
+        <div className="flex justify-end">
+          <button
+                  type="submit"
+                  className={`inline-flex items-center justify-center
+              px-6 py-2 text-sm font-medium rounded-lg
+              bg-purple-600 text-white ${loading
+                    ? "cursor-not-allowed bg-purple-300"
+                    : "hover:bg-purple-800"
+                    }`}
+                  disabled={loading}
                 >
-                  {/* Current Password */}
-                  <div className="relative">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                      Current Password
-                    </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
-                      <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
-                    </svg>
-                    <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      className="w-full pl-10 px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
+                  <div className="flex items-center justify-center space-x-4">
+                    {loading ? (
+                      <>
 
-                      value={formData.password}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
-                    >
-                      {showPassword ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5 text-gray-400"
-                      >
-                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                        <p className="text-white text-lg font-semibold">Please wait</p>
+                        <svg
+                          aria-hidden="true"
+                          role="status"
+                          className="inline size-4 text-purple-600 animate-spin "
+                          viewBox="0 0 100 101"
+                          fill="#7D0A0A"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                            fill="CurrentColor"
+                          />
+                        </svg>
+
+                      </>
                     ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="size-5"
-                      >
-                        <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                        <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                        <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                      </svg>
+                      <>
+
+                        <p className="text-white text-lg font-semibold">
+                          Update Password
+                        </p>
+                      </>
                     )}
-                    </button>
+
                   </div>
-                  {errors.password && (
-                    <p className="text-xs text-red-500">{errors.password}</p>
-                  )}
-
-                  {/* New Password */}
-                  <div className="relative">
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                      New Password
-                    </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
-                      <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
-                    </svg>
-                    <input
-                      id="newPassword"
-                      name="newPassword"
-                      type={showNewPassword ? "text" : "password"}
-                      className="w-full pl-10  px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
-
-                      value={formData.newPassword}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowNewPassword(!showNewPassword)}
-                      className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
-                    >
-                      {showNewPassword ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5 text-gray-400"
-                      >
-                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="size-5"
-                      >
-                        <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                        <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                        <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                      </svg>
-                    )}
-                    </button>
-                  </div>
-                  {errors.newPassword && (
-                    <p className="text-xs text-red-500">{errors.newPassword}</p>
-                  )}
-                  {/* Confirm Password */}
-                  <div className="relative">
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                      Confirm Password
-                    </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
-                      <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
-                    </svg>
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="w-full pl-10 px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
-
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
-                    >
-                      {showConfirmPassword ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5 text-gray-400"
-                      >
-                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="size-5"
-                      >
-                        <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                        <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                        <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                      </svg>
-                    )}
-                    </button>
-                  </div>
-                  {errors.confirmPassword && (
-                    <p className="text-xs text-red-500">{errors.confirmPassword}</p>
-                  )}
-                  {/* Submit */}
-                  <div className="flex justify-end">
-                    <button
-                      type="submit"
-                      className={`inline-flex items-center justify-center
-                          px-6 py-2 text-sm font-medium rounded-lg
-                          bg-purple-600 text-white ${loading
-                          ? "cursor-not-allowed bg-purple-300"
-                          : "hover:bg-purple-800"
-                        }`}
-                      disabled={loading}
-                    >
-                      <div className="flex items-center justify-center space-x-4">
-                        {loading ? (
-                          <>
-
-                            <p className="text-white text-lg font-semibold">Please wait</p>
-                            <svg
-                              aria-hidden="true"
-                              role="status"
-                              className="inline size-4 text-white animate-spin "
-                              viewBox="0 0 100 101"
-                              fill="white"
-                              stroke="white"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                                fill="CurrentColor"
-                              />
-                            </svg>
-
-                          </>
-                        ) : (
-                          <>
-
-                            <p className="text-white text-lg font-semibold">
-                              Update Password
-                            </p>
-                          </>
-                        )}
-
-                      </div>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </main>
+                </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
 
         </div>
       </div>

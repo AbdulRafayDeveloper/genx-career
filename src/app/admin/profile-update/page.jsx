@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useRef, useEffect } from "react";
 import LeftSideBar from "../components/sidebar";
 import Header from "../components/header";
@@ -18,24 +19,11 @@ export default function SettingForm() {
   const [imageFile, setImageFile] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     // password: "",
   });
-
-  const validateForm = () => {
-    const newError = {};  
-    if(formData.name.trim() === "") {
-      newError.name = "Name is required";
-    }else if(formData.name.length < 2) {
-      newError.name = "Name must be at least 2 characters"; 
-    }else if(formData.name.length > 35) {
-      newError.name = "Name must be less than 35 characters";
-    }
-    return newError;
-  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -98,7 +86,6 @@ export default function SettingForm() {
       ...prevData,
       [name]: value,
     }));
-    setErrors(prev => ({ ...prev, [name]: undefined }));
   };
 
   const handleImageUpload = (event) => {
@@ -111,11 +98,6 @@ export default function SettingForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isValid = validateForm();
-    if (Object.keys(isValid).length > 0) {
-      setErrors(isValid);
-      return; 
-    }
     setLoading(true);
     try {
       const token = Cookies.get("token");
@@ -250,9 +232,6 @@ export default function SettingForm() {
                       <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
                     </svg>
                   </div>
-                  {errors.name && (
-                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                  )}
                 </div>
 
                 {/* Email */}

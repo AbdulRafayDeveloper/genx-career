@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+}
+
+.text-stroke-black {
+  -webkit-text-stroke: 0.4px black;
+}
+
+/* Example: Scoped button styles */
+.scoped-container button {
+  width: 165px;
+  height: 40px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 1rem;
+  position: relative;
+  background: transparent;
+  transition: 0.1s;
+}
+
+.scoped-container button::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgb(251, 11, 239) 17.8%,
+    rgb(1, 225, 233) 100.2%
+  );
+  filter: blur(30px);
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.scoped-container button:active {
+  transform: scale(0.9) rotate(3deg);
+  background: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgb(251, 42, 240) 17.8%,
+    rgb(1, 193, 200) 100.2%
+  );
+  transition: 0.5s;
+}
+
+.feature-card {
+  @apply flex rounded-lg h-full bg-white bg-opacity-60 p-8 flex-col border shadow-lg relative transition duration-300 ease-in-out;
+  min-height: 100px;
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgb(250, 150, 245) 17.8%,
+    rgb(92, 243, 249) 100.2%
+  );
+  filter: blur(15px);
+  z-index: -1;
+  border-radius: 0.5rem;
+  opacity: 1; /* Always visible */
+}
+
+.feature-card:active {
+  transform: scale(0.97);
+}
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100px; /* Adjust height as needed */
+  background-color: rgba(
+    236,
+    236,
+    236,
+    0.5
+  ); /* Set background opacity using rgba */
+  display: flex;
+  align-items: center; /* Vertically center items */
+}
+
+.marquee {
+  display: flex;
+  animation: scroll 10s linear infinite; /* Adjust duration for scroll speed */
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  margin: 0 5px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* Scroll entire content width */
+  }
+}
+
+/* Section styling */
+.benefits-section {
+  background-color: #7c53a380; /* Dark background */
+  color: white;
+  height: 100vh; /* Full screen height */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Gradient heading text */
+.section-heading {
+  font-size: 6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #7d0dbe, #ec56d6, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 50px;
+  z-index: 1; /* Keep above the floating labels */
+}
+
+/* Floating labels container */
+.floating-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Prevent interaction with floating labels */
+}
+
+/* Individual label styling */
+.label {
+  position: absolute;
+  background: white;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  pointer-events: auto; /* Allow interaction on individual labels */
+}
+
+/* Label hover effect */
+.label:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Avatar styling (if needed) */
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.feature-card2 {
+  @apply flex rounded-lg h-full bg-white bg-opacity-60 p-8 flex-col border shadow-lg relative transition duration-300 ease-in-out;
+  min-height: 40px;
+}
+
+.feature-card2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgb(250, 150, 245) 17.8%,
+    rgb(92, 243, 249) 100.2%
+  );
+  filter: blur(15px);
+  z-index: -1;
+  border-radius: 0.5rem;
+  opacity: 1; /* Always visible */
+}
+
+.feature-card2:active {
+  transform: scale(0.97);
+}
+
+/* Add this to your global CSS file or a styled component */
+/* styles/globals.css */
+::-webkit-scrollbar {
+  width: 6px; /* Width of scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c03ab9f3; /* Thumb (scroll) color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c03ab9f3; /* Hover effect */
+}
+::selection{
+  background-color: #9a3cd1f1;
+  color: white;
+}
+
+/*.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root{
+  fill: #7d0dbe !important;
+}*/
+
+/* ============ Arooba Css Start ===================== */
+
+/* .css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  fill: #7d0dbe !important;
+}
+
+.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed{
+  fill: #7d0dbe !important;
+}
+
+
+
+.wrapper {
+  width: 200px;
+  height: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #937AB2;
+  left: 15%;
+  transform-origin: 50%;
+  animation: circle7124 .5s alternate infinite ease;
+}
+
+@keyframes circle7124 {
+  0% {
+    top: 60px;
+    height: 5px;
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(1.7);
+  }
+
+  40% {
+    height: 20px;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+
+  100% {
+    top: 0%;
+  }
+}
+
+.circle:nth-child(2) {
+  left: 45%;
+  animation-delay: .2s;
+}
+
+.circle:nth-child(3) {
+  left: auto;
+  right: 15%;
+  animation-delay: .3s;
+}
+
+.shadow {
+  width: 20px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.9);
+  position: absolute;
+  top: 62px;
+  transform-origin: 50%;
+  z-index: -1;
+  left: 15%;
+  filter: blur(1px);
+  animation: shadow046 .5s alternate infinite ease;
+}
+
+@keyframes shadow046 {
+  0% {
+    transform: scaleX(1.5);
+  }
+
+  40% {
+    transform: scaleX(1);
+    opacity: .7;
+  }
+
+  100% {
+    transform: scaleX(.2);
+    opacity: .4;
+  }
+}
+
+.shadow:nth-child(4) {
+  left: 45%;
+  animation-delay: .2s
+} */
+
+/* ============ Arooba Css Finish ===================== */
+
+/* 
+.shadow:nth-child(5) {
+  left: auto;
+  right: 15%;
+  animation-delay: .3s;
+} */
