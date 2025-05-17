@@ -10,18 +10,18 @@ const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-  const [errors,setErrors]=useState({});
+  const [errors, setErrors] = useState({});
 
-  const validateForm=()=>{
-    const newError={};
-    if(email.trim() === ""){
-      newError.email="Please provide an email. Email is not empty";
+  const validateForm = () => {
+    const newError = {};
+    if (email.trim() === "") {
+      newError.email = "Please provide an email. Email is not empty";
     }
-    else if(typeof email !== "string"){
-      newError.email="Please provide an email that must be in a valid format";
+    else if (typeof email !== "string") {
+      newError.email = "Please provide an email that must be in a valid format";
     }
-    else if(!email.includes("@")){
-      newError.email="Please provide an email that must be in a valid format";
+    else if (!email.includes("@")) {
+      newError.email = "Please provide an email that must be in a valid format";
     }
     return newError;
   }
@@ -31,7 +31,7 @@ const Page = () => {
     const isValid = validateForm();
     if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
-      return; 
+      return;
     }
     if (!email) {
       toast.error("Email is required.");
@@ -66,7 +66,7 @@ const Page = () => {
         error.response?.data?.message ||
         "An error occurred. Please try again."
       );
-    }finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -108,7 +108,7 @@ const Page = () => {
           </svg>
         </div> */}
         <main
-          
+
           className=" max-w-lg p-8  relative z-10 bg-white bg-opacity-50"
         >
           {/* Title */}
@@ -132,8 +132,8 @@ const Page = () => {
               </label>
               <div className="relative">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="absolute left-3 top-1/4 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
-                    <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                  </svg>
+                  <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+                </svg>
                 <input
                   type="email"
                   id="email"
@@ -159,15 +159,15 @@ const Page = () => {
                 }`}
             >
               {loading ? (<>
-                    <div className="flex justify-center items-center gap-3">
-                      <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">Please wait</p>
-                      <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
-                    </div>
-                    </>) :(
-                    <>
-                    <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm font-semibold">Submit</p>
-                    </>
-                  )}
+                <div className="flex justify-center items-center gap-3">
+                  <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">Please wait</p>
+                  <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
+                </div>
+              </>) : (
+                <>
+                  <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm font-semibold">Submit</p>
+                </>
+              )}
             </button>
           </form>
 
@@ -185,7 +185,7 @@ const Page = () => {
           </div>
         </main>
 
-        
+
       </div>
     </>
   );

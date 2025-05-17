@@ -387,27 +387,8 @@ export default function ApplianceForm() {
                       <div className="flex items-center justify-center space-x-4">
                         {loading ? (
                           <>
-
                             <p className="text-white text-lg font-semibold">Please wait</p>
-                            <svg
-                              aria-hidden="true"
-                              role="status"
-                              className="inline size-4 text-white animate-spin "
-                              viewBox="0 0 100 101"
-                              fill="white"
-                              stroke="white"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                                fill="CurrentColor"
-                              />
-                            </svg>
-
+                            <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                           </>
                         ) : (
                           <>

@@ -18,7 +18,7 @@ const ProfileUpdatePage = () => {
   const router = useRouter();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const [errors,setErrors]=useState({});
+  const [errors, setErrors] = useState({});
 
 
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const ProfileUpdatePage = () => {
     password: "",
   });
 
-   const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -36,13 +36,13 @@ const ProfileUpdatePage = () => {
     setErrors(prev => ({ ...prev, [name]: undefined }));
   };
 
-    const validateForm = () => {
-    const newError = {};  
-    if(formData.name.trim() === "") {
+  const validateForm = () => {
+    const newError = {};
+    if (formData.name.trim() === "") {
       newError.name = "Name is required";
-    }else if(formData.name.length < 2) {
-      newError.name = "Name must be at least 2 characters"; 
-    }else if(formData.name.length > 35) {
+    } else if (formData.name.length < 2) {
+      newError.name = "Name must be at least 2 characters";
+    } else if (formData.name.length > 35) {
       newError.name = "Name must be less than 35 characters";
     }
     return newError;
@@ -91,8 +91,8 @@ const ProfileUpdatePage = () => {
       } catch (error) {
         console.log("Error fetching user data:", error);
         toast.error(error.message || "Profile Information not found currently. Please try again later");
-      } 
-      
+      }
+
     };
 
     fetchUserData();
@@ -112,8 +112,8 @@ const ProfileUpdatePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isValid=validateForm();
-    if(Object.keys(isValid).length>0){
+    const isValid = validateForm();
+    if (Object.keys(isValid).length > 0) {
       setErrors(isValid);
       return;
     }
@@ -160,7 +160,7 @@ const ProfileUpdatePage = () => {
     } catch (error) {
       console.log("Update error:", error);
       toast.error(error.response.data.message || "Something went wrong while updating the profile.");
-    }finally {
+    } finally {
       setLoading(false);
     }
   };

@@ -186,16 +186,13 @@ const VerifyOtpPage = () => {
                             disabled={otpExpired}
                         >
                             {loading ? (
-                                <>
-                                    <p className="text-white text-lg font-semibold">Please wait</p>
-                                    <span className="animate-spin inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full"></span>
-                                </>
+                                <div className="flex justify-center items-center gap-2 text-white text-lg font-semibold">
+                                    <p>Please wait</p>
+                                    <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
+                                </div>
                             ) : (
-                                <>
-                                    <p>Verify OTP</p>
-                                </>
+                                <p className="text-center">Verify OTP</p>
                             )}
-
                         </button>
                     </form>
                 </div>
