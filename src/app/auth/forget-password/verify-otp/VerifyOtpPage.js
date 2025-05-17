@@ -9,7 +9,7 @@ import { jwtVerify } from 'jose';
 const VerifyOtpPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-
+    const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(() => searchParams.get("token") || "");
     const JWT_SECRET = new TextEncoder().encode(process.env.NEXT_PUBLIC_RESEND_TOKEN_SECRET_KEY);
     const [email, setEmail] = useState("");
@@ -99,6 +99,8 @@ const VerifyOtpPage = () => {
             return;
         }
 
+        setLoading(true);
+
         try {
             const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-otp`,
@@ -112,6 +114,7 @@ const VerifyOtpPage = () => {
 
             if (response.status !== 200) {
                 toast.error(response.data.message || "Invalid OTP or expired. Please try again.");
+                setLoading(false);
                 return;
             }
 
@@ -119,10 +122,12 @@ const VerifyOtpPage = () => {
             toast.success(response.data.message || "OTP verified! Redirecting...");
 
             setTimeout(() => {
+                setLoading(false);
                 router.push(`/auth/new-password?token=${otpVerifiedToken}`);
             }, 2000);
         } catch (err) {
             toast.error(err.response?.data?.message || "Invalid OTP or expired. Please try again.");
+            setLoading(false);
         }
     };
 
@@ -180,7 +185,17 @@ const VerifyOtpPage = () => {
                                 }`}
                             disabled={otpExpired}
                         >
-                            Verify OTP
+                            {loading ? (
+                                <>
+                                    <p className="text-white text-lg font-semibold">Please wait</p>
+                                    <span className="animate-spin inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full"></span>
+                                </>
+                            ) : (
+                                <>
+                                    <p>Verify OTP</p>
+                                </>
+                            )}
+
                         </button>
                     </form>
                 </div>
