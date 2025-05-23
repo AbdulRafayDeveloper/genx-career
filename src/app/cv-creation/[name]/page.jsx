@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
@@ -43,7 +44,7 @@ const Page = () => {
     experience: [{ title: "", company: "", description: "" }],
     projects: [{ name: "", technologies: [], link: "" }],
     skills: [""],
-    imageUrl: "",
+    imageUrl: "N/A",
     templateName: "",
     color: "#2563eb",
     templateName: "",
@@ -201,7 +202,7 @@ const Page = () => {
           width: 600,
           padding: "3em",
           color: "#716add",
-          background: "#fff url(/images/trees.png)",
+          background: "#fff ",
           backdrop: `
             #013368
             url("/images/cat-space.gif")
@@ -216,12 +217,28 @@ const Page = () => {
         if (result.isConfirmed) {
           setIsGenerating(true);
 
+          const token = Cookies.get("token");
+          if (!token) {
+            console.log("Token not found");
+            setLoading(false);
+            toast.error("Please login again.");
+            router.push("/auth/login");
+            return;
+          }
+
+          console.log(formData);
+
           try {
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_BASE_URL}/api/generate`,
-              formData
+              formData,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
-            
+
             console.log(response);
             const { downloadUrl } = response.data;
             router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
@@ -230,7 +247,9 @@ const Page = () => {
             Swal.fire({
               icon: "error",
               title: "Oops!",
-              text: "Something went wrong while generating your resume.",
+              text:
+                error.response.data.message ||
+                "Something went wrong while generating your resume.",
             });
             setIsGenerating(false);
           }
@@ -364,7 +383,7 @@ const Page = () => {
                           title="Click to change photo"
                         >
                           <img
-                            src={formData.imageUrl || "/images/profile.jpg"}
+                            src={formData?.imageUrl || "/images/profile.jpg"}
                             alt="Profile Preview"
                             className="object-cover w-full h-full"
                           />

@@ -135,7 +135,8 @@ const Home = () => {
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/design.png')",
+          // backgroundImage: "url('/images/design.png')",
+          backgroundImage: "url('bg.png')",
         }}
       ></div>
 
@@ -145,24 +146,24 @@ const Home = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
-        <div className="flex flex-col justify-center items-center mt-14">
-          <h1 className="md:text-8xl text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
+        <div className="flex flex-col justify-center items-center mt-28">
+          {/*<h1 className="md:text-8xl text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">*/}
+          <h1 className="md:text-8xl text-4xl font-semibold bg-clip-text text-black text-center">
             Revolutionize
-            <br /> Job Hunt
-            <br /> with
-            <br /> GenX Career
+            <br /> Job Hunt with GenX <br />
+            Career
           </h1>
-          <p className="mt-4 text-lg text-center font-normal">
+          <p className="mt-10 text-lg text-center font-normal">
             Effortlessly Fetch, Match, and Create: Discover the Power of Job
             Tools
           </p>
           <div className="mt-4">
-            <div className="scoped-container bg-white bg-opacity-40 rounded-2xl">
+            <div className=" bg-black bg-opacity-40 rounded-lg">
               <button
                 onClick={() => (window.location.href = "/jobs")}
-                className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
+                className="px-8 py-1 bg-black rounded-lg text-white hover:bg-white hover:text-black"
               >
-                <Link href="/jobs">
+                <Link href="/jobs" className="whitespace-nowrap">
                   Explore Jobs
                 </Link>
               </button>
@@ -407,8 +408,9 @@ const Home = () => {
                 {slides.map((slide, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${currentSlide === index ? "opacity-100" : "opacity-0"
-                      }`}
+                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${
+                      currentSlide === index ? "opacity-100" : "opacity-0"
+                    }`}
                   >
                     <h2 className="text-3xl font-semibold text-white mb-4">
                       {slide.title}
@@ -436,7 +438,8 @@ const Home = () => {
         <div className="mt-4">
           <section className="benefits-section py-12 px-4">
             {/* Heading */}
-            <h1 className="
+            <h1
+              className="
               section-heading 
               text-center 
               font-bold 
@@ -446,13 +449,15 @@ const Home = () => {
               lg:text-5xl 
               xl:text-6xl 
               leading-tight         /* Adjust line height for better readability */
-            ">
+            "
+            >
               Benefits of
               <span className="block">GenX Career</span>
               {/* Using .block places "GenX Career" on a new line automatically */}
             </h1>
             {/* Grid Container */}
-            <div className="
+            <div
+              className="
               floating-labels 
               opacity-70 
               mt-8 
@@ -461,7 +466,8 @@ const Home = () => {
               sm:grid-cols-2 
               md:grid-cols-4 
               gap-4
-            ">
+            "
+            >
               {/* Each item */}
               <div className="label p-4 border rounded text-center">
                 <span>Job Fetching</span>
@@ -531,8 +537,9 @@ const Home = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)} // Function to set the current slide
-                  className={`w-3 h-3 mx-2 rounded-full ${currentSlide === index ? "bg-purple-900" : "bg-gray-400"
-                    } transition-all duration-300`}
+                  className={`w-3 h-3 mx-2 rounded-full ${
+                    currentSlide === index ? "bg-purple-900" : "bg-gray-400"
+                  } transition-all duration-300`}
                 />
               ))}
             </div>
