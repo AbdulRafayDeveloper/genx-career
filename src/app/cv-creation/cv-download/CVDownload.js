@@ -1,17 +1,41 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export default function CVDownload() {
     const searchParams = useSearchParams();
-    const url = searchParams.get("url");
+    // const url = searchParams.get("url");
+    // const rawUrl = searchParams.get("url");
     const [pdfUrl, setPdfUrl] = useState("");
 
+    // useEffect(() => {
+    //     if (url) {
+    //         setPdfUrl(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`);
+    //     }
+    // }, [url]);
+
     useEffect(() => {
-        if (url) {
-            setPdfUrl(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`);
+        // console.log("rawUrl:", rawUrl);
+        // // if (url) {
+        // //     // ✅ Use the full URL directly
+        // //     setPdfUrl(url);
+        // // }
+        // if (rawUrl) {
+        //     // ✅ decode it once in case it's encoded
+        //     const decodedUrl = decodeURIComponent(rawUrl);
+        //     console.log("decodedUrl:", decodedUrl);
+        //     setPdfUrl(decodedUrl);
+        // }
+        const downloadUrl = Cookies.get("downloadUrl");
+        console.log("downloadUrl:", downloadUrl);
+        if (downloadUrl) {
+            // If the download URL is stored in cookies, use it
+            setPdfUrl(downloadUrl);
+        } else {
+            console.error("No valid URL found for PDF download.");
         }
-    }, [url]);
+    }, []);
 
     if (!pdfUrl) return <p>Loading...</p>;
 

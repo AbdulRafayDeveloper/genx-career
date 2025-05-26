@@ -235,13 +235,22 @@ const Page = () => {
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
                 },
               }
             );
 
             console.log(response);
-            const { downloadUrl } = response.data;
-            router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
+            // const { downloadUrl } = response.data;
+            // router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
+
+            const downloadUrl = response?.data?.data?.downloadUrl;
+            // router.push(`/cv-download?url=${encodeURIComponent(downloadUrl)}`);
+            // ⚠️ Don't double encode — use downloadUrl as is
+            console.log("Download URL:", downloadUrl);
+            // store in cookie
+            Cookies.set("downloadUrl", downloadUrl, { expires: 1 });
+            router.push(`/cv-creation/cv-download`);
           } catch (error) {
             console.log("Error generating CV:", error);
             Swal.fire({
