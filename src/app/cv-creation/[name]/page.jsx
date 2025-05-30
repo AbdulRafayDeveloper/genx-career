@@ -39,10 +39,10 @@ const Page = () => {
     },
     interests: [""],
     languages: [{ language: "", proficiency: "" }],
-    education: [{ degree: "", institute: "", cgpa: "", year: "" }],
+    education: [{ degree: "", institution: "", cgpa: "", year: "" }],
     certificates: [{ name: "", date: "" }],
     experience: [{ title: "", company: "", description: "" }],
-    projects: [{ name: "", technologies: [], link: "" }],
+    projects: [{ name: "", technologies: [""], link: "" }],
     skills: [""],
     imageUrl: "N/A",
     templateName: "",
@@ -67,7 +67,7 @@ const Page = () => {
       location: "",
     },
     languages: [{ language: "", proficiency: "" }],
-    education: [{ degree: "", institute: "", cgpa: "", year: "" }],
+    education: [{ degree: "", institution: "", cgpa: "", year: "" }],
     skills: "",
   });
 
@@ -137,59 +137,108 @@ const Page = () => {
     // Step 1: Education & Skills
     if (activeStep === 1) {
       newErrors.education = formData.education.map((edu) => {
-        const entry = { degree: "", institute: "", cgpa: "", year: "" };
+        const entry = { degree: "", institution: "", cgpa: "", year: "" };
         if (!edu.degree.trim()) {
           entry.degree = "Degree is required.";
           isValid = false;
         }
-        if (!edu.institute.trim()) {
-          entry.institute = "Institute is required.";
+        if (!edu.institution.trim()) {
+          entry.institution = "institution is required.";
           isValid = false;
         }
         if (!edu.cgpa.trim()) {
           entry.cgpa = "CGPA is required.";
           isValid = false;
+        } else {
+          const cgpaVal = parseFloat(edu.cgpa);
+          if (isNaN(cgpaVal) || cgpaVal < 0 || cgpaVal > 4) {
+            entry.cgpa = "CGPA must be a number between 0 and 4.0";
+            isValid = false;
+          }
         }
+
         if (!edu.year.trim()) {
           entry.year = "Year is required.";
           isValid = false;
+        } else if (!/^\d{4}-\d{4}$/.test(edu.year)) {
+          entry.year = "Year format should be like 2021-2025";
+          isValid = false;
         }
+
         return entry;
       });
 
       if (formData.skills.some((skill) => !skill.trim())) {
-        newErrors.skills = "All skill fields must be filled.";
+        newErrors.skills = "Skill fields must be filled.";
         isValid = false;
       }
     }
     // Add this inside your handleNext function under step 2 validation:
     if (activeStep === 2) {
+      // Initialize new error arrays
+      newErrors.experience = [];
+      newErrors.projects = [];
+      newErrors.certificates = [];
+
       // Validate Experience
       formData.experience.forEach((exp) => {
-        if (
-          !exp.title.trim() ||
-          !exp.company.trim() ||
-          !exp.description.trim()
-        ) {
+        const entry = { title: "", company: "", description: "" };
+        const hasAny =
+          exp.title.trim() || exp.company.trim() || exp.description.trim();
+        const hasAll =
+          exp.title.trim() && exp.company.trim() && exp.description.trim();
+
+        if (hasAny && !hasAll) {
+          if (!exp.title.trim()) entry.title = "Job title is required.";
+          if (!exp.company.trim()) entry.company = "Company name is required.";
+          if (!exp.description.trim())
+            entry.description = "Description is required.";
           isValid = false;
         }
+
+        newErrors.experience.push(entry);
       });
 
       // Validate Projects
+      // Validate Projects
       formData.projects.forEach((proj) => {
-        if (
-          !proj.name.trim() ||
-          proj.technologies.some((tech) => !tech.trim())
-        ) {
+        const entry = { name: "", technologies: [], link: "" };
+
+        const hasAny =
+          proj.name.trim() ||
+          proj.link.trim() ||
+          proj.technologies.some((tech) => tech.trim());
+
+        const hasAll =
+          proj.name.trim() &&
+          proj.link.trim() &&
+          proj.technologies.every((tech) => tech.trim());
+
+        if (hasAny && !hasAll) {
+          if (!proj.name.trim()) entry.name = "Project name is required.";
+          if (!proj.link.trim()) entry.link = "Project link is required.";
+          entry.technologies = proj.technologies.map((tech) =>
+            !tech.trim() ? "Technology is required." : ""
+          );
           isValid = false;
         }
+
+        newErrors.projects.push(entry);
       });
 
       // Validate Certificates
       formData.certificates.forEach((cert) => {
-        if (!cert.name.trim() || !cert.date.trim()) {
+        const entry = { name: "", date: "" };
+        const hasAny = cert.name.trim() || cert.date.trim();
+        const hasAll = cert.name.trim() && cert.date.trim();
+
+        if (hasAny && !hasAll) {
+          if (!cert.name.trim()) entry.name = "Certificate name is required.";
+          if (!cert.date.trim()) entry.date = "Certificate date is required.";
           isValid = false;
         }
+
+        newErrors.certificates.push(entry);
       });
     }
 
@@ -227,11 +276,26 @@ const Page = () => {
           }
 
           console.log(formData);
+          const cleanedData = {
+            ...formData,
+            experience: formData.experience.filter(
+              (exp) =>
+                exp.title.trim() || exp.company.trim() || exp.description.trim()
+            ),
+            projects: formData.projects.filter(
+              (proj) =>
+                proj.name.trim() ||
+                proj.technologies.some((tech) => tech.trim())
+            ),
+            certificates: formData.certificates.filter(
+              (cert) => cert.name.trim() || cert.date.trim()
+            ),
+          };
 
           try {
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_BASE_URL}/api/generate`,
-              formData,
+              cleanedData,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -459,7 +523,7 @@ const Page = () => {
                   }
                 />
                 {errors.name && (
-                  <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+                  <p className="text-sm text-red-500 ">{errors.name}</p>
                 )}
               </div>
 
@@ -477,11 +541,11 @@ const Page = () => {
                     handleChange("summary", null, null, e.target.value)
                   }
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 ">
                   {formData.summary.length} / 400 characters
                 </p>
                 {errors.summary && (
-                  <p className="text-sm text-red-500 mt-1">{errors.summary}</p>
+                  <p className="text-sm text-red-500 ">{errors.summary}</p>
                 )}
               </div>
 
@@ -515,7 +579,7 @@ const Page = () => {
                     {/* Show error below the input */}
                     {["email", "phone", "location"].includes(field.key) &&
                       errors.contact[field.key] && (
-                        <p className="text-sm text-red-500 mt-1">
+                        <p className="text-sm text-red-500 ">
                           {errors.contact[field.key]}
                         </p>
                       )}
@@ -525,7 +589,7 @@ const Page = () => {
 
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Interest <span className="text-red-500">*</span>
+                  Interest
                 </label>
                 <input
                   type="text"
@@ -565,7 +629,7 @@ const Page = () => {
                         }
                       />
                       {errors.languages[index]?.language && (
-                        <p className="text-sm text-red-500 mt-1">
+                        <p className="text-sm text-red-500 ">
                           {errors.languages[index].language}
                         </p>
                       )}
@@ -591,7 +655,7 @@ const Page = () => {
                         <option value="Basic">Basic</option>
                       </select>
                       {errors.languages[index]?.proficiency && (
-                        <p className="text-sm text-red-500 mt-1">
+                        <p className="text-sm text-red-500 ">
                           {errors.languages[index].proficiency}
                         </p>
                       )}
@@ -651,20 +715,20 @@ const Page = () => {
                       type="text"
                       placeholder="Institution"
                       className="p-2 rounded-xl border border-gray-300 shadow-sm bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
-                      value={edu.institute}
+                      value={edu.institution}
                       maxLength={30}
                       onChange={(e) =>
                         handleChange(
                           "education",
                           index,
-                          "institute",
+                          "institution",
                           e.target.value
                         )
                       }
                     />
-                    {errors.education[index]?.institute && (
+                    {errors.education[index]?.institution && (
                       <p className="text-sm text-red-500">
-                        {errors.education[index].institute}
+                        {errors.education[index].institution}
                       </p>
                     )}
                     <input
@@ -726,7 +790,7 @@ const Page = () => {
                       ...prev,
                       education: [
                         ...prev.education,
-                        { degree: "", institute: "", cgpa: "", year: "" },
+                        { degree: "", institution: "", cgpa: "", year: "" },
                       ],
                     }))
                   }
@@ -754,9 +818,7 @@ const Page = () => {
                       }}
                     />
                     {errors.skills && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {errors.skills}
-                      </p>
+                      <p className="text-sm text-red-500 ">{errors.skills}</p>
                     )}
                     {formData.skills.length > 1 && (
                       <button
@@ -794,7 +856,7 @@ const Page = () => {
             <div className="grid grid-cols-1 gap-6 bg-white/90 rounded-2xl pt-12 pb-12 px-10 shadow-xl backdrop-blur-md">
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Experience <span className="text-red-500">*</span>
+                  Experience
                 </label>
 
                 {formData.experience.map((exp, index) => (
@@ -817,6 +879,12 @@ const Page = () => {
                         )
                       }
                     />
+                    {errors.experience?.[index]?.title && (
+                      <p className="text-sm text-red-500 ">
+                        {errors.experience[index].title}
+                      </p>
+                    )}
+
                     <input
                       type="text"
                       placeholder="Company"
@@ -832,6 +900,12 @@ const Page = () => {
                         )
                       }
                     />
+                    {errors.experience?.[index]?.company && (
+                      <p className="text-sm text-red-500">
+                        {errors.experience[index].company}
+                      </p>
+                    )}
+
                     <textarea
                       placeholder="Description / Responsibilities"
                       className="p-2 rounded-xl border border-gray-300  resize-none bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:ring-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-1 transition-all duration-200 "
@@ -846,6 +920,12 @@ const Page = () => {
                         )
                       }
                     />
+                    {errors.experience?.[index]?.description && (
+                      <p className="text-sm text-red-500">
+                        {errors.experience[index].description}
+                      </p>
+                    )}
+
                     <div className="flex justify-end">
                       {formData.experience.length > 1 && (
                         <button
@@ -885,7 +965,7 @@ const Page = () => {
               </div>
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Projects <span className="text-red-500">*</span>
+                  Projects
                 </label>
 
                 {formData.projects.map((proj, index) => (
@@ -902,6 +982,11 @@ const Page = () => {
                         handleChange("projects", index, "name", e.target.value)
                       }
                     />
+                    {errors.projects?.[index]?.name && (
+                      <p className="text-sm text-red-500 ">
+                        {errors.projects[index].name}
+                      </p>
+                    )}
 
                     {/* Technologies - Multiple inputs */}
                     <div>
@@ -928,6 +1013,13 @@ const Page = () => {
                               });
                             }}
                           />
+                          {errors.projects?.[index]?.technologies?.[
+                            techIndex
+                          ] && (
+                            <p className="text-sm text-red-500 ">
+                              {errors.projects[index].technologies[techIndex]}
+                            </p>
+                          )}
                           {proj.technologies.length > 1 && (
                             <button
                               type="button"
@@ -951,7 +1043,7 @@ const Page = () => {
                       ))}
                       <button
                         type="button"
-                        className="text-blue-600 text-sm mt-1"
+                        className="text-blue-600 text-sm "
                         onClick={() => {
                           const updatedProjects = [...formData.projects];
                           updatedProjects[index].technologies.push("");
@@ -974,6 +1066,11 @@ const Page = () => {
                         handleChange("projects", index, "link", e.target.value)
                       }
                     />
+                    {errors.projects?.[index]?.link && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.projects[index].link}
+                      </p>
+                    )}
 
                     <div className="flex justify-end">
                       {formData.projects.length > 1 && (
@@ -1015,7 +1112,7 @@ const Page = () => {
 
               <div>
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                  Certificates <span className="text-red-500">*</span>
+                  Certificates
                 </label>
 
                 {formData.certificates.map((cert, index) => (
@@ -1039,6 +1136,11 @@ const Page = () => {
                       }
                     />
 
+                    {errors.certificates?.[index]?.name && (
+                      <p className="text-sm text-red-500 ">
+                        {errors.certificates[index].name}
+                      </p>
+                    )}
                     <input
                       type="month"
                       className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
@@ -1053,6 +1155,11 @@ const Page = () => {
                       }
                     />
 
+                    {errors.certificates?.[index]?.date && (
+                      <p className="text-sm text-red-500 ">
+                        {errors.certificates[index].date}
+                      </p>
+                    )}
                     <div className="col-span-2 flex justify-end">
                       {formData.certificates.length > 1 && (
                         <button
