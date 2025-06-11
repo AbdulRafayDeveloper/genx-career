@@ -6,6 +6,7 @@ import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../footer/Footer";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -136,7 +137,7 @@ const Home = () => {
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
         style={{
           // backgroundImage: "url('/images/design.png')",
-          backgroundImage: "url('bg.png')",
+          backgroundImage: "url('/bg/bg.jpg')",
         }}
       ></div>
 
@@ -148,12 +149,12 @@ const Home = () => {
         />
         <div className="flex flex-col justify-center items-center mt-28">
           {/*<h1 className="md:text-8xl text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">*/}
-          <h1 className="md:text-8xl text-4xl font-semibold bg-clip-text text-black text-center">
+          <h1 className="md:text-8xl text-4xl font-semibold bg-clip-text text-white text-center">
             Revolutionize
             <br /> Job Hunt with GenX <br />
             Career
           </h1>
-          <p className="mt-10 text-lg text-center font-normal">
+          <p className="mt-10 text-lg text-center font-normal text-white">
             Effortlessly Fetch, Match, and Create: Discover the Power of Job
             Tools
           </p>
@@ -262,8 +263,8 @@ const Home = () => {
           </div>
         </div>
 
-        <div className=" items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50">
-          <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
+        <div className=" items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50 pb-6">
+          <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 ">
             Our Features
           </h1>
           <p className="text-center text-white">
@@ -388,7 +389,7 @@ const Home = () => {
         </div>
 
         <div className=" pt-12">
-          <h1 className="text-5xl font-extralight text-[#a67ccd] mb-10 text-center font-serif">
+          <h1 className="text-5xl font-extralight text-white mb-10 text-center ">
             How It Works
           </h1>
 
@@ -415,7 +416,7 @@ const Home = () => {
                     <h2 className="text-3xl font-semibold text-white mb-4">
                       {slide.title}
                     </h2>
-                    <div className="text-lg text-gray-600 mb-6">
+                    <div className="text-lg text-white mb-6">
                       {/* Display each description item on a new line with arrow */}
                       {slide.description.map((point, i) => (
                         <div key={i} className="flex items-start mb-4">
@@ -435,72 +436,104 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="mt-4">
-          <section className="benefits-section py-12 px-4">
-            {/* Heading */}
-            <h1
-              className="
-              section-heading 
-              text-center 
-              font-bold 
-              text-base              /* Base font size on the smallest screens */
-              sm:text-2xl 
-              md:text-4xl 
-              lg:text-5xl 
-              xl:text-6xl 
-              leading-tight         /* Adjust line height for better readability */
-            "
-            >
-              Benefits of
-              <span className="block">GenX Career</span>
-              {/* Using .block places "GenX Career" on a new line automatically */}
-            </h1>
-            {/* Grid Container */}
-            <div
-              className="
-              floating-labels 
-              opacity-70 
-              mt-8 
-              grid 
-              grid-cols-1 
-              sm:grid-cols-2 
-              md:grid-cols-4 
-              gap-4
-            "
-            >
-              {/* Each item */}
-              <div className="label p-4 border rounded text-center">
-                <span>Job Fetching</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Platform Integration</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Periodic Updates</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Data Storage</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Advanced Filters</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Job Recommendations</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Resume Matching</span>
-              </div>
-              <div className="label p-4 border rounded text-center">
-                <span>Job Fit</span>
-              </div>
+        <div className="py-16 sm:py-24 px-4 sm:px-8 lg:px-16 relative overflow-hidden">
+          {/* Background Image Layer */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/bg/benefits.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              opacity: 0.5,
+            }}
+          ></div>
+
+          {/* Foreground Content Layer */}
+          <div className="relative z-10 flex flex-col lg:flex-row gap-10 items-center justify-between">
+            {/* Left side content */}
+            <div className="p-10 rounded-2xl w-full lg:w-1/2">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4 leading-snug">
+                How we stand out in world
+              </h2>
+              <p className="text-white mb-8">
+                Offering unique features and benefits that are tailored to your
+                needs.
+              </p>
             </div>
-          </section>
+
+            {/* Right side features */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full lg:w-1/2">
+              {[
+                {
+                  title: "Platform Integration",
+                  description:
+                    "Seamlessly connect with various job platforms for maximum reach.",
+                },
+                {
+                  title: "Periodic Updates",
+                  description:
+                    "Keep your data fresh with scheduled and automated updates.",
+                },
+                {
+                  title: "Data Storage",
+                  description:
+                    "Securely store job listings and user information with scalable storage.",
+                },
+                {
+                  title: "Advanced Filters",
+                  description:
+                    "Quickly refine job search with powerful filtering options.",
+                },
+                {
+                  title: "Job Recommendations",
+                  description:
+                    "Personalized job suggestions based on user preferences and profile.",
+                },
+                {
+                  title: "Resume Matching",
+                  description:
+                    "Accurately match resumes with job listings using AI-powered algorithms.",
+                },
+                {
+                  title: "Job Fit",
+                  description:
+                    "Evaluate job suitability based on candidate profiles and job criteria.",
+                },
+              ].map((item, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="p-3 bg-indigo-50 rounded-lg">
+                    <svg
+                      className="w-6 h-6 text-indigo-600"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-gray-300 text-sm">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
         <section className="flex items-center justify-center bg-opacity-25  ">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
             <figure className="max-w-screen-md mx-auto p-8 bg-white bg-opacity-40 rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
               <svg
-                className="h-12 mx-auto mb-3 text-purple-400"
+                className="h-12 mx-auto mb-3 text-white"
                 viewBox="0 0 24 27"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -512,7 +545,7 @@ const Home = () => {
               </svg>
               {/* Testimonial content */}
               <blockquote>
-                <p className="text-2xl font-medium text-purple-900 animate__animated animate__fadeIn animate__delay-1s">
+                <p className="text-2xl font-medium text-white animate__animated animate__fadeIn animate__delay-1s">
                   {testimonialSlides[currentSlide].quote}
                 </p>
               </blockquote>
@@ -523,10 +556,10 @@ const Home = () => {
                   alt="profile picture"
                 />
                 <div className="flex items-center divide-x-2 divide-gray-500">
-                  <div className="pr-3 font-medium text-purple-900">
+                  <div className="pr-3 font-medium text-white">
                     {testimonialSlides[currentSlide].name}
                   </div>
-                  <div className="pl-3 text-sm font-light text-purple-900">
+                  <div className="pl-3 text-sm font-light text-white">
                     {testimonialSlides[currentSlide].position}
                   </div>
                 </div>

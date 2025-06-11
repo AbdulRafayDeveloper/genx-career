@@ -11,8 +11,8 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Footer from "../components/footer/Footer";
 
 const Page = () => {
@@ -72,8 +72,7 @@ const Page = () => {
       } catch (error) {
         // toast.error('Error fetching jobs:', error);
         console.log("Error fetching jobs:", error);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
@@ -125,7 +124,10 @@ const Page = () => {
 
         router.push(`/cv-matching/${matchJob}`);
       } else {
-        toast.error(response.data.message || "There is some error in uploading this file. Please try with a correct CV!");
+        toast.error(
+          response.data.message ||
+            "There is some error in uploading this file. Please try with a correct CV!"
+        );
       }
     } catch (error) {
       if (
@@ -133,9 +135,14 @@ const Page = () => {
         error.response.data &&
         error.response.data.message
       ) {
-        toast.error(error.response.data.message || "There is some error in uploading this file. Please try with a correct CV!");
+        toast.error(
+          error.response.data.message ||
+            "There is some error in uploading this file. Please try with a correct CV!"
+        );
       } else {
-        toast.error("There is some error in uploading this file. Please try with a correct CV!");
+        toast.error(
+          "There is some error in uploading this file. Please try with a correct CV!"
+        );
       }
     } finally {
       setIsMatching(false);
@@ -259,7 +266,7 @@ const Page = () => {
     setIsCheckingAuth(false);
   }, []);
 
-  // 
+  //
   // useEffect(() => {
   //   const handleResize = () => {
   //     setIsMobile(window.innerWidth <= 768);
@@ -279,7 +286,6 @@ const Page = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   return (
     <>
       {/* <ToastContainer></ToastContainer> */}
@@ -288,7 +294,7 @@ const Page = () => {
         <div
           className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
           style={{
-            backgroundImage: "url('/images/design.png')",
+            backgroundImage: "url('/bg/bg.jpg')",
           }}
         ></div>
 
@@ -309,7 +315,10 @@ const Page = () => {
               >
                 {/* Search Bar */}
                 <div className="relative flex-grow">
-                  <label htmlFor="search" className="sr-only xl:text-lg lg:text-lg md:text-md text-[12px]">
+                  <label
+                    htmlFor="search"
+                    className="sr-only xl:text-lg lg:text-lg md:text-md text-[12px]"
+                  >
                     Search
                   </label>
                   <input
@@ -339,7 +348,10 @@ const Page = () => {
 
                 {/* Location Bar */}
                 <div className="relative w-[160px] ">
-                  <label htmlFor="location" className="sr-only xl:text-lg lg:text-lg md:text-md text-[12px]">
+                  <label
+                    htmlFor="location"
+                    className="sr-only xl:text-lg lg:text-lg md:text-md text-[12px]"
+                  >
                     Location
                   </label>
                   <input
@@ -368,14 +380,14 @@ const Page = () => {
           <div className="flex flex-col justify-center items-center relative z-20 bg-opacity-75 p-4 rounded ">
             <div className="flex items-center gap-2">
               <svg
-                className="w-6 h-6 text-purple-900"
+                className="w-6 h-6 text-purple-200"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
                 <path fill="currentColor" d="M13 2l-8 13h6v7l8-13h-6z" />
               </svg>
 
-              <p className="text-purple-900 font-semibold text-base">
+              <p className="text-purple-200 font-semibold text-base">
                 Upload your resume - Find the best fitting job
               </p>
             </div>
@@ -390,28 +402,31 @@ const Page = () => {
                 <button className="px-3 py-2 border rounded-full text-black bg-purple-300 shadow hover:bg-purple-100 flex items-center gap-2">
                   <FontAwesomeIcon icon={faSliders} />
                 </button>
-                {["Remote only", "Salary Range", "Date Posted"].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={
-                      filter === "Remote only"
-                        ? () =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            remote: !prev.remote,
-                          }))
-                        : filter === "Salary Range"
+                {["Remote only", "Salary Range", "Date Posted"].map(
+                  (filter) => (
+                    <button
+                      key={filter}
+                      onClick={
+                        filter === "Remote only"
+                          ? () =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                remote: !prev.remote,
+                              }))
+                          : filter === "Salary Range"
                           ? toggleModal
                           : toggleModalCalender
-                    }
-                    className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
-                        ? "bg-purple-500 text-white"
-                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                      }
+                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${
+                        filter === "Remote only" && formData.remote
+                          ? "bg-purple-500 text-white"
+                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
                       }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
+                    >
+                      {filter}
+                    </button>
+                  )
+                )}
               </div>
 
               {/* Loader */}
@@ -440,7 +455,9 @@ const Page = () => {
                 </div>
               )}
 
-              <p className="pb-2 text-gray-800">{jobsPost.length} jobs fetched</p>
+              <p className="pb-2 text-gray-200">
+                {jobsPost.length} jobs fetched
+              </p>
 
               {/* Job Cards (with mobile accordion) */}
               {jobsPost.map((job) => (
@@ -454,7 +471,11 @@ const Page = () => {
                     <p className="text-gray-600">{job.companyName}</p>
                     <h3 className="font-semibold text-lg">{job.title}</h3>
                     <p className="text-gray-600">
-                      {job.hybrid ? "Hybrid" : job.remote ? "Remote" : "On-site"}
+                      {job.hybrid
+                        ? "Hybrid"
+                        : job.remote
+                        ? "Remote"
+                        : "On-site"}
                     </p>
                     <p className="text-gray-600">{job.salary}</p>
                   </div>
@@ -463,7 +484,9 @@ const Page = () => {
                   {isMobile && selectedJob === job && (
                     <div className="mb-4 p-4 bg-gray-100 rounded-lg shadow-inner">
                       <h4 className="font-bold text-xl mb-2">{job.title}</h4>
-                      <p className="text-gray-700 mb-2 text-[8px]">{job.description}</p>
+                      <p className="text-gray-700 mb-2 text-[8px]">
+                        {job.description}
+                      </p>
                       <div className="flex gap-1">
                         <button
                           className="mt-2 px-4 py-2 bg-white text-black rounded-full"
@@ -474,7 +497,11 @@ const Page = () => {
                         >
                           Match CV
                         </button>
-                        <Link href={job.applyUrl} target="_blank" rel="noopener">
+                        <Link
+                          href={job.applyUrl}
+                          target="_blank"
+                          rel="noopener"
+                        >
                           <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full">
                             Easy Apply
                           </button>
@@ -500,9 +527,8 @@ const Page = () => {
             </div>
 
             {/* Right Column: Job Detail (only on tablet+ screens) */}
-            {(selectedJob && (!isMobile || showJobDetail)) && (
+            {selectedJob && (!isMobile || showJobDetail) && (
               <div className="flex-grow lg:w-2/3 overflow-y-auto border rounded-lg p-4 shadow bg-white bg-opacity-80 pr-12 pb-12 scrollbar-hidden">
-
                 {/* Back button for mobile */}
                 {isMobile && (
                   <button
@@ -558,11 +584,12 @@ const Page = () => {
                   </div>
                 </div>
 
-                <p className="text-gray-600 mb-4">Salary: {selectedJob.salary}</p>
+                <p className="text-gray-600 mb-4">
+                  Salary: {selectedJob.salary}
+                </p>
                 <p className="text-gray-800">{selectedJob.description}</p>
               </div>
             )}
-
           </div>
         </div>
         {isModalOpen && (
@@ -670,11 +697,11 @@ const Page = () => {
         )}
 
         {isModalMatchOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg w-1/2 flex justify-center items-center">
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 sm:px-6">
+            <div className="bg-white p-6 rounded-lg w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl flex justify-center items-center">
               {selectedFile ? (
                 isMatching ? (
-                  <div className="flex flex-col items-center p-20">
+                  <div className="flex flex-col items-center p-10 sm:p-20">
                     <svg
                       className="animate-spin h-10 w-10 text-purple-600"
                       xmlns="http://www.w3.org/2000/svg"
@@ -700,14 +727,13 @@ const Page = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className="bg-white p-6 rounded-lg w-full">
-                    {/* File Preview */}
+                  <div className="bg-white p-4 sm:p-6 rounded-lg w-full">
                     <p className="text-lg font-bold text-gray-700">
                       File selected:
                     </p>
                     <div className="mt-4 border-t pt-4">
                       <p className="text-sm text-gray-600">Selected file:</p>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center sm:space-x-2">
                         <svg
                           className="w-5 h-5 text-gray-500"
                           xmlns="http://www.w3.org/2000/svg"
@@ -722,9 +748,9 @@ const Page = () => {
                             d="M12 4v2m4 4V6M8 10V6M4 4v8M12 14v2m4 4v-8m-8 0v8"
                           />
                         </svg>
-                        <div className="text-sm text-gray-700">
-                          <div className="grid grid-cols-2">
-                            <p>{selectedFile.name}</p>
+                        <div className="text-sm text-gray-700 w-full">
+                          <div className="flex justify-between">
+                            <p className="truncate">{selectedFile.name}</p>
                             <button onClick={deletefile} className="text-end">
                               <FontAwesomeIcon
                                 icon={faTrash}
@@ -739,8 +765,7 @@ const Page = () => {
                       </div>
                     </div>
 
-                    {/* Close Button */}
-                    <div className="mt-4 flex justify-end gap-4">
+                    <div className="mt-4 flex flex-col sm:flex-row justify-end gap-4">
                       <button
                         onClick={matchCv}
                         className="px-4 py-2 border border-gray-400 hover:bg-purple-600 text-black rounded-full hover:text-white hover:border-white shadow-lg"
@@ -757,14 +782,15 @@ const Page = () => {
                   </div>
                 )
               ) : (
-                <div className="bg-white p-6 rounded-lg w-full">
-                  <p className="text-xl font-semibold text-gray-700 mb-4">
+                <div className="bg-white p-4 sm:p-6 rounded-lg w-full">
+                  <p className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
                     Please select a file to proceed
                   </p>
+
                   <div className="flex items-center justify-center w-full mb-4">
                     <label
                       htmlFor="dropzone-file"
-                      className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                      className="flex flex-col items-center justify-center w-full h-48 sm:h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg
@@ -800,8 +826,7 @@ const Page = () => {
                     </label>
                   </div>
 
-                  {/* Close Button */}
-                  <div className="mt-4 flex justify-end gap-4">
+                  <div className="mt-4 flex justify-end">
                     <button
                       onClick={toggleMatch}
                       className="px-4 py-2 bg-purple-400 hover:bg-purple-600 text-white rounded-full"

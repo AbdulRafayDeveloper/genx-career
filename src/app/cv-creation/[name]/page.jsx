@@ -90,8 +90,11 @@ const Page = () => {
 
     // Step 0: Personal Info
     if (activeStep === 0) {
-      if (!formData.imageUrl) {
-        newErrors.imageUrl = "Profile image is required.";
+      if (
+        isImageInputEnabled &&
+        (!formData.imageUrl || formData.imageUrl === "N/A")
+      ) {
+        newErrors.imageUrl = "Profile image is required for this template.";
         isValid = false;
       }
 
@@ -254,8 +257,8 @@ const Page = () => {
           background: "#fff ",
           backdrop: `
             #013368
-            url("/images/cat-space.gif")
-            left top
+            url("/bg/benefits.jpg")
+            cover
             no-repeat
           `,
           confirmButtonText: "Yes, generate it!",
@@ -385,14 +388,14 @@ const Page = () => {
   return (
     <div
       className="min-h-screen bg-fixed bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/design.png')" }}
+      style={{ backgroundImage: "url('/bg/bg.jpg')" }}
     >
       <div className="max-w-4xl mx-auto pt-12">
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-bold text-[oklch(0.293_0.136_325.661)]">
+          <h1 className="text-6xl font-bold text-white">
             Build Your Professional CV
           </h1>
-          <p className="text-gray-600 mt-2 text-lg">
+          <p className="text-gray-50 mt-2 text-lg">
             Fill in your details step by step to generate a polished and
             professional resume.
           </p>
@@ -406,7 +409,7 @@ const Page = () => {
                   "& .MuiStepLabel-label": {
                     fontSize: "1.125rem",
                     fontWeight: 200,
-                    color: "#374151",
+                    color: "#ffff",
                   },
                   "& .MuiStepIcon-root": {
                     fontSize: "2.5rem",
@@ -456,7 +459,11 @@ const Page = () => {
                           title="Click to change photo"
                         >
                           <img
-                            src={formData?.imageUrl || "/images/profile.jpg"}
+                            src={
+                              formData?.imageUrl && formData.imageUrl !== "N/A"
+                                ? formData.imageUrl
+                                : "/images/profile.jpg"
+                            }
                             alt="Profile Preview"
                             className="object-cover w-full h-full"
                           />
@@ -608,10 +615,10 @@ const Page = () => {
                 <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
                   Languages <span className="text-red-500">*</span>
                 </label>
+
                 {formData.languages.map((lang, index) => (
                   <div key={index} className="grid grid-cols-2 gap-4 mb-4">
                     {/* Language Input */}
-
                     <div className="col-span-1">
                       <input
                         type="text"
@@ -629,7 +636,7 @@ const Page = () => {
                         }
                       />
                       {errors.languages[index]?.language && (
-                        <p className="text-sm text-red-500 ">
+                        <p className="text-sm text-red-500">
                           {errors.languages[index].language}
                         </p>
                       )}
@@ -655,7 +662,7 @@ const Page = () => {
                         <option value="Basic">Basic</option>
                       </select>
                       {errors.languages[index]?.proficiency && (
-                        <p className="text-sm text-red-500 ">
+                        <p className="text-sm text-red-500">
                           {errors.languages[index].proficiency}
                         </p>
                       )}
@@ -675,6 +682,15 @@ const Page = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* ✅ Add Language Button */}
+                <button
+                  type="button"
+                  className="text-blue-600 text-sm mt-2"
+                  onClick={handleAddLanguage}
+                >
+                  + Add Language
+                </button>
               </div>
             </div>
           )}

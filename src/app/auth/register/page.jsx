@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 
 const Page = () => {
@@ -43,13 +43,17 @@ const Page = () => {
         } else if (
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(value)
         ) {
-          newErrors.password = "Must include uppercase, lowercase, number & special character.";
+          newErrors.password =
+            "Must include uppercase, lowercase, number & special character.";
         } else {
           delete newErrors.password;
         }
 
         // Confirm password validation if already filled
-        if (updatedData.confirmPassword && updatedData.confirmPassword !== value) {
+        if (
+          updatedData.confirmPassword &&
+          updatedData.confirmPassword !== value
+        ) {
           newErrors.confirmPassword = "Passwords do not match.";
         } else {
           delete newErrors.confirmPassword;
@@ -69,7 +73,6 @@ const Page = () => {
       return updatedData;
     });
   };
-
 
   const validateForm = () => {
     const newErrors = {};
@@ -92,7 +95,8 @@ const Page = () => {
 
     // Password: required, ≥8 chars, at least one uppercase, one lowercase, one digit, one special
     if (!formData.password) {
-      newErrors.password = "Please provide the password. The password cannot be empty.";
+      newErrors.password =
+        "Please provide the password. The password cannot be empty.";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must have at least 8 characters.";
     } else if (
@@ -107,7 +111,6 @@ const Page = () => {
     } else if (formData.confirmPassword !== formData.password) {
       newErrors.confirmPassword = "Passwords do not match.";
     }
-
 
     return newErrors;
   };
@@ -135,7 +138,7 @@ const Page = () => {
       email: formData.email,
       password: formData.password,
     };
-    
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/register`,
@@ -177,34 +180,31 @@ const Page = () => {
       <div className="relative">
         <div
           className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        // style={{ backgroundImage: "url('/images/design.png')" }}
+          style={{
+            backgroundImage: "url('/bg/benefits.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
         ></div>
         <div className="font-calibri relative z-10">
           <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
             <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
               <button
                 onClick={() => router.push("/")}
-                className="absolute top-6 left-6 p-3 bg-purple-200 bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline"
+                className="absolute top-6 left-6 p-3  bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline"
               >
                 <FontAwesomeIcon
                   icon={faArrowLeft}
-                  className="w-5 h-5"
+                  className="w-8 h-8"
                 ></FontAwesomeIcon>
               </button>
-              <div className="relative mt-8 w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-md overflow-hidden md:block lg:block xl:block hidden">
-                <Image
-                  src="/images/logo.png"
-                  alt="GenX Career Logo"
-                  fill
-                  className="object-fit object-center ml-3"
-                  priority
-                />
-              </div>
+              <div className="relative mt-8 w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-md overflow-hidden md:block lg:block xl:block hidden"></div>
               <form
                 onSubmit={handleSubmit}
                 className="max-w-md md:ml-auto w-full p-4"
               >
-                <h3 className="text-purple-900 font-calibri text-5xl font-extrabold mb-8 text-center">
+                <h3 className="text-purple-50 font-calibri text-5xl font-extrabold mb-8 text-center">
                   Register<br></br>
                   <span className="text-sm text-center font-medium">
                     Create new account to continue
@@ -232,9 +232,7 @@ const Page = () => {
                     />
                   </div>
                   {errors.name && (
-                    <p className="mt-1 text-red-600 text-sm">
-                      {errors.name}
-                    </p>
+                    <p className="mt-1 text-red-600 text-sm">{errors.name}</p>
                   )}
                   <div className="relative">
                     <svg
@@ -255,12 +253,14 @@ const Page = () => {
                     />
                   </div>
                   {errors.email && (
-                    <p className="mt-1 text-red-600 text-sm">
-                      {errors.email}
-                    </p>
+                    <p className="mt-1 text-red-600 text-sm">{errors.email}</p>
                   )}
                   <div className="relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute inset-x-0 left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-4"
+                    >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
                     <input
@@ -311,7 +311,11 @@ const Page = () => {
                     </p>
                   )}
                   <div className="relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-4 fill-gray-400 w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute left-3 top-4 fill-gray-400 w-4 h-4"
+                    >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
                     <input
@@ -331,7 +335,9 @@ const Page = () => {
                     <button
                       type="button"
                       className="absolute right-3 top-4 w-4 h-5 cursor-pointer"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                     >
                       {showConfirmPassword ? (
                         <svg
@@ -366,35 +372,36 @@ const Page = () => {
                 <div className="!mt-8">
                   <button
                     type="submit"
-                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
-                      ? "cursor-not-allowed bg-purple-300"
-                      : "hover:bg-purple-800"
-                      }`}
+                    className={`w-full bg-purple-800 text-white py-2 px-4 rounded-md transition ${
+                      loading
+                        ? "cursor-not-allowed bg-purple-300"
+                        : "hover:bg-purple-500"
+                    }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-4">
                       {loading ? (
                         <>
-                          <p className="text-white text-lg font-semibold">Please wait</p>
+                          <p className="text-white text-lg font-semibold">
+                            Please wait
+                          </p>
                           <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                         </>
                       ) : (
                         <>
-
                           <p className="text-white text-lg font-semibold">
                             Register
                           </p>
                         </>
                       )}
-
                     </div>
                   </button>
                 </div>
-                <p className="text-sm mt-4 text-gray-800 ">
+                <p className="text-sm mt-4 text-white ">
                   Already have an account?{" "}
                   <Link
                     href="/auth/login"
-                    className="text-purple-600 font-semibold hover:underline ml-1"
+                    className="text-purple-50 font-semibold hover:underline ml-1"
                   >
                     Login here
                   </Link>

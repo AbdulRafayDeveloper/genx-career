@@ -113,7 +113,7 @@ const Contact = () => {
     <div className="relative">
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/design.png')" }}
+        style={{ backgroundImage: "url('/bg/bg.jpg')" }}
       ></div>
       <div className="relative z-10">
         <Header
@@ -121,31 +121,34 @@ const Contact = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
-        <div className="flex flex-col justify-center items-center min-h-screen mt-14 p-5 mb-10">
-          <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-6xl">
+        <div className="flex flex-col justify-center items-center min-h-screen mt-6 p-5 mb-10">
+          <div className="bg-white bg-opacity-20 shadow-lg rounded-lg p-8 w-full max-w-6xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Left Column */}
               <div className="space-y-4">
-                <h2 className="text-3xl font-bold text-purple-900 pb-6">
+                <h2 className="text-3xl font-bold text-purple-200 pb-6">
                   Get in Touch
                 </h2>
-                <p className="text-gray-700 text-lg">
+                <p className="text-white text-lg">
                   Have questions or feedback? We are here to help! Our dedicated
                   support team is just a click away, ready to assist you on your
                   journey.
                 </p>
                 <div className="flex items-center space-x-4">
-                  <FontAwesomeIcon icon={faPhone} className="text-purple-700 size-4" />
-                  <p className="text-gray-700 text-lg font-semibold">
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    className="text-white size-4"
+                  />
+                  <p className="text-purple-200 text-lg font-semibold">
                     111-222-333
                   </p>
                 </div>
                 <div className="flex items-center space-x-4">
                   <FontAwesomeIcon
                     icon={faMailForward}
-                    className="text-purple-700 size-4"
+                    className="text-white size-4"
                   />
-                  <p className="text-gray-700 text-lg font-semibold">
+                  <p className="text-purple-200 text-lg font-semibold">
                     genxcareer@gmail.com
                   </p>
                 </div>
@@ -153,15 +156,12 @@ const Contact = () => {
 
               {/* Right Column */}
               <div>
-                <h3 className="text-2xl font-bold text-purple-900 mb-10">
-                  Contact Us
-                </h3>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   {/* Name Field */}
                   <div>
                     <label
                       htmlFor="name"
-                      className="block text-lg font-medium text-gray-700"
+                      className="block text-lg font-medium text-white"
                     >
                       Name
                     </label>
@@ -178,39 +178,46 @@ const Contact = () => {
                         id="name"
                         name="name"
                         placeholder="Arooba Zaman"
-                        className="mt-1 pl-10 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                        className="mt-1 pl-10 block w-full rounded-md border border-gray-300 bg-white bg-opacity-70 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                         required
                       />
-
                     </div>
                     {errors.name && (
-                      <span className="text-red-500 text-sm">{errors.name}</span>
+                      <span className="text-red-500 text-sm">
+                        {errors.name}
+                      </span>
                     )}
                   </div>
-
 
                   {/* Email Field */}
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-lg font-medium text-gray-700"
+                      className="block text-lg font-medium text-white"
                     >
                       Email
                     </label>
                     <div className="relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5">
-                        <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" /></svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5"
+                      >
+                        <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+                      </svg>
                       <input
                         type="email"
                         id="email"
                         name="genxcareer@gmail.com"
                         placeholder="genxcareer@gmail.com"
-                        className="mt-1 pl-10 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                        className="mt-1 pl-10 block w-full rounded-md border border-gray-300 bg-white bg-opacity-70 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                         required
                       />
                     </div>
                     {errors.email && (
-                      <span className="text-red-500 text-sm">{errors.email}</span>
+                      <span className="text-red-500 text-sm">
+                        {errors.email}
+                      </span>
                     )}
                   </div>
 
@@ -218,7 +225,7 @@ const Contact = () => {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-lg font-medium text-gray-700"
+                      className="block text-lg font-medium text-white"
                     >
                       Message
                     </label>
@@ -227,37 +234,47 @@ const Contact = () => {
                       name="message"
                       placeholder="Write a message here..."
                       rows="4"
-                      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
+                      className="mt-1 pl-10 block w-full rounded-md border border-gray-300 bg-white bg-opacity-70 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                       required
                     ></textarea>
                     {errors.message && (
-                      <span className="text-red-500 text-sm">{errors.message}</span>
+                      <span className="text-red-500 text-sm">
+                        {errors.message}
+                      </span>
                     )}
                   </div>
 
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading ? "cursor-not-allowed bg-purple-300" : "hover:bg-purple-800"
-                      }`}
+                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
+                      loading
+                        ? "cursor-not-allowed bg-purple-300"
+                        : "hover:bg-purple-800"
+                    }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-4">
                       {loading ? (
                         <>
-                          <p className="text-white text-lg font-semibold">Please wait</p>
+                          <p className="text-white text-lg font-semibold">
+                            Please wait
+                          </p>
                           <span className="animate-spin inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full"></span>
                         </>
                       ) : (
                         <>
-                          <FontAwesomeIcon icon={faPaperPlane} className="text-white size-4" />
-                          <p className="text-white text-lg font-semibold">Send Message</p>
+                          <FontAwesomeIcon
+                            icon={faPaperPlane}
+                            className="text-white size-4"
+                          />
+                          <p className="text-white text-lg font-semibold">
+                            Send Message
+                          </p>
                         </>
                       )}
                     </div>
                   </button>
-
-
                 </form>
               </div>
             </div>

@@ -126,7 +126,7 @@ const Page = () => {
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/design.png')",
+          backgroundImage: "url('/bg/bg.jpg')",
         }}
       ></div>
       <div className="relative z-10 scrollbar-hidden">
@@ -140,13 +140,13 @@ const Page = () => {
         <div className="flex h-screen w-screen mt-28">
           <div className="flex flex-col lg:flex-row gap-6 px-4 w-full bg-opacity-50 justify-center">
             {/* Left Column (Rating) */}
-            <div className="flex-grow lg:w-1/6 max-h-screen overflow-y-auto rounded-lg p-4 shadow bg-yellow-100 bg-opacity-50 flex flex-col items-center justify-center text-center">
+            <div className="flex-grow max-h-screen overflow-y-auto rounded-lg p-4 shadow  bg-opacity-50 flex flex-col items-center justify-center text-center hidden lg:flex">
               {results && typeof results === "string" ? (
                 <>
-                  <h2 className="text-5xl font-bold text-purple-900 mb-4">
+                  <h2 className="text-5xl font-bold text-purple-200 mb-4">
                     Rating
                   </h2>
-                  <div className=" p-4 rounded text-purple-700">
+                  <div className=" p-4 rounded text-purple-200">
                     {(() => {
                       const { emoji, text } = getEmojiForRating(
                         extractRatingAndDetails(results).rating
@@ -179,14 +179,14 @@ const Page = () => {
                 </span>
               </div>
 
-              <div className="bg-purple-900 rounded bg-opacity-50 pb-28 pt-16 flex flex-col items-center justify-start relative h-auto">
+              <div className="bg-purple-900 rounded bg-opacity-50 pb-20 pt-16 flex flex-col items-center justify-start relative h-auto">
                 {/* Heading */}
-                <h2 className="text-white text-3xl font-bold mb-4 z-10">
+                <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4 z-10 text-center px-4">
                   Craft Your Perfect CV in Minutes!
                 </h2>
 
                 {/* Button */}
-                <button className="bg-purple-500 text-white py-2 px-6 rounded-full mb-32 z-10 hover:bg-purple-900 hover:text-white">
+                <button className="bg-purple-500 text-white py-2 px-8 sm:px-10 rounded-full mb-24 z-10 hover:bg-purple-900 hover:text-white text-sm sm:text-base">
                   Generate!
                 </button>
 
@@ -194,7 +194,7 @@ const Page = () => {
                 <img
                   src="/images/image.png"
                   alt="CV Image"
-                  className="absolute bottom-0 transform translate-x-[-50%] left-1/2 w-1/2 z-0 mt-20"
+                  className="absolute bottom-0 transform -translate-x-1/2 left-1/2 w-3/4 sm:w-2/3 md:w-1/2 lg:w-2/5 z-0"
                 />
               </div>
 

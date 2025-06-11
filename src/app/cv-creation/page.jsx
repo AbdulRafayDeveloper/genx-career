@@ -66,7 +66,7 @@ const Page = () => {
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: "url('bg.png')",
+          backgroundImage: "url('/bg/bg.jpg')",
         }}
       ></div>
       <div className="relative z-10 scrollbar-hidden">
@@ -100,15 +100,15 @@ const Page = () => {
           </div>
         )}
 
-        <div className="flex h-screen w-screen flex-col">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 mt-2 gap-10">
+        <div className="flex  w-screen flex-col">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 lg:mt-2 gap-10 sm:mt-20">
             {/* Left Column */}
             <div className="flex flex-col justify-center items-center text-center lg:w-1/2 space-y-6">
-              <h1 className="xl:text-7xl lg:text-6xl md:text-4xl text-3xl font-sans font-extrabold  bg-clip-text text-black">
+              <h1 className="xl:text-7xl lg:text-6xl md:text-4xl text-3xl font-sans font-extrabold  bg-clip-text text-white">
                 Professional CV Builder
               </h1>
 
-              <p className="text-purple-950 text-lg md:text-xl font-sans leading-relaxed px-2">
+              <p className="text-white text-lg md:text-xl font-sans leading-relaxed px-2">
                 Only 2% of resumes win. Yours will be one of them. Let’s build
                 you a resume that works.
               </p>

@@ -79,7 +79,7 @@ const Page = () => {
       <div
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/design.png')",
+          backgroundImage: "url('/bg/bg.jpg')",
         }}
       ></div>
 
@@ -89,20 +89,20 @@ const Page = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
-        <div className="flex flex-col justify-center items-center mb-12 mt-20">
-          <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">
+        <div className="flex flex-col justify-center items-center mb-16 mt-28">
+          <h1 className="text-8xl font-extrabold text-transparent bg-clip-text   text-center text-white">
             About
             <br /> GenX Career
           </h1>
-          <p className="mt-4 text-lg text-center font-normal">
+          <p className="mt-4 text-lg text-center font-normal text-white">
             Effortlessly Fetch, Match, and Create: Discover the Power of Job
             Tools
           </p>
           <div className="mt-12">
-            <div className="scoped-container bg-white bg-opacity-40 rounded-2xl">
+            <div className="bg-black bg-opacity-40 rounded-lg">
               <button
                 onClick={() => router.push("/jobs")}
-                className="px-8 py-1 border bg-white bg-opacity-70 text-[#7c53a3] hover:bg-[#a67ccd] hover:text-white"
+                className="px-8 py-1 bg-black rounded-lg text-white hover:bg-white hover:text-black bg-opacity-50"
               >
                 Explore Jobs
               </button>
@@ -219,26 +219,26 @@ const Page = () => {
           {/* Content */}
           <div className="flex flex-col items-center w-full h-full bg-[#7c53a380] bg-opacity-50 flex-wrap justify-center">
             <div className="p-4">
-            <h1 className="text-2xl md:text-5xl lg:text-5xl font-extralight text-white mb-2 text-center mt-4 font-serif">
-              Our Vision : Empowering Careers,<br></br> Simplifying Job Search
-            </h1>
-            <p className="text-center text-white md:mt-4 font-medium">
-              Empowering job seekers with a seamless platform that bridges the{" "}
-              <br />
-              gap between opportunities and talents. By leveraging cutting-edge{" "}
-              <br />
-              technologies, we fetch job listings from multiple platforms via{" "}
-              <br />
-              the TheirStack API, curate them periodically, and offer advanced{" "}
-              <br />
-              search filters for precision job hunting.
-            </p>
+              <h1 className="text-2xl md:text-5xl lg:text-5xl font-extralight text-white mb-2 text-center mt-4 ">
+                Our Vision : Empowering Careers,<br></br> Simplifying Job Search
+              </h1>
+              <p className="text-center text-white md:mt-4 font-medium">
+                Empowering job seekers with a seamless platform that bridges the{" "}
+                <br />
+                gap between opportunities and talents. By leveraging
+                cutting-edge <br />
+                technologies, we fetch job listings from multiple platforms via{" "}
+                <br />
+                the TheirStack API, curate them periodically, and offer advanced{" "}
+                <br />
+                search filters for precision job hunting.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="items-center justify-center flex flex-col mt-20 mb-20  ">
-          <h1 className="text-5xl font-extralight text-purple-900 mb-2 text-center mt-4 font-serif">
+          <h1 className="text-5xl font-extralight text-purple-200 mb-2 text-center mt-4 ">
             Why Choose Us
           </h1>
           <p className="text-center text-purple-400">
@@ -342,37 +342,97 @@ const Page = () => {
           </div>
         </div>
 
-        <section className="benefits-section">
-          <h1 className="section-heading flex items-center justify-center">
-            Who can Use <br />
-            GenX Career
-          </h1>
+        <div className="py-16 sm:py-24 px-4 sm:px-8 lg:px-16 relative overflow-hidden">
+          {/* Background Image Layer */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/bg/benefits.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              opacity: 0.5,
+            }}
+          ></div>
 
-          <div className="floating-labels opacity-50">
-            <div className="label">
-              <span>Frontend Developer</span>
+          {/* Foreground Content Layer */}
+          <div className="relative z-10 flex flex-col lg:flex-row gap-10 items-center justify-between">
+            {/* Left side content */}
+            <div className="p-10 rounded-2xl w-full lg:w-1/2">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4 leading-snug">
+                Who can use our services?
+              </h2>
+              <p className="text-white mb-8">
+                Offering unique features and benefits that are tailored to your
+                needs.
+              </p>
             </div>
-            <div className="label">
-              <span>Backend Developer</span>
-            </div>
-            <div className="label">
-              <span>Full-Stack Developer</span>
-            </div>
-            <div className="label">
-              <span>Data Scientist</span>
-            </div>
-            <div className="label">
-              <span>Artifical Intelligence Engineer</span>
-            </div>
-            <div className="label">
-              <span>Network Engineer</span>
+
+            {/* Right side features */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full lg:w-1/2">
+              {[
+                {
+                  title: "Frontend Developers",
+                  description:
+                    "Seamlessly connect with various job platforms for maximum reach.",
+                },
+                {
+                  title: "Backend Developers",
+                  description:
+                    "Keep your data fresh with scheduled and automated updates.",
+                },
+                {
+                  title: "Full-Stack Developer",
+                  description:
+                    "Securely store job listings and user information with scalable storage.",
+                },
+                {
+                  title: "Data Scientist",
+                  description:
+                    "Quickly refine job search with powerful filtering options.",
+                },
+                {
+                  title: "Artifical Intelligence Engineer",
+                  description:
+                    "Personalized job suggestions based on user preferences and profile.",
+                },
+                {
+                  title: "Network Engineer",
+                  description:
+                    "Accurately match resumes with job listings using AI-powered algorithms.",
+                },
+              ].map((item, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="p-3 bg-indigo-50 rounded-lg">
+                    <svg
+                      className="w-6 h-6 text-indigo-600"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-gray-300 text-sm">{item.description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
         <section className="py-10 sm:py-16 lg:py-24">
           <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-5xl font-extralight text-purple-900 mb-2 text-center mt-4 font-serif">
+              <h2 className="text-5xl font-extralight text-purple-200 mb-2 text-center mt-4 ">
                 Explore Common Questions
               </h2>
             </div>
@@ -380,14 +440,14 @@ const Page = () => {
               {questions.map((item, index) => (
                 <div
                   key={index}
-                  className="transition-all duration-200 bg-gray-100 bg-opacity-25 border border-gray-200 shadow-lg cursor-pointer hover:bg-gray-300 rounded-2xl"
+                  className="transition-all duration-200 bg-gray-100 bg-opacity-25 border border-gray-200 shadow-lg cursor-pointer hover:bg-gray-800 rounded-2xl hover:bg-opacity-50"
                 >
                   <button
                     type="button"
                     onClick={() => toggleQuestion(index)}
                     className="flex items-center justify-between w-full px-4 py-5 sm:p-6 "
                   >
-                    <span className="flex text-lg font-semibold text-purple-700">
+                    <span className="flex text-lg font-semibold text-white">
                       {item.question}
                     </span>
                     <svg
@@ -395,7 +455,7 @@ const Page = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      className={`w-6 h-6 text-purple-700 transform ${
+                      className={`w-6 h-6 text-white transform ${
                         openQuestion === index ? "rotate-180" : ""
                       }`}
                     >
@@ -408,14 +468,14 @@ const Page = () => {
                     </svg>
                   </button>
                   {openQuestion === index && (
-                    <div className="px-4 pb-5 sm:px-6 sm:pb-6">
+                    <div className="px-4 pb-5 sm:px-6 sm:pb-6 text-white">
                       <p>{item.answer}</p>
                     </div>
                   )}
                 </div>
               ))}
             </div>
-            <p className="text-center text-gray-600 text-base mt-9">
+            <p className="text-center text-gray-300 text-base mt-9">
               Still have questions?{" "}
               <Link
                 href={"/contact"}
