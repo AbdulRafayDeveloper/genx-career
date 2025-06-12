@@ -142,7 +142,7 @@ const Page = () => {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 512 512"
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-white w-4 h-5"
                     >
                       <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                     </svg>
@@ -152,7 +152,7 @@ const Page = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className=" w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 outline-none focus:bg-transparent"
+                      className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 bg-transparent outline-none focus:bg-gray-400 focus:bg-opacity-50 placeholder-white"
                       placeholder="Email address"
                     />
                   </div>
@@ -163,7 +163,7 @@ const Page = () => {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 448 512"
-                      className="absolute inset-x-0 left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-4"
+                      className="absolute inset-x-0 left-3 top-1/2 transform -translate-y-1/2 fill-white w-4 h-4"
                     >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
@@ -173,7 +173,7 @@ const Page = () => {
                       value={formData.password}
                       onChange={handleChange}
                       required
-                      className=" w-full text-sm text-gray-800 px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 outline-none focus:bg-transparent"
+                      className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 bg-transparent outline-none focus:bg-gray-400 focus:bg-opacity-50 placeholder-white"
                       placeholder="Password"
                     />
                     <button

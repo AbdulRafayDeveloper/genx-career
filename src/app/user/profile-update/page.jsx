@@ -3,15 +3,13 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import Cookies from "js-cookie";
+import axios from "axios";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const ProfileUpdatePage = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +17,6 @@ const ProfileUpdatePage = () => {
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [errors, setErrors] = useState({});
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,7 +30,7 @@ const ProfileUpdatePage = () => {
       ...prevData,
       [name]: value,
     }));
-    setErrors(prev => ({ ...prev, [name]: undefined }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const validateForm = () => {
@@ -46,7 +43,7 @@ const ProfileUpdatePage = () => {
       newError.name = "Name must be less than 35 characters";
     }
     return newError;
-  }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -73,11 +70,15 @@ const ProfileUpdatePage = () => {
 
         if (response.status !== 200) {
           console.log("Error fetching user data:", response.data.message);
-          toast.error(response.data.message || "Profile Information not found currently. Please try again later");
+          toast.error(
+            response.data.message ||
+              "Profile Information not found currently. Please try again later"
+          );
           return;
         }
 
-        const { name, email, password, profileImage } = response.data.data || {};
+        const { name, email, password, profileImage } =
+          response.data.data || {};
 
         setFormData({
           name: name || "",
@@ -90,9 +91,11 @@ const ProfileUpdatePage = () => {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
-        toast.error(error.message || "Profile Information not found currently. Please try again later");
+        toast.error(
+          error.message ||
+            "Profile Information not found currently. Please try again later"
+        );
       }
-
     };
 
     fetchUserData();
@@ -120,7 +123,7 @@ const ProfileUpdatePage = () => {
       setLoading(false);
       return;
     }
-    
+
     try {
       const token = Cookies.get("token");
       const userId = Cookies.get("userId");
@@ -140,7 +143,6 @@ const ProfileUpdatePage = () => {
       for (let [key, value] of updateData.entries()) {
         console.log(`${key}:`, value);
       }
-
 
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/user-profile-update/${userId}`,
@@ -162,12 +164,14 @@ const ProfileUpdatePage = () => {
       }
     } catch (error) {
       console.log("Update error:", error);
-      toast.error(error.response.data.message || "Something went wrong while updating the profile.");
+      toast.error(
+        error.response.data.message ||
+          "Something went wrong while updating the profile."
+      );
     } finally {
       setLoading(false);
     }
   };
-
 
   return (
     <>
@@ -183,22 +187,23 @@ const ProfileUpdatePage = () => {
         pauseOnHover
         theme="light"
       />
-      <div
-        className="min-h-screen flex flex-col items-center justify-center p-5 "
-      >
+      <div className="min-h-screen flex flex-col items-center justify-center p-5  ">
         {/* Background */}
-        {/* <div
-          className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/design.png')" }}
-        ></div> */}
-        <main className="w-full max-w-lg p-8 shadow-xl mb-4 shadow-purple-300">
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-cover bg-center z-0"
+          style={{ backgroundImage: "url('/bg/benefits.jpg')" }}
+        ></div>
+
+        <main className="relative z-10 w-full max-w-lg p-8 shadow-xl mb-4 shadow-purple-300 bg-black bg-opacity-50 rounded-lg">
           {/* Avatar Upload */}
           <div className="flex justify-center items-center text-center m-7 ">
-            <p className="text-xl xl:text-4xl md:text-2xl lg:text-3xl font-bold text-purple-800 ">Update Profile</p>
+            <p className="text-xl xl:text-4xl md:text-2xl lg:text-3xl font-bold text-purple-50 ">
+              Update Profile
+            </p>
           </div>
           <button
             onClick={() => router.push("/")}
-            className="fixed top-4 left-4 p-2 bg-white bg-opacity-80 rounded-full text-purple-600 shadow-md hover:bg-opacity-100 transition z-50"
+            className="fixed top-4 left-4 p-2   text-purple-600 hover:bg-opacity-100 transition z-50"
           >
             <FontAwesomeIcon
               icon={faArrowLeft}
@@ -213,8 +218,8 @@ const ProfileUpdatePage = () => {
                   imageFile
                     ? image // Temporary preview for newly uploaded image
                     : image
-                      ? `${image}`
-                      : defaultProfile
+                    ? `${image}`
+                    : defaultProfile
                 }
                 alt="Avatar"
                 width={40}
@@ -249,12 +254,17 @@ const ProfileUpdatePage = () => {
           <form onSubmit={handleSubmit} className=" space-y-2">
             {/* Name Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Name
               </label>
               <div className="relative">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
-                  <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" /></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                  className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300"
+                >
+                  <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
+                </svg>
                 <input
                   name="name"
                   placeholder="Enter your name"
@@ -266,16 +276,22 @@ const ProfileUpdatePage = () => {
                   required
                 />
               </div>
-              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
             </div>
 
             {/* Email Field (non-editable) */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Email Address
               </label>
               <div className="relative">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="absolute left-3 top-1/3 transition-translate-y-1/3 h-5 w-4 fill-gray-300"
+                >
                   <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                 </svg>
                 <input
@@ -292,8 +308,11 @@ const ProfileUpdatePage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading ? "cursor-not-allowed bg-purple-300" : "hover:bg-purple-800"
-                }`}
+              className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
+                loading
+                  ? "cursor-not-allowed bg-purple-300"
+                  : "hover:bg-purple-800"
+              }`}
               disabled={loading}
             >
               <div className="flex items-center justify-center space-x-2">
@@ -304,8 +323,13 @@ const ProfileUpdatePage = () => {
                   </>
                 ) : (
                   <>
-                    <FontAwesomeIcon icon={faPaperPlane} className="text-white size-4" />
-                    <p className="text-white text-lg font-semibold">Update Profile</p>
+                    <FontAwesomeIcon
+                      icon={faPaperPlane}
+                      className="text-white size-4"
+                    />
+                    <p className="text-white text-lg font-semibold">
+                      Update Profile
+                    </p>
                   </>
                 )}
               </div>

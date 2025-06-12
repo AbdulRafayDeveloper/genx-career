@@ -88,7 +88,7 @@ const Home = () => {
         "View personalized job suggestions based on your profile.",
         "Submit applications to suitable job postings seamlessly.",
       ],
-      image: "/images/Capture.PNG",
+      image: "/bg/job_finding.PNG",
     },
     {
       title: "CV Matching",
@@ -100,7 +100,7 @@ const Home = () => {
         "Review feedback and suggestions to improve your resume.",
         "Update your resume and recheck the match to maximize compatibility.",
       ],
-      image: "/images/Capture2.PNG",
+      image: "/bg/cv_matching.PNG",
     },
     {
       title: "CV Generation",
@@ -112,7 +112,7 @@ const Home = () => {
         "Preview your resume and make final adjustments.",
         "Download your polished resume in PDF format.",
       ],
-      image: "/images/Capture3.PNG",
+      image: "/bg/cv_creation.PNG",
     },
   ];
 

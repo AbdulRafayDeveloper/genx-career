@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Page = () => {
   const router = useRouter();
@@ -16,15 +16,13 @@ const Page = () => {
     const newError = {};
     if (email.trim() === "") {
       newError.email = "Please provide an email. Email is not empty";
-    }
-    else if (typeof email !== "string") {
+    } else if (typeof email !== "string") {
       newError.email = "Please provide an email that must be in a valid format";
-    }
-    else if (!email.includes("@")) {
+    } else if (!email.includes("@")) {
       newError.email = "Please provide an email that must be in a valid format";
     }
     return newError;
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +39,7 @@ const Page = () => {
       toast.error("Email is required.");
       setLoading(false);
       return;
-    }    
+    }
 
     try {
       const response = await axios.post(
@@ -59,20 +57,21 @@ const Page = () => {
         // setLoading(false);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
       } else {
-        toast.error(response.data.message || "Failed to send email. Please try again.");
+        toast.error(
+          response.data.message || "Failed to send email. Please try again."
+        );
         // setLoading(false);
       }
     } catch (error) {
       // setLoading(false);
       console.log("Error sending email:", error);
       toast.error(
-        error.response?.data?.message ||
-        "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again."
       );
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -92,7 +91,7 @@ const Page = () => {
         {/* Background Image */}
         <div
           className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBsicscfPq6Fw86u6OmNdPhhRt5WV8o-gS1A&s')" }}
+          style={{ backgroundImage: "url('/bg/benefits.jpg')" }}
         ></div>
 
         {/* Main Form Card */}
@@ -110,16 +109,13 @@ const Page = () => {
             ></path>
           </svg>
         </div> */}
-        <main
-
-          className=" max-w-lg p-8  relative z-10 bg-white bg-opacity-50"
-        >
+        <main className=" max-w-lg p-8  relative z-10 ">
           {/* Title */}
           <div className="text-center mb-8">
-            <h1 className="xl:text-4xl lg:text-3xl md:text-2xl text-xl font-extrabold text-purple-900 font-serif ">
+            <h1 className="xl:text-5xl lg:text-5xl md:text-4xl text-5xl font-extrabold text-purple-950 font-serif ">
               Forget Password?
             </h1>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-50">
               Enter your email address to reset your password.
             </p>
           </div>
@@ -127,14 +123,12 @@ const Page = () => {
           {/* Form Section */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email Address
-              </label>
               <div className="relative">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="absolute left-3 top-1/4 transition-translate-y-1/3 h-5 w-4 fill-gray-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="absolute left-3 top-1/4 transition-translate-y-1/3 h-5 w-4 fill-gray-300"
+                >
                   <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                 </svg>
                 <input
@@ -144,7 +138,7 @@ const Page = () => {
                   value={email}
                   placeholder="Enter the email"
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-sm border border-purple-700 outline-none text-sm bg-gray-50"
+                  className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300  bg-opacity-50 outline-none bg-gray-400 focus:bg-opacity-60 placeholder-white"
                   required
                 />
               </div>
@@ -156,19 +150,26 @@ const Page = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 rounded-md text-white font-semibold transition ${loading
-                ? "bg-purple-900 cursor-not-allowed"
-                : "bg-purple-900 hover:bg-purple-900"
-                }`}
+              className={`w-full py-3 px-4 rounded-md text-white font-semibold transition ${
+                loading
+                  ? "bg-purple-900 cursor-not-allowed"
+                  : "bg-purple-900 hover:bg-purple-900"
+              }`}
             >
-              {loading ? (<>
-                <div className="flex justify-center items-center gap-3">
-                  <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">Please wait</p>
-                  <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
-                </div>
-              </>) : (
+              {loading ? (
                 <>
-                  <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm font-semibold">Submit</p>
+                  <div className="flex justify-center items-center gap-3">
+                    <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm">
+                      Please wait
+                    </p>
+                    <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-white xl:text-lg lg:text-lg md:text-md text-sm font-semibold">
+                    Submit
+                  </p>
                 </>
               )}
             </button>
@@ -176,19 +177,17 @@ const Page = () => {
 
           {/* Footer Links */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-white">
               Remember your password?{" "}
               <Link
                 href="../login"
-                className="text-purple-900 hover:underline font-medium"
+                className="text-white hover:underline font-medium"
               >
                 Login here
               </Link>
             </p>
           </div>
         </main>
-
-
       </div>
     </>
   );

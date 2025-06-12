@@ -4,14 +4,12 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Cookies from 'js-cookie';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Cookies from "js-cookie";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-import {
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const router = useRouter();
@@ -21,13 +19,11 @@ const Page = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
-
   const [formData, setFormData] = useState({
     password: "",
     newPassword: "",
     confirmNewPassword: "",
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +51,9 @@ const Page = () => {
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = "New password must be at least 8 characters long";
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/.test(formData.newPassword)
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/.test(
+        formData.newPassword
+      )
     ) {
       newErrors.newPassword =
         "New password must contain at least one uppercase letter, one lowercase letter, one number, and one special character";
@@ -71,7 +69,6 @@ const Page = () => {
     return newErrors;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -83,7 +80,7 @@ const Page = () => {
       setLoading(false);
       return;
     }
-    
+
     setErrors({});
 
     const token = Cookies.get("token");
@@ -102,11 +99,10 @@ const Page = () => {
       // updateData.append("password", formData.password);
       // updateData.append("newPassword", formData.newPassword);
 
-
       const updateData = {
         password: formData.password,
         newPassword: formData.newPassword,
-        confirmNewPassword: formData.confirmNewPassword
+        confirmNewPassword: formData.confirmNewPassword,
       };
 
       // console all values of updateData
@@ -150,10 +146,12 @@ const Page = () => {
       }
     } catch (error) {
       console.log("Error fetching user data:", error.response.data.message);
-      toast.error(error.response.data.message || "An error occurred. Please try again.");
+      toast.error(
+        error.response.data.message || "An error occurred. Please try again."
+      );
       return;
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -174,44 +172,47 @@ const Page = () => {
       <div className="relative">
         <div
           className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        // style={{ backgroundImage: "url('/images/design.png')" }}
+          style={{ backgroundImage: "url('/bg/benefits.jpg')" }}
         ></div>
         <div className="font-[sans-serif] relative z-10">
           <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
             <div className="grid md:grid-cols-2 items-center gap-4 max-w-5xl w-full">
               <button
                 onClick={() => router.push("/")}
-                className="fixed top-4 left-4 p-2 bg-white bg-opacity-80 rounded-full text-purple-600 shadow-md hover:bg-opacity-100 transition z-50"
+                className="fixed top-4 left-4 p-2  text-purple-600  hover:bg-opacity-100 transition z-50"
               >
                 <FontAwesomeIcon
                   icon={faArrowLeft}
                   className="w-8 h-8"
                 ></FontAwesomeIcon>
               </button>
-              <div className="hidden xl:block md:block lg:block">
-                <img src="https://img.freepik.com/free-vector/my-password-concept-illustration_114360-4294.jpg?semt=ais_hybrid&w=740" className="rounded object-cover" />
-              </div>
+              <div className="hidden xl:block md:block lg:block"></div>
 
               <form
                 onSubmit={handleSubmit}
                 className="max-w-md md:ml-auto w-full mt-12"
               >
-                <h3 className="flex justify-center text-center items-center text-purple-900 font-serif text-3xl font-extrabold mb-8">
+                <h3 className="text-purple-50 font-calibri text-5xl  font-extrabold mb-8 text-center">
                   Update Password
                 </h3>
 
                 <div className="space-y-4">
                   <div>
                     <div className="relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5">
-                        <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" /></svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-white w-4 h-5"
+                      >
+                        <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
+                      </svg>
                       <input
                         name="password"
                         type={showPassword ? "text" : "password"}
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        className="bg-gray-50 pl-10 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                        className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 bg-transparent outline-none focus:bg-gray-400 focus:bg-opacity-50 placeholder-white"
                         placeholder="Current Password"
                       />
                       <button
@@ -223,7 +224,7 @@ const Page = () => {
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="currentColor"
+                            fill="white"
                             className="w-5 h-5 text-gray-400"
                           >
                             <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
@@ -237,7 +238,7 @@ const Page = () => {
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="currentColor"
+                            fill="white"
                             className="size-5"
                           >
                             <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
@@ -248,12 +249,18 @@ const Page = () => {
                       </button>
                     </div>
                     {errors.password && (
-                      <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.password}
+                      </p>
                     )}
                   </div>
                   <div>
                     <div className="relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-white w-4 h-5"
+                      >
                         <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                       </svg>
                       <input
@@ -262,7 +269,7 @@ const Page = () => {
                         value={formData.newPassword}
                         onChange={handleChange}
                         required
-                        className="bg-gray-50 w-full pl-10 text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                        className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 bg-transparent outline-none focus:bg-gray-400 focus:bg-opacity-50 placeholder-white"
                         placeholder="New Password"
                       />
                       <button
@@ -274,7 +281,7 @@ const Page = () => {
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="currentColor"
+                            fill="white"
                             className="w-5 h-5 text-gray-400"
                           >
                             <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
@@ -288,7 +295,7 @@ const Page = () => {
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="currentColor"
+                            fill="white"
                             className="size-5"
                           >
                             <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
@@ -299,12 +306,18 @@ const Page = () => {
                       </button>
                     </div>
                     {errors.newPassword && (
-                      <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.newPassword}
+                      </p>
                     )}
                   </div>
                   <div>
                     <div className="relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-gray-400 w-4 h-5">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 fill-white w-4 h-5"
+                      >
                         <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                       </svg>
                       <input
@@ -313,12 +326,14 @@ const Page = () => {
                         value={formData.confirmNewPassword}
                         onChange={handleChange}
                         required
-                        className="bg-gray-50 pl-10 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-purple-600 focus:bg-transparent"
+                        className="w-full text-sm text-white px-4 py-3.5 pl-9 rounded-md border-2 border-purple-300 bg-transparent outline-none focus:bg-gray-400 focus:bg-opacity-50 placeholder-white"
                         placeholder="Confirm New Password"
                       />
                       <button
                         type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                         className="absolute right-3 top-1/2 transform -translate-y-1/2"
                       >
                         {showConfirmPassword ? (
@@ -326,7 +341,7 @@ const Page = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
-                            className="w-5 h-5 text-gray-400"
+                            className="w-5 h-5 text-white"
                           >
                             <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                             <path
@@ -339,7 +354,7 @@ const Page = () => {
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="currentColor"
+                            fill="white"
                             className="size-5"
                           >
                             <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
@@ -350,7 +365,9 @@ const Page = () => {
                       </button>
                     </div>
                     {errors.confirmNewPassword && (
-                      <p className="text-red-500 text-sm mt-1">{errors.confirmNewPassword}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.confirmNewPassword}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -358,8 +375,11 @@ const Page = () => {
                 <div className="!mt-8">
                   <button
                     type="submit"
-                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading ? "cursor-not-allowed bg-purple-300" : "hover:bg-purple-800"
-                      }`}
+                    className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
+                      loading
+                        ? "cursor-not-allowed bg-purple-300"
+                        : "hover:bg-purple-800"
+                    }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-2">
@@ -367,18 +387,20 @@ const Page = () => {
                         <>
                           <p className="text-white text-sm">Please wait</p>
                           <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
-
                         </>
                       ) : (
                         <>
-                          <FontAwesomeIcon icon={faPaperPlane} className="text-white size-4" />
-                          <p className="text-white text-lg font-semibold">Update Password</p>
+                          <FontAwesomeIcon
+                            icon={faPaperPlane}
+                            className="text-white size-4"
+                          />
+                          <p className="text-white text-lg font-semibold">
+                            Update Password
+                          </p>
                         </>
                       )}
                     </div>
                   </button>
-
-
                 </div>
               </form>
             </div>
