@@ -15,24 +15,44 @@ const Page = () => {
 
   const questions = [
     {
-      question: "How can I get started?",
+      question: "How do I start using GenX Career?",
       answer:
-        "Getting started is easy! Sign up for an account, and you'll have access to our platform's features. No credit card required for the initial signup.",
+        "Getting started with GenX Career is simple. Just sign up for a free account to instantly access job search, CV matching, and professional CV creation tools. No credit card required.",
     },
     {
-      question: "What is the pricing structure?",
+      question: "What makes GenX Career different from other job platforms?",
       answer:
-        "Our pricing structure is flexible. We offer both free and paid plans. You can choose the one that suits your needs and budget.",
+        "GenX Career combines advanced job fetching from top sources, intelligent CV-to-job matching, and professional CV generation — all in one place. This unique combination increases your chances of landing the right job efficiently.",
     },
     {
-      question: "What kind of support do you provide?",
+      question: "Is the CV matching feature free?",
       answer:
-        "We offer comprehensive customer support. You can reach out to our support team through various channels, including email, chat, and a knowledge base.",
+        "Yes! Our CV matching tool is completely free. You can upload your CV to see how well it aligns with specific job postings, identify gaps, and receive personalized suggestions to improve your chances.",
     },
     {
-      question: "Can I cancel my subscription anytime?",
+      question: "Can I generate a CV on GenX Career?",
       answer:
-        "Yes, you can cancel your subscription at any time without any hidden fees. We believe in providing a hassle-free experience for our users.",
+        "Absolutely. GenX Career offers a built-in CV generator with modern, professional templates designed to help you stand out in the job market.",
+    },
+    {
+      question: "How often are job listings updated?",
+      answer:
+        "We continuously fetch and update jobs from top platforms like Glassdoor and Indeed to ensure you're seeing the latest opportunities. Outdated postings are regularly removed to keep listings fresh and relevant.",
+    },
+    {
+      question: "What support options are available if I face issues?",
+      answer:
+        "Our support team is here to help! You can reach us anytime through our contact page or email. Additionally, we provide detailed guidelines and an up-to-date FAQ section to assist you throughout your journey.",
+    },
+    {
+      question: "Can recruiters benefit from GenX Career?",
+      answer:
+        "Yes. Our CV matching and filtering tools allow recruiters to connect directly with the most relevant candidates, saving time and effort by avoiding manual screening of irrelevant applications.",
+    },
+    {
+      question: "Is my data safe on GenX Career?",
+      answer:
+        "We take data privacy seriously. Your personal information and documents are securely stored and never shared without your consent, in compliance with the latest data protection standards.",
     },
   ];
 
@@ -67,7 +87,7 @@ const Page = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("token");
+    const storedToken = Cookies.get("access_token");
     if (storedToken) {
       setToken(storedToken);
     }
@@ -101,10 +121,12 @@ const Page = () => {
           <div className="mt-12">
             <div className="bg-black bg-opacity-40 rounded-lg">
               <button
-                onClick={() => router.push("/jobs")}
+                onClick={() => (window.location.href = "/jobs")}
                 className="px-8 py-1 bg-black rounded-lg text-white hover:bg-white hover:text-black bg-opacity-50"
               >
-                Explore Jobs
+                <Link href="/jobs" className="whitespace-nowrap">
+                  Explore Jobs
+                </Link>
               </button>
             </div>
           </div>
@@ -455,9 +477,8 @@ const Page = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      className={`w-6 h-6 text-white transform ${
-                        openQuestion === index ? "rotate-180" : ""
-                      }`}
+                      className={`w-6 h-6 text-white transform ${openQuestion === index ? "rotate-180" : ""
+                        }`}
                     >
                       <path
                         strokeLinecap="round"

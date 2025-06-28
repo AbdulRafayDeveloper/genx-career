@@ -112,6 +112,8 @@ const VerifyOtpPage = () => {
     }
 
     try {
+      console.log("Token:", token);
+      console.log("Entered OTP:", enteredOtp);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-otp`,
         { userOtp: enteredOtp },

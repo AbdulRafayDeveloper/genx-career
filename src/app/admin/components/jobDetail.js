@@ -37,25 +37,25 @@ const JobDetail = () => {
     <div className="p-2 sm:ml-64 rounded-lg">
       {/* <Header /> */}
       <div className="p-2 w-full">
-          <div className="flex items-center justify-between">
-            {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar/>
+        <div className="flex items-center justify-between">
+          {/* Mobile: Show sidebar toggle */}
+          <LeftSideBar />
 
-            {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-              Job Details
-            </p>
+          {/* Title */}
+          <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+            Job Details
+          </p>
 
-            {/* Header component */}
-            <div className="ml-auto">
-              <Header appear={true} />
-            </div>
+          {/* Header component */}
+          <div className="ml-auto">
+            <Header appear={true} />
           </div>
         </div>
+      </div>
       <div className="p-6 bg-gray-50 shadow-md rounded-md max-w-5xl mx-auto mt-4">
         {/* Job Title */}
         <h1 className="text-2xl font-bold " style={{ color: "purple" }}>
-          {jobDetails.title}
+          {jobDetails.title || "N/A"}
         </h1>
         <div className="flex items-center space-x-4 mt-2">
           <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
@@ -71,14 +71,14 @@ const JobDetail = () => {
               <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Job Title:
               </span>
-              <span className="text-gray-600 text-sm">{jobDetails.title}</span>
+              <span className="text-gray-600 text-sm">{jobDetails.title || "N/A"}</span>
             </div>
             <div className="flex items-center">
               <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Company Name:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.companyName}
+                {jobDetails.companyName || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -86,7 +86,7 @@ const JobDetail = () => {
                 Location:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.location}
+                {jobDetails.location || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -94,7 +94,7 @@ const JobDetail = () => {
                 Country:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.country}
+                {jobDetails.country || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -102,7 +102,7 @@ const JobDetail = () => {
                 Minimum Annual Salary:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.minAnnualSalary}
+                {jobDetails.minAnnualSalary || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -110,7 +110,7 @@ const JobDetail = () => {
                 Maximum Annual Salary:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.maxAnnualSalary}
+                {jobDetails.maxAnnualSalary || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -118,7 +118,7 @@ const JobDetail = () => {
                 Total Salary with currency:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.salary} ({jobDetails.salaryCurrency})
+                {jobDetails.salary || "N/A"} ({jobDetails.salaryCurrency})
               </span>
             </div>
           </div>
@@ -130,7 +130,7 @@ const JobDetail = () => {
                 Industry:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.industry}
+                {jobDetails.industry || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -138,7 +138,7 @@ const JobDetail = () => {
                 Employment Status:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.employment_statuses.join(", ")}
+                {jobDetails.employment_statuses.join(", ") || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -162,7 +162,7 @@ const JobDetail = () => {
                 Seniority:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.seniority}
+                {jobDetails.seniority || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -170,7 +170,7 @@ const JobDetail = () => {
                 Founded Year:
               </span>
               <span className="text-gray-600 text-sm">
-                {jobDetails.foundedYear}
+                {jobDetails.foundedYear || "N/A"}
               </span>
             </div>
             <div className="flex items-center">
@@ -178,7 +178,7 @@ const JobDetail = () => {
                 Company Website:
               </span>
               <Link
-                href={jobDetails.companyUrl}
+                href={jobDetails.companyUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline text-sm"
@@ -196,7 +196,7 @@ const JobDetail = () => {
               Description:
             </span>
             <p className="text-gray-600 text-sm mt-1 leading-relaxed">
-              {jobDetails.description}
+              {jobDetails.description || "N/A"}
             </p>
           </div>
         </div>

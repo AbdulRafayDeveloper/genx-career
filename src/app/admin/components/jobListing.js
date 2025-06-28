@@ -11,6 +11,8 @@ import Pagination from "./pagination";
 import Header from "./header";
 import LeftSideBar from "./sidebar";
 import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const JobListing = () => {
   const router = useRouter();
@@ -68,7 +70,7 @@ const JobListing = () => {
     if (!selectedJobId) return;
 
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${selectedJobId}`,
         {
@@ -109,8 +111,18 @@ const JobListing = () => {
 
   const downloadJobsExcel = async () => {
     try {
+      const token = Cookies.get('access_token');
+
+      if (!token) {
+        toast.error('You are not logged in. Please log in to download Jobs Excel file.');
+        return;
+      }
+
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/export`, {
         responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });

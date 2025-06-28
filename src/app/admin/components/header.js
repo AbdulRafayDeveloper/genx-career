@@ -101,7 +101,7 @@ const Header = () => {
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove("token");
+        Cookies.remove("access_token");
         router.push("/auth/login");
       }
     });

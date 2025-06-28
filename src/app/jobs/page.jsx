@@ -17,7 +17,7 @@ import Footer from "../components/footer/Footer";
 
 const Page = () => {
   const router = useRouter();
-  // const token = Cookies.get("token");
+  // const token = Cookies.get("access_token");
   const userId = Cookies.get("userId");
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -93,6 +93,9 @@ const Page = () => {
 
   const matchCv = async () => {
     console.log("entered 1");
+
+    console.log("entered 3");
+
     if (!selectedFile) {
       setSelectFile(true);
     }
@@ -115,6 +118,8 @@ const Page = () => {
         }
       );
 
+      console.log("response: ", response);
+
       if (response.data.status === 200) {
         const { data } = response;
         localStorage.setItem(
@@ -126,23 +131,17 @@ const Page = () => {
       } else {
         toast.error(
           response.data.message ||
-            "There is some error in uploading this file. Please try with a correct CV!"
+          "There is some error in uploading this file. Please try with a correct CV!"
         );
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response && error.response.data && error.response.data.message) {
         toast.error(
           error.response.data.message ||
-            "There is some error in uploading this file. Please try with a correct CV!"
-        );
-      } else {
-        toast.error(
           "There is some error in uploading this file. Please try with a correct CV!"
         );
+      } else {
+        toast.error("There is some error in uploading this file. Please try with a correct CV!");
       }
     } finally {
       setIsMatching(false);
@@ -167,6 +166,13 @@ const Page = () => {
         }
       });
 
+      return;
+    }
+
+    const role = Cookies.get("role")?.trim().toLowerCase();
+    if (role !== "user") {
+      console.log("entered 2");
+      toast.error("You are not a user. Please login as a user to match CV.");
       return;
     }
 
@@ -285,6 +291,27 @@ const Page = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleProtectedAction = (callback) => {
+    if (!token) {
+      Swal.fire({
+        title: "Login Required",
+        text: "You need to login first.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/auth/login");
+        }
+      });
+      return;
+    }
+    // Agar login ho to callback call karo
+    callback();
+  };
+
 
   return (
     <>
@@ -409,19 +436,18 @@ const Page = () => {
                       onClick={
                         filter === "Remote only"
                           ? () =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                remote: !prev.remote,
-                              }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              remote: !prev.remote,
+                            }))
                           : filter === "Salary Range"
-                          ? toggleModal
-                          : toggleModalCalender
+                            ? toggleModal
+                            : toggleModalCalender
                       }
-                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${
-                        filter === "Remote only" && formData.remote
-                          ? "bg-purple-500 text-white"
-                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
-                      }`}
+                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
+                        ? "bg-purple-500 text-white"
+                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                        }`}
                     >
                       {filter}
                     </button>
@@ -474,8 +500,8 @@ const Page = () => {
                       {job.hybrid
                         ? "Hybrid"
                         : job.remote
-                        ? "Remote"
-                        : "On-site"}
+                          ? "Remote"
+                          : "On-site"}
                     </p>
                     <p className="text-gray-600">{job.salary}</p>
                   </div>
@@ -497,15 +523,13 @@ const Page = () => {
                         >
                           Match CV
                         </button>
-                        <Link
-                          href={job.applyUrl}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full">
-                            Easy Apply
-                          </button>
-                        </Link>
+                        <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full" onClick={() => {
+                          handleProtectedAction(() => {
+                            window.open(selectedJob.applyUrl, "_blank");
+                          });
+                        }}>
+                          Easy Apply
+                        </button>
                       </div>
                     </div>
                   )}
@@ -556,15 +580,13 @@ const Page = () => {
                     >
                       Match CV
                     </button>
-                    <Link
-                      href={selectedJob.applyUrl}
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <button className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900">
-                        Easy Apply
-                      </button>
-                    </Link>
+                    <button className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900" onClick={() => {
+                      handleProtectedAction(() => {
+                        window.open(selectedJob.applyUrl, "_blank");
+                      });
+                    }}>
+                      Easy Apply
+                    </button>
                   </div>
                 </div>
 

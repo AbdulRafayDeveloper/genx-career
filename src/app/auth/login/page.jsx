@@ -69,6 +69,8 @@ const Page = () => {
         const token = response.data.data.token;
         Cookies.set("access_token", token);
         Cookies.set("userId", response.data.data.user._id);
+        Cookies.set("role", response.data.data.user.role);
+        
 
         console.log("token is :", response.data.data.token);
 

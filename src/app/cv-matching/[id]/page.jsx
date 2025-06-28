@@ -4,6 +4,7 @@ import Header from "../../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 const Page = () => {
   const [results, setResults] = useState(null);
@@ -186,8 +187,14 @@ const Page = () => {
                 </h2>
 
                 {/* Button */}
-                <button className="bg-purple-500 text-white py-2 px-8 sm:px-10 rounded-full mb-24 z-10 hover:bg-purple-900 hover:text-white text-sm sm:text-base">
-                  Generate!
+                <button
+                  className="bg-purple-500 text-white py-2 px-8 sm:px-10 rounded-full mb-24 z-10 hover:bg-purple-900 hover:text-white text-sm sm:text-base"
+                >
+                  <Link
+                    href="/cv-creation"
+                    className="flex items-center justify-center gap-2">
+                    Generate!
+                  </Link>
                 </button>
 
                 {/* Image */}

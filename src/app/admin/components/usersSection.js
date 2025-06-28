@@ -10,6 +10,8 @@ import Pagination from "./pagination";
 import Header from "./header";
 import LeftSideBar from "./sidebar";
 import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserSection = () => {
   const [users, setusers] = useState([]);
@@ -31,7 +33,7 @@ const UserSection = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('token');
+        const token = Cookies.get('access_token');
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
           {
@@ -69,7 +71,7 @@ const UserSection = () => {
     if (!selectedUserId) return;
 
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${selectedUserId}`,
         {
@@ -110,7 +112,7 @@ const UserSection = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('access_token');
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users-list/export`, {
         responseType: "blob",
         headers: {
@@ -250,14 +252,14 @@ const UserSection = () => {
                     <td className="px-6 py-4">
                       {new Date(item.createdAt).toLocaleDateString("en-GB")}
                     </td>
-                    <td className="px-6 py-4 flex gap-1">
+                    <td className="px-6 py-4 flex gap-1 justify-center items-center">
                       <div>
                         {/* Delete Button */}
                         <div
-                          className="p-1 w-5 h-5 bg-red-600 rounded-md flex justify-center items-center  cursor-pointer"
-                          onClick={() => handleDeleteClick(item._id)} // Pass the specific ID
+                          className="w-5 h-5 bg-red-600 rounded-md flex justify-center items-center cursor-pointer"
+                          onClick={() => handleDeleteClick(item._id)}
                         >
-                          <RiDeleteBin6Line color="white" />
+                          <RiDeleteBin6Line className="w-3.5 h-3.5 text-white" />
                         </div>
 
                         {/* Dialog Box */}

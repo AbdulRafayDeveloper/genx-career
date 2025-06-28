@@ -33,7 +33,7 @@ const UserQueries = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('token');
+        const token = Cookies.get('access_token');
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us?page=${currentPage}&limit=${itemsPerPage}&search=${search}`,
           {
@@ -71,7 +71,7 @@ const UserQueries = () => {
     if (!selectedUserId) return;
 
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us/${selectedUserId}`,
         {
@@ -112,7 +112,7 @@ const UserQueries = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('access_token');
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-us-list/export`, {
         responseType: "blob",
         headers: {

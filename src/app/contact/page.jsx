@@ -140,7 +140,7 @@ const Contact = () => {
                     className="text-white size-4"
                   />
                   <p className="text-purple-200 text-lg font-semibold">
-                    111-222-333
+                    +92 306 0815246
                   </p>
                 </div>
                 <div className="flex items-center space-x-4">

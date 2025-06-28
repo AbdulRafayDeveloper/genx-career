@@ -25,9 +25,9 @@ export async function middleware(req) {
   const isProtectedUserRoute =
     pathname.startsWith("/cv-creation") ||
     pathname.startsWith("/cv-matching") ||
-    pathname.startsWith("/jobs") ||
-    pathname.startsWith("/contact") ||
-    pathname.startsWith("/about") ||
+    // pathname.startsWith("/jobs") ||
+    // pathname.startsWith("/contact") ||
+    // pathname.startsWith("/about") ||
     pathname.startsWith("/user/profile-update") ||
     pathname.startsWith("/user/password-update");
 
@@ -73,7 +73,7 @@ export async function middleware(req) {
   } catch (error) {
     console.log("JWT verification failed:", error);
     const response = NextResponse.redirect(new URL("/auth/login", req.url));
-    response.cookies.set("token", "", { maxAge: 0, path: "/" });
+    response.cookies.set("access_token", "", { maxAge: 0, path: "/" });
     return response;
   }
 }
