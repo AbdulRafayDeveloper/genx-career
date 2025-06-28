@@ -2,9 +2,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
-import Swal from 'sweetalert2';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import defaultProfile from "../../../../public/images/profile avatar.png";
@@ -16,13 +16,13 @@ const Header = () => {
   const [showData, setShowData] = useState(false);
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
-    name: ""
+    name: "",
   });
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = Cookies.get("access_token");
         const userId = Cookies.get("userId");
 
         if (!token) {
@@ -43,14 +43,17 @@ const Header = () => {
 
         if (response.status !== 200) {
           console.log("Error fetching user data:", response.data.message);
-          toast.error(response.data.message || "Profile Information not found currently. Please try again later");
+          toast.error(
+            response.data.message ||
+              "Profile Information not found currently. Please try again later"
+          );
           return;
         }
 
         const { name, profileImage } = response.data.data || {};
 
         setFormData({
-          name: name || ""
+          name: name || "",
         });
 
         if (profileImage) {
@@ -58,7 +61,10 @@ const Header = () => {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
-        toast.error(error.message || "Profile Information not found currently. Please try again later");
+        toast.error(
+          error.message ||
+            "Profile Information not found currently. Please try again later"
+        );
       }
     };
 
@@ -86,17 +92,17 @@ const Header = () => {
     e.stopPropagation();
     console.log("Call logout API here");
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You will be logged out!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#8e44ad',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, logout!',
+      confirmButtonColor: "#8e44ad",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove('token');
-        router.push('/auth/login');
+        Cookies.remove("token");
+        router.push("/auth/login");
       }
     });
   };
@@ -117,11 +123,7 @@ const Header = () => {
               >
                 <span className="sr-only">Open user menu</span>
                 <Image
-                  src={
-                    image
-                      ? `${image}`
-                      : defaultProfile
-                  }
+                  src={image ? `${image}` : defaultProfile}
                   alt="user profile"
                   width={40}
                   height={40}
@@ -132,7 +134,7 @@ const Header = () => {
                 <div className="absolute w-44 right-0 mt-2 p-4 bg-white border border-gray-400 rounded-lg shadow-lg z-50">
                   <button
                     type="button"
-                    onClick={() => router.push('/admin/profile-update')}
+                    onClick={() => router.push("/admin/profile-update")}
                     className="flex items-center gap-2 w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
                   >
                     <MdOutlineTipsAndUpdates color="purple" />
@@ -140,7 +142,7 @@ const Header = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => router.push('/admin/password-update')}
+                    onClick={() => router.push("/admin/password-update")}
                     className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
                   >
                     <IoSettingsOutline color="purple" />
@@ -157,10 +159,9 @@ const Header = () => {
                 </div>
               )}
             </div>
-             {/* <span className="mr-4 p-2 text-sm md:text-base">{formData.name || "User Name"}</span> */}
+            {/* <span className="mr-4 p-2 text-sm md:text-base">{formData.name || "User Name"}</span> */}
           </div>
         </div>
-
       </nav>
     </header>
   );

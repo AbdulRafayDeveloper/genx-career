@@ -18,7 +18,7 @@ const Page = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("token");
+    const storedToken = Cookies.get("access_token");
     if (storedToken) {
       setToken(storedToken);
     }

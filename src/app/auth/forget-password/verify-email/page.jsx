@@ -5,6 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const router = useRouter();
@@ -54,7 +55,7 @@ const Page = () => {
 
       if (response.status === 200) {
         toast.success(response.data.message || "Email sent successfully.");
-        // setLoading(false);
+        Cookies.set("emailVerified", true);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
       } else {
         toast.error(

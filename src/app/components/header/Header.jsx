@@ -25,7 +25,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = Cookies.get("access_token");
         const userId = Cookies.get("userId");
 
         if (!token) return;
@@ -79,7 +79,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove("token");
+        Cookies.remove("access_token");
         router.push("/auth/login");
       }
     });

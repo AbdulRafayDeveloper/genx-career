@@ -2,10 +2,10 @@
 import { useState, useRef, useEffect } from "react";
 import LeftSideBar from "../components/sidebar";
 import Header from "../components/header";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
+import axios from "axios";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -36,13 +36,13 @@ export default function SettingForm() {
       newError.name = "Name must be less than 35 characters";
     }
     return newError;
-  }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get("token");
+        const token = Cookies.get("access_token");
         const userId = Cookies.get("userId");
 
         if (!token) {
@@ -63,7 +63,10 @@ export default function SettingForm() {
 
         if (response.status !== 200) {
           console.log("Error fetching user data:", response.data.message);
-          toast.error(response.data.message || "Profile Information not found currently. Please try again later");
+          toast.error(
+            response.data.message ||
+              "Profile Information not found currently. Please try again later"
+          );
           return;
         }
 
@@ -80,7 +83,10 @@ export default function SettingForm() {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
-        toast.error(error.response.data.message || "Profile Information not found currently. Please try again later");
+        toast.error(
+          error.response.data.message ||
+            "Profile Information not found currently. Please try again later"
+        );
       } finally {
         setLoading(false);
       }
@@ -99,7 +105,7 @@ export default function SettingForm() {
       ...prevData,
       [name]: value,
     }));
-    setErrors(prev => ({ ...prev, [name]: undefined }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const handleImageUpload = (event) => {
@@ -122,7 +128,7 @@ export default function SettingForm() {
     }
 
     try {
-      const token = Cookies.get("token");
+      const token = Cookies.get("access_token");
       const userId = Cookies.get("userId");
       if (!token) {
         console.log("Token not found");
@@ -165,7 +171,10 @@ export default function SettingForm() {
     } catch (error) {
       console.log("Update error:", error);
       setLoading(false);
-      toast.error(error.response.data.message || "Something went wrong while updating the profile.");
+      toast.error(
+        error.response.data.message ||
+          "Something went wrong while updating the profile."
+      );
     } finally {
       setLoading(false);
     }
@@ -218,8 +227,8 @@ export default function SettingForm() {
                       imageFile
                         ? image // Temporary preview for newly uploaded image
                         : image
-                          ? `${image}`
-                          : defaultProfile
+                        ? `${image}`
+                        : defaultProfile
                     }
                     alt="User Profile"
                     width={40}
@@ -230,7 +239,11 @@ export default function SettingForm() {
                     htmlFor="imageUpload"
                     className="absolute bottom-0 right-0 bg-purple-600 border border-white p-1 rounded-full cursor-pointer shadow-md"
                   >
-                    <img src="/icons/camera.png" alt="Camera Icon" className="w-5 h-5" />
+                    <img
+                      src="/icons/camera.png"
+                      alt="Camera Icon"
+                      className="w-5 h-5"
+                    />
                   </label>
                   <input
                     type="file"
@@ -247,7 +260,9 @@ export default function SettingForm() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Username */}
                 <div>
-                  <label className="block text-lg font-bold mb-1">Username</label>
+                  <label className="block text-lg font-bold mb-1">
+                    Username
+                  </label>
                   <div className="relative">
                     <input
                       type="text"
@@ -319,27 +334,28 @@ export default function SettingForm() {
                   <div className="!mt-8">
                     <button
                       type="submit"
-                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
-                        ? "cursor-not-allowed bg-purple-600"
-                        : "hover:bg-purple-800"
-                        }`}
+                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
+                        loading
+                          ? "cursor-not-allowed bg-purple-600"
+                          : "hover:bg-purple-800"
+                      }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">
                         {loading ? (
                           <>
-                            <p className="text-white text-lg font-semibold">Please wait</p>
+                            <p className="text-white text-lg font-semibold">
+                              Please wait
+                            </p>
                             <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                           </>
                         ) : (
                           <>
-
                             <p className="text-white text-lg font-semibold">
                               Submit
                             </p>
                           </>
                         )}
-
                       </div>
                     </button>
                   </div>

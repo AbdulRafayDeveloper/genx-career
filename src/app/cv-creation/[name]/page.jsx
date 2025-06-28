@@ -269,7 +269,7 @@ const Page = () => {
         if (result.isConfirmed) {
           setIsGenerating(true);
 
-          const token = Cookies.get("token");
+          const token = Cookies.get("access_token");
           if (!token) {
             console.log("Token not found");
             setLoading(false);

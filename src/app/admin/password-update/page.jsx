@@ -4,10 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import LeftSideBar from "../components/sidebar";
 import { useRouter } from "next/navigation";
 import Header from "../components/header";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function ApplianceForm() {
   const sidebarRef = useRef(null);
@@ -31,7 +31,6 @@ export default function ApplianceForm() {
 
   const [errors, setErrors] = useState({});
   const router = useRouter();
-
 
   const validatePassword = (password) => {
     if (!password) return "Password is required";
@@ -64,7 +63,10 @@ export default function ApplianceForm() {
     }
 
     if (name === "confirmPassword") {
-      tempErrors.confirmPassword = validateConfirmPassword(value, formData.newPassword);
+      tempErrors.confirmPassword = validateConfirmPassword(
+        value,
+        formData.newPassword
+      );
     }
     setErrors(tempErrors);
   };
@@ -75,7 +77,10 @@ export default function ApplianceForm() {
 
     let tempErrors = {
       newPassword: validatePassword(formData.newPassword),
-      confirmPassword: validateConfirmPassword(formData.confirmPassword, formData.newPassword),
+      confirmPassword: validateConfirmPassword(
+        formData.confirmPassword,
+        formData.newPassword
+      ),
     };
     setErrors(tempErrors);
 
@@ -85,7 +90,7 @@ export default function ApplianceForm() {
       return;
     }
 
-    const token = Cookies.get("token");
+    const token = Cookies.get("access_token");
     const userId = Cookies.get("userId");
 
     if (!token) {
@@ -100,7 +105,7 @@ export default function ApplianceForm() {
       const updateData = {
         password: formData.password,
         newPassword: formData.newPassword,
-        confirmNewPassword: formData.confirmPassword
+        confirmNewPassword: formData.confirmPassword,
       };
 
       console.log("Form data:", updateData);
@@ -122,7 +127,9 @@ export default function ApplianceForm() {
       console.log("User data response:", response);
       if (response.status !== 200) {
         console.log("Error fetching user data:", response.data.message);
-        toast.error(response.data.message || "An error occurred. Please try again.");
+        toast.error(
+          response.data.message || "An error occurred. Please try again."
+        );
         return;
       } else {
         toast.success(response.data.message || "Password updated successfully");
@@ -137,7 +144,9 @@ export default function ApplianceForm() {
       }
     } catch (error) {
       console.log("Error fetching user data:", error.response.data.message);
-      toast.error(error.response.data.message || "An error occurred. Please try again.");
+      toast.error(
+        error.response.data.message || "An error occurred. Please try again."
+      );
       return;
     } finally {
       setLoading(false);
@@ -209,16 +218,20 @@ export default function ApplianceForm() {
                 <h1 className="text-2xl sm:text-3xl font-bold text-center text-purple-600 mb-6">
                   Update Password
                 </h1>
-                <form
-                  className="space-y-6"
-                  onSubmit={handleSubmit}
-                >
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   {/* Current Password */}
                   <div className="relative">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Current Password
                     </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4"
+                    >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
                     <input
@@ -226,7 +239,6 @@ export default function ApplianceForm() {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       className="w-full pl-10 px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
-
                       value={formData.password}
                       onChange={handleChange}
                     />
@@ -269,10 +281,17 @@ export default function ApplianceForm() {
 
                   {/* New Password */}
                   <div className="relative">
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="newPassword"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       New Password
                     </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4"
+                    >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
                     <input
@@ -280,7 +299,6 @@ export default function ApplianceForm() {
                       name="newPassword"
                       type={showNewPassword ? "text" : "password"}
                       className="w-full pl-10  px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
-
                       value={formData.newPassword}
                       onChange={handleChange}
                     />
@@ -322,10 +340,17 @@ export default function ApplianceForm() {
                   )}
                   {/* Confirm Password */}
                   <div className="relative">
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Confirm Password
                     </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="absolute inset-x-0 left-3 mt-5 transform -translate-y-1/2 fill-gray-400 w-4 h-4"
+                    >
                       <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
                     <input
@@ -333,13 +358,14 @@ export default function ApplianceForm() {
                       name="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       className="w-full pl-10 px-12 p-2 text-sm rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none"
-
                       value={formData.confirmPassword}
                       onChange={handleChange}
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute inset-y-0 right-3 top-1/3 flex items-center text-gray-500"
                     >
                       {showConfirmPassword ? (
@@ -371,7 +397,9 @@ export default function ApplianceForm() {
                     </button>
                   </div>
                   {errors.confirmPassword && (
-                    <p className="text-xs text-red-500">{errors.confirmPassword}</p>
+                    <p className="text-xs text-red-500">
+                      {errors.confirmPassword}
+                    </p>
                   )}
                   {/* Submit */}
                   <div className="flex justify-end">
@@ -379,27 +407,28 @@ export default function ApplianceForm() {
                       type="submit"
                       className={`inline-flex items-center justify-center
                           px-6 py-2 text-sm font-medium rounded-lg
-                          bg-purple-600 text-white ${loading
-                          ? "cursor-not-allowed bg-purple-300"
-                          : "hover:bg-purple-800"
-                        }`}
+                          bg-purple-600 text-white ${
+                            loading
+                              ? "cursor-not-allowed bg-purple-300"
+                              : "hover:bg-purple-800"
+                          }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">
                         {loading ? (
                           <>
-                            <p className="text-white text-lg font-semibold">Please wait</p>
+                            <p className="text-white text-lg font-semibold">
+                              Please wait
+                            </p>
                             <span className="animate-spin inline-block w-4 h-4 border-2 border-t-2 border-white rounded-full"></span>
                           </>
                         ) : (
                           <>
-
                             <p className="text-white text-lg font-semibold">
                               Update Password
                             </p>
                           </>
                         )}
-
                       </div>
                     </button>
                   </div>
@@ -407,10 +436,8 @@ export default function ApplianceForm() {
               </div>
             </div>
           </main>
-
         </div>
       </div>
     </>
   );
 }
-

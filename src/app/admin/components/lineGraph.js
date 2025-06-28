@@ -187,12 +187,13 @@ ChartJS.register(
 const App = () => {
   const currentYear = new Date().getFullYear();
   const [monthlyData, setMonthlyData] = useState([]);
-  const token = Cookies.get("token");
+  const token = Cookies.get("access_token");
 
   useEffect(() => {
     const fetchMonthlyData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard/users-monthly`,
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard/users-monthly`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -202,7 +203,10 @@ const App = () => {
 
         if (response.status !== 200) {
           console.log("Error fetching monthly data:", response.data.message);
-          toast.error(response.data.message || "Failed to fetch monthly data. Please try again later.");
+          toast.error(
+            response.data.message ||
+              "Failed to fetch monthly data. Please try again later."
+          );
           return;
         }
 
@@ -270,16 +274,18 @@ const App = () => {
     <div className="my-8 p-4">
       <div className="flex justify-center items-center text-center">
         <button className="flex w-full justify-center text-center items-center text-sm xl:text-2xl md:text-xl  bg-purple-200 p-2 rounded-full  font-bold text-purple-900 mb-4">
-          Registration Activity Throughout  {currentYear}
+          Registration Activity Throughout {currentYear}
         </button>
       </div>
       <div className="mt-6 w-full h-64 sm:h-80 md:h-96">
-        <Line data={data} options={{
-          ...options,
-          maintainAspectRatio: false
-        }} />
+        <Line
+          data={data}
+          options={{
+            ...options,
+            maintainAspectRatio: false,
+          }}
+        />
       </div>
-
     </div>
   );
 };

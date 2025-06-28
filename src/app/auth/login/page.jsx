@@ -66,14 +66,21 @@ const Page = () => {
 
       if (response.status === 200) {
         toast.success(response.data.message || "Login successful!");
-        Cookies.set("token", response.data.data.token);
+        const token = response.data.data.token;
+        Cookies.set("access_token", token);
         Cookies.set("userId", response.data.data.user._id);
 
-        if (response.data.data.user.role === "admin") {
-          router.push("/admin/dashboard");
-        } else {
-          router.push("/jobs");
-        }
+        console.log("token is :", response.data.data.token);
+
+        console.log("role is :", response.data.data.user.role);
+
+        setTimeout(() => {
+          if (response.data.data.user.role === "admin") {
+            router.push("/admin/dashboard");
+          } else {
+            router.push("/");
+          }
+        }, 300);
       } else {
         toast.error(response.data.message || "Something went wrong.");
         setLoading(false);

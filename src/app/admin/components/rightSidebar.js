@@ -11,8 +11,8 @@ import { BsBullseye } from "react-icons/bs";
 import axios from "axios";
 import Cookies from "js-cookie";
 import LeftSideBar from "./sidebar";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RightSide = () => {
   const [monthlyData, setMonthlyData] = useState([]);
@@ -26,7 +26,7 @@ const RightSide = () => {
   const [totalCvMatchers, setTotalCvMatchers] = useState(0);
   const [statsLoading, setStatsLoading] = useState(false);
   const [monthlyStatsLoading, setMonthlyStatsLoading] = useState(false);
-  const token = Cookies.get("token");
+  const token = Cookies.get("access_token");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const buttonRef = useRef(null);
@@ -38,16 +38,22 @@ const RightSide = () => {
     const fetchStats = async () => {
       setStatsLoading(true);
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         console.log("response stats: ", response);
         const data = response.data?.data || [];
 
         if (!data) {
-          toast.error(response.data.message || "Failed to fetch stats. Please try again later.");
+          toast.error(
+            response.data.message ||
+              "Failed to fetch stats. Please try again later."
+          );
           return;
         }
 
@@ -60,7 +66,10 @@ const RightSide = () => {
         console.log("stats: ", data);
       } catch (error) {
         console.log("Error fetching monthly user data:", error);
-        toast.error(error.response?.data?.message || "Failed to fetch stats. Please try again later.");
+        toast.error(
+          error.response?.data?.message ||
+            "Failed to fetch stats. Please try again later."
+        );
       } finally {
         setStatsLoading(false);
       }
@@ -69,7 +78,8 @@ const RightSide = () => {
     const fetchMonthlyUsers = async () => {
       setMonthlyStatsLoading(true);
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard/users-monthly`,
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/dashboard/users-monthly`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -79,7 +89,10 @@ const RightSide = () => {
         const data = response.data?.data?.monthlyData || [];
 
         if (!data) {
-          toast.error(response.data.message || "Failed to fetch monthly user data. Please try again later.");
+          toast.error(
+            response.data.message ||
+              "Failed to fetch monthly user data. Please try again later."
+          );
           return;
         }
 
@@ -90,11 +103,13 @@ const RightSide = () => {
         setTotalUsers(total);
       } catch (error) {
         console.log("Error fetching monthly user data:", error);
-        toast.error(error.response?.data?.message || "Failed to fetch monthly user data. Please try again later.");
+        toast.error(
+          error.response?.data?.message ||
+            "Failed to fetch monthly user data. Please try again later."
+        );
       } finally {
         setMonthlyStatsLoading(false);
       }
-
     };
 
     fetchMonthlyUsers();
