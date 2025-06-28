@@ -308,6 +308,13 @@ const Page = () => {
       });
       return;
     }
+
+    const role = Cookies.get("role")?.trim().toLowerCase();
+    if (role !== "user") {
+      console.log("entered 2");
+      toast.error("You are not a user. Please login as a user to match CV.");
+      return;
+    }
     // Agar login ho to callback call karo
     callback();
   };
@@ -315,7 +322,7 @@ const Page = () => {
 
   return (
     <>
-      {/* <ToastContainer></ToastContainer> */}
+      <ToastContainer></ToastContainer>
       <div className="relative ">
         {/* Background Image */}
         <div

@@ -218,9 +218,9 @@ const UserQueries = () => {
                     type="text"
                     onChange={e => setSearch(e.target.value)}
                     id="simple-search"
-                    placeholder="Search by title..."
+                    placeholder="Search by email..."
                     className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
-                    aria-label="Search by title"
+                    aria-label="Search by email"
                     required
                   />
                 </div>

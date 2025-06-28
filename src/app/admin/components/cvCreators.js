@@ -22,7 +22,7 @@ const CvCreators = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);
   const totalPages = Math.ceil(totalusers / itemsPerPage);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -31,33 +31,35 @@ const CvCreators = () => {
   useEffect(() => {
     const fetchusers = async () => {
       setLoading(true);
-      try{
+      try {
         const token = Cookies.get('access_token');
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matchers?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.data;
+        console.log(data.data.cvCreators);
+        console.log(data.data.totalRecordsCount);
+
+        if (data.status == 200) {
+          setusers(data.data.cvCreators);
+          setTotalusers(data.data.totalRecordsCount);
+        } else {
+          setusers([]);
+          setTotalusers(0);
+          toast.error(data.message);
         }
-      );
-      const data = await response.data;
-      console.log(data.data.matchers);
-      console.log(data.data.totalMatchersCount);
-      if (data.status == 200) {
-        setusers(data.data.matchers);
-        setTotalusers(data.data.totalMatchersCount);
-      } else {
-        setusers([]);
-        setTotalusers(0);
+      } catch (error) {
         toast.error(data.message);
-      }
-      }catch(error){
-        toast.error(data.message);
-      }finally{
+      } finally {
         setLoading(false);
       }
-      
+
 
     };
     fetchusers();
@@ -74,7 +76,7 @@ const CvCreators = () => {
     try {
       const token = Cookies.get('access_token');
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching/${selectedUserId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation/${selectedUserId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -114,7 +116,7 @@ const CvCreators = () => {
   const downloadusersExcel = async () => {
     try {
       const token = Cookies.get('access_token');
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching-list/export`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation-list/export`, {
         responseType: "blob",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -124,12 +126,12 @@ const CvCreators = () => {
       const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
-      link.download = "CvMatchers_List.xlsx";
+      link.download = "CvCreators_List.xlsx";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      toast.error(error.response.data.message || 'Failed to download Cv Matchers Excel file. Please try again later.');
+      toast.error(error.response.data.message || 'Failed to download Cv Creators Excel file. Please try again later.');
     }
   };
 
@@ -152,45 +154,45 @@ const CvCreators = () => {
           {/* Header Section */}
           {/* <Header /> */}
           <div className="p-2 w-full">
-          <div className="flex items-center justify-between">
-            {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar/>
+            <div className="flex items-center justify-between">
+              {/* Mobile: Show sidebar toggle */}
+              <LeftSideBar />
 
-            {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-              Welcome Back
-            </p>
+              {/* Title */}
+              <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+                Welcome Back
+              </p>
 
-            {/* Header component */}
-            <div className="ml-auto">
-              <Header appear={true} />
+              {/* Header component */}
+              <div className="ml-auto">
+                <Header appear={true} />
+              </div>
             </div>
           </div>
-        </div>
           {loading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
-            <div className="flex flex-col items-center justify-center text-lg">
-              <svg
-                aria-hidden="true"
-                role="status"
-                className="inline w-8 h-8 text-purple-600 animate-spin "
-                viewBox="0 0 100 101"
-                fill="#7D0A0A"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
-                  fill="CurrentColor"
-                />
-              </svg>
-              <p className="mt-4 text-lg text-purple-600">Loading...</p>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+              <div className="flex flex-col items-center justify-center text-lg">
+                <svg
+                  aria-hidden="true"
+                  role="status"
+                  className="inline w-8 h-8 text-purple-600 animate-spin "
+                  viewBox="0 0 100 101"
+                  fill="#7D0A0A"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051..."
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.39 38.4038 97.8624 35.9116 97.0079 33.5539..."
+                    fill="CurrentColor"
+                  />
+                </svg>
+                <p className="mt-4 text-lg text-purple-600">Loading...</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
           {/* User Records Section */}
           <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
             <div className="flex flex-wrap justify-between items-center gap-4">
@@ -207,25 +209,25 @@ const CvCreators = () => {
               {/* Search Form */}
               <div className="flex flex-col md:flex-row flex-wrap justify-between items-center w-full lg:w-auto gap-3">
                 <div className="w-full sm:w-auto flex justify-start gap-3">
-                <button
-                  onClick={downloadusersExcel}
-                  aria-label="Export Records"
-                className="flex items-center justify-center gap-2 w-full bg-white  p-1 rounded-lg border border-gray-300 transition duration-300"
-                >
-                  <p className="text-md ">Export </p> <Image src="/upload-icon.png" height={24} width={24} alt="Export" />
-                </button>
-                <div className="w-full  flex justify-start">
-                  <input
-                    type="text"
-                    onChange={e => setSearch(e.target.value)}
-                    id="simple-search"
-                    placeholder="Search by title..."
-                    className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
-                    aria-label="Search by title"
-                    required
-                  />
+                  <button
+                    onClick={downloadusersExcel}
+                    aria-label="Export Records"
+                    className="flex items-center justify-center gap-2 w-full bg-white  p-1 rounded-lg border border-gray-300 transition duration-300"
+                  >
+                    <p className="text-md ">Export </p> <Image src="/upload-icon.png" height={24} width={24} alt="Export" />
+                  </button>
+                  <div className="w-full  flex justify-start">
+                    <input
+                      type="text"
+                      onChange={e => setSearch(e.target.value)}
+                      id="simple-search"
+                      placeholder="Search by email..."
+                      className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
+                      aria-label="Search by email"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
                 <div className="w-full sm:w-auto">
                   <button
@@ -250,7 +252,7 @@ const CvCreators = () => {
                   <tr>
                     <th className="px-5 py-3">Sr #</th>
                     <th className="px-5 py-3">Email</th>
-                    <th className="px-5 py-3">No. of Templates Created</th>
+                    <th className="px-5 py-3">No. of CVs Created</th>
                     <th className="px-5 py-3">Created Date</th>
                     <th className="px-5 py-3">Action</th>
                   </tr>
@@ -264,7 +266,7 @@ const CvCreators = () => {
                       <td className="px-6 py-4">
                         {new Date(item.createdAt).toLocaleDateString("en-GB")}
                       </td>
-                      <td className="px-6 py-4 flex gap-1">
+                      <td className="px-6 py-4 flex gap-1 justify-center items-center">
                         <div>
                           {/* Delete Button */}
                           <div
@@ -305,44 +307,44 @@ const CvCreators = () => {
                       </td>
                     </tr>
                   ))}
-                  {users.length===0 && (
+                  {users.length === 0 && (
                     <tr>
-                    <td colSpan={6} className="py-12">
-                      <div className="flex flex-col items-center justify-center space-y-3">
-                        {/* Icon: folder or document */}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-10 h-10 text-gray-500"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H12l-2-2H5a2 2 0 00-2 2z"
-                          />
-                        </svg>
-                  
-                        {/* Main message */}
-                        <h3 className="text-xl font-medium text-gray-700">No records found</h3>
-                  
-                        {/* Help text */}
-                        <p className="text-sm text-gray-500">
-                          There’s nothing to display here yet.
-                        </p>
-                  
-                        {/* Optional action */}
-                        {/* <button
+                      <td colSpan={6} className="py-12">
+                        <div className="flex flex-col items-center justify-center space-y-3">
+                          {/* Icon: folder or document */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-10 h-10 text-gray-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H12l-2-2H5a2 2 0 00-2 2z"
+                            />
+                          </svg>
+
+                          {/* Main message */}
+                          <h3 className="text-xl font-medium text-gray-700">No records found</h3>
+
+                          {/* Help text */}
+                          <p className="text-sm text-gray-500">
+                            There’s nothing to display here yet.
+                          </p>
+
+                          {/* Optional action */}
+                          {/* <button
                           onClick={handleAddNew}
                           className="mt-2 inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
                         >
                           Add New Entry
                         </button> */}
-                      </div>
-                    </td>
-                </tr>
+                        </div>
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>

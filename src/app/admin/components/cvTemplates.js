@@ -21,7 +21,7 @@ const CVTemplates = () => {
   const [loading, setLoading] = useState(false);
   const [totalusers, setTotalusers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage=8;
+  const itemsPerPage = 8;
   const totalPages = Math.ceil(totalusers / itemsPerPage);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -117,21 +117,21 @@ const CVTemplates = () => {
             {/* Header Section */}
             {/* <Header /> */}
             <div className="p-2 w-full">
-          <div className="flex items-center justify-between">
-            {/* Mobile: Show sidebar toggle */}
-            <LeftSideBar/>
+              <div className="flex items-center justify-between">
+                {/* Mobile: Show sidebar toggle */}
+                <LeftSideBar />
 
-            {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-              Welcome Back
-            </p>
+                {/* Title */}
+                <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+                  Welcome Back
+                </p>
 
-            {/* Header component */}
-            <div className="ml-auto">
-              <Header appear={true} />
+                {/* Header component */}
+                <div className="ml-auto">
+                  <Header appear={true} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
             {loading && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
                 <div className="flex flex-col items-center justify-center text-lg">
@@ -299,10 +299,10 @@ const CVTemplates = () => {
                 </table>
               </div>
               <Pagination
-                          totalPages={totalPages}
-                          currentPage={currentPage}
-                          onPageChange={handlePageChange}
-                        />
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>

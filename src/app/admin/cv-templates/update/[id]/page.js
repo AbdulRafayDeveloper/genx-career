@@ -54,6 +54,7 @@ export default function ApplianceForm() {
 
                 const data = response.data.data;
                 console.log("User data:", data);
+                console.log("template name:", data.name);
                 setSelectedTemplate(data.name);
             } catch (error) {
                 console.log("Error fetching user data:", error);
@@ -207,9 +208,9 @@ export default function ApplianceForm() {
                                         <option value="" disabled>
                                             -- Choose Template --
                                         </option>
-                                        <option value="Template 1">Template 1</option>
-                                        <option value="Template 2">Template 2</option>
-                                        <option value="Template 3">Template 3</option>
+                                        <option value="template1">Template 1</option>
+                                        <option value="template2">Template 2</option>
+                                        <option value="template3">Template 3</option>
                                     </select>
                                 </div>
 
@@ -219,7 +220,7 @@ export default function ApplianceForm() {
                                     </label>
                                     <div className="flex items-center justify-center w-full">
                                         <label className="flex flex-col items-center w-full px-4 py-8 text-gray-600 bg-gray-50 border-2 border-dashed border-purple-400 rounded-lg cursor-pointer hover:border-gray-400">
-                                            <Image src={"/upload-cv.png"} height={45} width={45} />
+                                            <Image src={"/upload-cv.png"} height={45} width={45} alt="Upload Icon" />
                                             <span className="text-sm">Click to upload image</span>
                                             <input
                                                 id="file"
