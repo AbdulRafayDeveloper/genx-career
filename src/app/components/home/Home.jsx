@@ -327,7 +327,7 @@ const Home = () => {
                 </div>
                 <div className="mt-5">
                   <Link
-                    href="/cv-matching"
+                    href="/jobs"
                     className="text-black hover:text-[#9866C7] inline-flex items-center"
                   >
                     Get Started

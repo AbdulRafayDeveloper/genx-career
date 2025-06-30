@@ -177,7 +177,7 @@ const Contact = () => {
                         type="text"
                         id="name"
                         name="name"
-                        placeholder="Arooba Zaman"
+                        placeholder="Abdul Rafay"
                         className="mt-1 pl-10 block w-full rounded-md border border-gray-300 bg-white bg-opacity-70 shadow-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 p-2 outline-none"
                         required
                       />

@@ -42,7 +42,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/cv-matching"
+                    href="/jobs"
                     className="text-white font-sans xl:text-lg md:text-md text-[10px]  hover:text-purple-400 transition"
                   >
                     Cv Matching
