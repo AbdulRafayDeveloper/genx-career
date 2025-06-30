@@ -497,11 +497,17 @@ const Page = () => {
 
   return (
     <>
-      {isGenerating && (
+      {/* {isGenerating && (
         <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center">
           <div className="flex justify-center items-center h-screen">
             <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
           </div>
+        </div>
+      )} */}
+      {isGenerating && (
+        <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center flex-col">
+          <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
+          <p className="mt-4 text-violet-800 text-lg font-medium">Your CV is being generated...</p>
         </div>
       )}
       <div
@@ -579,7 +585,7 @@ const Page = () => {
                             <img
                               src={
                                 formData?.imageUrl &&
-                                formData.imageUrl !== "N/A"
+                                  formData.imageUrl !== "N/A"
                                   ? formData.imageUrl
                                   : "/images/profile.jpg"
                               }
@@ -1062,11 +1068,10 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Job Title"
-                        className={`p-2 rounded-xl border ${
-                          errors.experience?.[index]?.title
+                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.title
                             ? "border-red-500"
                             : "border-gray-300"
-                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.title}
                         maxLength={30}
                         onChange={(e) =>
@@ -1087,11 +1092,10 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Company"
-                        className={`p-2 rounded-xl border ${
-                          errors.experience?.[index]?.company
+                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.company
                             ? "border-red-500"
                             : "border-gray-300"
-                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.company}
                         maxLength={50}
                         onChange={(e) =>
@@ -1111,11 +1115,10 @@ const Page = () => {
 
                       <textarea
                         placeholder="Description / Responsibilities"
-                        className={`p-2 rounded-xl border ${
-                          errors.experience?.[index]?.description
+                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.description
                             ? "border-red-500"
                             : "border-gray-300"
-                        } resize-none bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                          } resize-none bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.description}
                         maxLength={400}
                         onChange={(e) =>
@@ -1183,11 +1186,10 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Project Name"
-                        className={`p-2 rounded-xl border ${
-                          errors.projects?.[index]?.name
+                        className={`p-2 rounded-xl border ${errors.projects?.[index]?.name
                             ? "border-red-500"
                             : "border-gray-300"
-                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.name}
                         onChange={(e) =>
                           handleChange(
@@ -1217,13 +1219,12 @@ const Page = () => {
                             <input
                               type="text"
                               placeholder={`Technology ${techIndex + 1}`}
-                              className={`p-2 rounded-xl border ${
-                                errors.projects?.[index]?.technologies?.[
+                              className={`p-2 rounded-xl border ${errors.projects?.[index]?.technologies?.[
                                   techIndex
                                 ]
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } w-full bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                                } w-full bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                               value={tech}
                               onChange={(e) => {
                                 const updatedProjects = [...formData.projects];
@@ -1238,10 +1239,10 @@ const Page = () => {
                             {errors.projects?.[index]?.technologies?.[
                               techIndex
                             ] && (
-                              <p className="text-sm text-red-500">
-                                {errors.projects[index].technologies[techIndex]}
-                              </p>
-                            )}
+                                <p className="text-sm text-red-500">
+                                  {errors.projects[index].technologies[techIndex]}
+                                </p>
+                              )}
 
                             {proj.technologies.length > 1 && (
                               <button
@@ -1285,11 +1286,10 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Project Link (Optional)"
-                        className={`p-2 rounded-xl border ${
-                          errors.projects?.[index]?.link
+                        className={`p-2 rounded-xl border ${errors.projects?.[index]?.link
                             ? "border-red-500"
                             : "border-gray-300"
-                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.link}
                         onChange={(e) =>
                           handleChange(
