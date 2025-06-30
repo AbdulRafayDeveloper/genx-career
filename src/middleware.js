@@ -31,7 +31,7 @@ export async function middleware(req) {
     pathname.startsWith("/user/profile-update") ||
     pathname.startsWith("/user/password-update");
 
-  // ✅ Prevent direct access to verify-otp or new-password without emailVerified cookie
+  // Prevent direct access to verify-otp or new-password without emailVerified cookie
   const isOTPPage = pathname.startsWith("/auth/forget-password/verify-otp");
   const isNewPasswordPage = pathname.startsWith("/auth/new-password");
   const emailVerified = req.cookies.get("emailVerified")?.value;
@@ -42,7 +42,7 @@ export async function middleware(req) {
     );
   }
 
-  // 🔐 No token
+  //  No token
   if (!token) {
     if (isProtectedUserRoute || isProtectedAdminRoute) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
@@ -50,17 +50,17 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  // ✅ Token exists
+  // Token exists
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
     const role = payload.role || "user";
 
-    // 🚫 Redirect logged-in users away from auth pages
+    // Redirect logged-in users away from auth pages
     if (isAuthPage) {
       return NextResponse.redirect(new URL(ROLE_DASHBOARD[role], req.url));
     }
 
-    // 🚫 Role-based route blocking
+    // Role-based route blocking
     if (isProtectedAdminRoute && role !== "admin") {
       return NextResponse.redirect(new URL(ROLE_DASHBOARD[role], req.url));
     }
