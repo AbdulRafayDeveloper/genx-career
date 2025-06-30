@@ -6,20 +6,21 @@ const Footer = () => {
     <footer className="container-fluid relative bg-purple-700 bg-opacity-50 text-gray-600 ">
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center max-w-7xl ">
-          <div className="grid md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5 sm:grid-cols-3 grid-cols-2 xl:gap-10 gap-4 font-mono">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 font-mono">
             {/* Left Section */}
             <div className="md:col-span-1">
               <div className="flex flex-row gap-2">
                 <Link href="/" className="flex flex-row gap-2">
-                  {/* <img src="/logo.png" alt="GenX Career Logo" className="w-12 h-12 rounded-xl object-fill "/> */}
-                  <h5 className="text-md xl:text-xl font-bold text-white font-sans">
-                    GenX Career
-                  </h5>
+                  <img
+                    src="/bg/bg_2.png"
+                    alt="GenX Career Logo"
+                    className="w-20 h-20 rounded-xl object-fill "
+                  />
                 </Link>
               </div>
-              <p className="mt-8 text-white font-sans xl:text-lg md:text-sm text-[10px] ">
-                Advance your career with easy job search, smart CV matching, and
-                professional resume creation.
+              <p className=" text-white font-sans xl:text-lg md:text-sm text-[10px] ">
+                Easy job search, Smart CV matching, and Professional resume
+                creation.
               </p>
             </div>
 
@@ -27,7 +28,7 @@ const Footer = () => {
 
             {/* Middle Section */}
             <div className="md:col-span-1">
-              <h6 className="text-md xl:text-xl font-semibold text-white font-sans hover:text-purple-400 mb-4">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4">
                 Our Services
               </h6>
               <ul className="mt-7">
@@ -41,7 +42,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/jobs"
+                    href="/cv-matching"
                     className="text-white font-sans xl:text-lg md:text-md text-[10px]  hover:text-purple-400 transition"
                   >
                     Cv Matching
@@ -49,7 +50,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/cv-creation"
                     className="text-white font-sans xl:text-lg md:text-md text-[10px]  hover:text-purple-400 transition"
                   >
                     CV Creation
@@ -60,7 +61,7 @@ const Footer = () => {
 
             {/* Right Section */}
             <div className="md:col-span-1 font-mono">
-              <h6 className="text-md xl:text-xl font-semibold text-white font-sans hover:text-purple-400 mb-4 ">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4 ">
                 Social Media
               </h6>
               <div className="flex flex-col gap-3 mt-7">
@@ -126,39 +127,9 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
+
             <div className="md:col-span-1 font-mono">
-              <h6 className="text-md xl:text-xl font-semibold text-white font-sans hover:text-purple-400 mb-4">
-                Helpful Links
-              </h6>
-              <div className="flex flex-col gap-1 mt-7">
-                <Link
-                  href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans xl:text-lg md:text-md text-[10px] gap-2"
-                >
-                  <p>Support</p>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans xl:text-lg md:text-md text-[10px] gap-2"
-                >
-                  <p>Terms and Conditions</p>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans xl:text-lg md:text-md text-[10px] gap-2"
-                >
-                  <p>Services</p>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans xl:text-lg md:text-md text-[10px] gap-2"
-                >
-                  <p>Privacy Policy</p>
-                </Link>
-              </div>
-            </div>
-            <div className="md:col-span-1 font-mono">
-              <h6 className="text-md xl:text-xl font-semibold text-white font-sans hover:text-purple-400 mb-4 ">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4 ">
                 Contact Us
               </h6>
               <div className="flex flex-col gap-1 mt-7">
@@ -184,7 +155,7 @@ const Footer = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
                     fill="currentColor"
-                    className="w-5 h-6"
+                    className="w-4 h-5"
                   >
                     <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                   </svg>

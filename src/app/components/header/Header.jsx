@@ -176,25 +176,40 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                     />
                   </button>
                   {showData && (
-                    <div className="absolute w-44 right-0 mt-8 p-4 bg-gray-200  rounded-lg shadow-lg z-50">
+                    <div className="absolute w-44 right-0 mt-8 p-2 bg-gray-200 rounded-lg shadow-lg z-50 pr-2">
                       <button
                         onClick={() => router.push("/user/profile-update")}
-                        className="flex items-center gap-2 w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded min-h-[40px]"
                       >
-                        <MdOutlineTipsAndUpdates color="purple" /> Update
-                        Profile
+                        <MdOutlineTipsAndUpdates
+                          className="flex-shrink-0 text-lg"
+                          color="purple"
+                        />
+                        <span className="whitespace-nowrap">
+                          Update Profile
+                        </span>
                       </button>
                       <button
                         onClick={() => router.push("/user/password-update")}
-                        className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded min-h-[40px]"
                       >
-                        <IoSettingsOutline color="purple" /> Change Password
+                        <IoSettingsOutline
+                          className="flex-shrink-0 text-lg"
+                          color="purple"
+                        />
+                        <span className="whitespace-nowrap">
+                          Update Password
+                        </span>
                       </button>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded min-h-[40px]"
                       >
-                        <IoLogOutOutline color="purple" /> Logout
+                        <IoLogOutOutline
+                          className="flex-shrink-0 text-lg"
+                          color="purple"
+                        />
+                        <span className="whitespace-nowrap">Logout</span>
                       </button>
                     </div>
                   )}
@@ -287,7 +302,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
               <span className="py-2 px-3 text-gray-400">Loading...</span>
             </li>
           ) : token ? (
-            <li className="flex gap-2 relative pl-4" ref={dropdownRef}>
+            <li className="flex relative pl-4" ref={dropdownRef}>
               <button type="button" onClick={handleChange}>
                 <Image
                   src={image ? image : "/images/profile_placeholder.jpg"}
@@ -298,7 +313,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                 />
               </button>
               {showData && (
-                <div className="absolute w-44 right-0 mt-2 p-4 bg-white border border-gray-400 rounded-lg shadow-lg z-50">
+                <div className="absolute w-44 right-0 bg-white border border-gray-400 rounded-lg shadow-lg z-50">
                   <button
                     onClick={() => router.push("/user/profile-update")}
                     className="flex items-center gap-2 w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
@@ -307,13 +322,13 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                   </button>
                   <button
                     onClick={() => router.push("/user/password-update")}
-                    className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                    className="flex items-center gap-2 w-full  px-2 py-2 text-sm text-left hover:bg-gray-100 rounded "
                   >
                     <IoSettingsOutline color="purple" /> Change Password
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 w-full mt-2 px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
+                    className="flex items-center gap-2 w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded"
                   >
                     <IoLogOutOutline color="purple" /> Logout
                   </button>

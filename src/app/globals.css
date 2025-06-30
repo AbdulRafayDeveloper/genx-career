@@ -203,6 +203,7 @@ body {
 /* styles/globals.css */
 ::-webkit-scrollbar {
   width: 6px; /* Width of scrollbar */
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -221,6 +222,11 @@ body {
 ::selection{
   background-color: #9a3cd1f1;
   color: white;
+}
+
+.react-tel-input .form-control{
+  width: 100% !important;
+  height: 40px !important;
 }
 
 /*.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root{

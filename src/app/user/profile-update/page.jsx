@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 import axios from "axios";
-import defaultProfile from "../../../../public/images/profile avatar.png";
+import defaultProfile from "../../../../public/images/profile.jpg";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -212,7 +212,7 @@ const ProfileUpdatePage = () => {
           </button>
 
           <div className="flex flex-col items-center relative">
-            <div className="relative w-32 h-32">
+            <div className="relative w-28 h-28">
               <Image
                 src={
                   imageFile
@@ -224,6 +224,7 @@ const ProfileUpdatePage = () => {
                 alt="Avatar"
                 width={40}
                 height={40}
+                unoptimized
                 className="w-full h-full object-cover rounded-full border bg-purple-700 "
               />
               <label

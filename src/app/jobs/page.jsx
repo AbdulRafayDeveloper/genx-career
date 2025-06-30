@@ -51,6 +51,7 @@ const Page = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?search=${formData.search}&pageNumber=${pageNumber}&location=${formData.location}&remote=${formData.remote}&datePosted=${formData.datePosted}&minSalary=${formData.minSalary}&maxSalary=${formData.maxSalary}`
         );
 
+        console.log("response: ", response);
         setTotalJobsCount(response.data.data.totalJobsCount);
 
         setJobs((prevJobs) => {
@@ -118,33 +119,44 @@ const Page = () => {
         }
       );
 
-      console.log("response: ", response);
+      console.log("response for matching: ", response);
 
       if (response.data.status === 200) {
         const { data } = response;
+
         localStorage.setItem(
           "cvResults",
           JSON.stringify(data.message.CvMatchingResult)
         );
 
-        router.push(`/cv-matching/${matchJob}`);
+        setTimeout(() => {
+          router.push(`/cv-matching/${matchJob}`);
+        }, 50);
+        setIsMatching(false);
       } else {
+        setIsMatching(false);
         toast.error(
           response.data.message ||
-          "There is some error in uploading this file. Please try with a correct CV!"
+            "There is some error in uploading this file. Please try with a correct CV!"
         );
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
+      setIsMatching(false);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         toast.error(
           error.response.data.message ||
-          "There is some error in uploading this file. Please try with a correct CV!"
+            "There is some error in uploading this file. Please try with a correct CV!"
         );
       } else {
-        toast.error("There is some error in uploading this file. Please try with a correct CV!");
+        setIsMatching(false);
+        toast.error(
+          "There is some error in uploading this file. Please try with a correct CV!"
+        );
       }
-    } finally {
-      setIsMatching(false);
     }
   };
 
@@ -319,7 +331,6 @@ const Page = () => {
     callback();
   };
 
-
   return (
     <>
       <ToastContainer></ToastContainer>
@@ -443,18 +454,19 @@ const Page = () => {
                       onClick={
                         filter === "Remote only"
                           ? () =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              remote: !prev.remote,
-                            }))
+                              setFormData((prev) => ({
+                                ...prev,
+                                remote: !prev.remote,
+                              }))
                           : filter === "Salary Range"
-                            ? toggleModal
-                            : toggleModalCalender
+                          ? toggleModal
+                          : toggleModalCalender
                       }
-                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
-                        ? "bg-purple-500 text-white"
-                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
-                        }`}
+                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${
+                        filter === "Remote only" && formData.remote
+                          ? "bg-purple-500 text-white"
+                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                      }`}
                     >
                       {filter}
                     </button>
@@ -507,8 +519,8 @@ const Page = () => {
                       {job.hybrid
                         ? "Hybrid"
                         : job.remote
-                          ? "Remote"
-                          : "On-site"}
+                        ? "Remote"
+                        : "On-site"}
                     </p>
                     <p className="text-gray-600">{job.salary}</p>
                   </div>
@@ -530,11 +542,14 @@ const Page = () => {
                         >
                           Match CV
                         </button>
-                        <button className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full" onClick={() => {
-                          handleProtectedAction(() => {
-                            window.open(selectedJob.applyUrl, "_blank");
-                          });
-                        }}>
+                        <button
+                          className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full"
+                          onClick={() => {
+                            handleProtectedAction(() => {
+                              window.open(selectedJob.applyUrl, "_blank");
+                            });
+                          }}
+                        >
                           Easy Apply
                         </button>
                       </div>
@@ -573,11 +588,11 @@ const Page = () => {
                   </button>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 items-start">
                   <h2 className="font-bold xl:text-xl text-md">
                     {selectedJob.title}
                   </h2>
-                  <div className="flex justify-end gap-4">
+                  <div className="flex justify-end gap-4 self-start">
                     <button
                       className="px-4 py-2 border rounded-full text-black bg-white bg-opacity-80 shadow hover:bg-purple-100"
                       onClick={() => {
@@ -587,11 +602,14 @@ const Page = () => {
                     >
                       Match CV
                     </button>
-                    <button className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900" onClick={() => {
-                      handleProtectedAction(() => {
-                        window.open(selectedJob.applyUrl, "_blank");
-                      });
-                    }}>
+                    <button
+                      className="px-4 py-2 rounded-full text-white bg-purple-400 bg-opacity-80 shadow hover:bg-purple-900"
+                      onClick={() => {
+                        handleProtectedAction(() => {
+                          window.open(selectedJob.applyUrl, "_blank");
+                        });
+                      }}
+                    >
                       Easy Apply
                     </button>
                   </div>
@@ -615,7 +633,12 @@ const Page = () => {
 
                 <p className="text-gray-600 mb-4">
                   Salary: {selectedJob.salary}
+                  {selectedJob.salary !== "Not disclosed" &&
+                  selectedJob.salaryCurrency
+                    ? ` ${selectedJob.salaryCurrency}`
+                    : ""}
                 </p>
+
                 <p className="text-gray-800">{selectedJob.description}</p>
               </div>
             )}
