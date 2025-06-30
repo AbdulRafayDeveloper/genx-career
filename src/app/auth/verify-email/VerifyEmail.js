@@ -9,7 +9,7 @@ import Link from "next/link";
 const VerifyEmail = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const token = searchParams.get("access_token");
+    const token = searchParams.get("token");
 
     const [loading, setLoading] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
