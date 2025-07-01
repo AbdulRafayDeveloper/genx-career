@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../components/footer/Footer";
+import defaultJobPic from "../../../public/images/ats_friendly.png";
 
 const Page = () => {
   const router = useRouter();
@@ -137,7 +138,7 @@ const Page = () => {
         // setIsMatching(false);
         toast.error(
           response.data.message ||
-            "There is some error in uploading this file. Please try with a correct CV!"
+          "There is some error in uploading this file. Please try with a correct CV!"
         );
       }
     } catch (error) {
@@ -149,7 +150,7 @@ const Page = () => {
       ) {
         toast.error(
           error.response.data.message ||
-            "There is some error in uploading this file. Please try with a correct CV!"
+          "There is some error in uploading this file. Please try with a correct CV!"
         );
       } else {
         // setIsMatching(false);
@@ -454,19 +455,18 @@ const Page = () => {
                       onClick={
                         filter === "Remote only"
                           ? () =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                remote: !prev.remote,
-                              }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              remote: !prev.remote,
+                            }))
                           : filter === "Salary Range"
-                          ? toggleModal
-                          : toggleModalCalender
+                            ? toggleModal
+                            : toggleModalCalender
                       }
-                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${
-                        filter === "Remote only" && formData.remote
+                      className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
                           ? "bg-purple-500 text-white"
                           : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
-                      }`}
+                        }`}
                     >
                       {filter}
                     </button>
@@ -519,8 +519,8 @@ const Page = () => {
                       {job.hybrid
                         ? "Hybrid"
                         : job.remote
-                        ? "Remote"
-                        : "On-site"}
+                          ? "Remote"
+                          : "On-site"}
                     </p>
                     <p className="text-gray-600">{job.salary}</p>
                   </div>
@@ -616,10 +616,19 @@ const Page = () => {
                 </div>
 
                 <div className="flex items-center mb-4">
-                  <img
+                  {/* <img
                     src={selectedJob.companyLogoLink}
                     alt={selectedJob.companyName}
                     className="w-12 h-12 rounded-full mr-4"
+                  /> */}
+                  <img
+                    src={selectedJob.companyLogoLink || defaultJobPic.src}
+                    alt={selectedJob.companyName}
+                    className="w-12 h-12 rounded-full mr-4 object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null; // prevent infinite loop
+                      e.target.src = defaultJobPic.src;
+                    }}
                   />
                   <div>
                     <p className="font-semibold text-gray-800">
@@ -634,7 +643,7 @@ const Page = () => {
                 <p className="text-gray-600 mb-4">
                   Salary: {selectedJob.salary}
                   {selectedJob.salary !== "Not disclosed" &&
-                  selectedJob.salaryCurrency
+                    selectedJob.salaryCurrency
                     ? ` ${selectedJob.salaryCurrency}`
                     : ""}
                 </p>
