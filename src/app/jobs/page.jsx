@@ -92,6 +92,18 @@ const Page = () => {
   const shouldShowLoadMore = jobsPost.length < totalJobsCount;
   const [isMatching, setIsMatching] = useState(false);
   const [selectFile, setSelectFile] = useState(false);
+  const resetAllFilters = () => {
+    setFormData({
+      search: "",
+      location: "",
+      remote: false,
+      datePosted: null,
+      minSalary: null,
+      maxSalary: null,
+    });
+    setPageNumber(1);
+  };
+
 
   const matchCv = async () => {
     console.log("entered 1");
@@ -222,7 +234,7 @@ const Page = () => {
       minSalary: formData.minSalary,
       maxSalary: formData.maxSalary,
     }));
-
+    setPageNumber(1);
     toggleModal();
   };
 
@@ -231,7 +243,7 @@ const Page = () => {
       ...prevFilters,
       datePosted: formData.datePosted,
     }));
-
+    setPageNumber(1);
     toggleModalCalender();
   };
 
@@ -330,6 +342,25 @@ const Page = () => {
     }
     // Agar login ho to callback call karo
     callback();
+  };
+
+  const handleResetSalary = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      minSalary: null,
+      maxSalary: null,
+    }));
+    setPageNumber(1);
+    toggleModal(); // close modal after reset
+  };
+
+  const handleResetDatePosted = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      datePosted: null,
+    }));
+    setPageNumber(1);
+    toggleModalCalender(); // close modal after reset
   };
 
   return (
@@ -448,7 +479,7 @@ const Page = () => {
                 <button className="px-3 py-2 border rounded-full text-black bg-purple-300 shadow hover:bg-purple-100 flex items-center gap-2">
                   <FontAwesomeIcon icon={faSliders} />
                 </button>
-                {["Remote only", "Salary Range", "Date Posted"].map(
+                {/* {["Remote only", "Salary Range", "Date Posted"].map(
                   (filter) => (
                     <button
                       key={filter}
@@ -464,14 +495,46 @@ const Page = () => {
                             : toggleModalCalender
                       }
                       className={`md:px-3 md:py-2 p-2 border text-[10px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
-                          ? "bg-purple-500 text-white"
-                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                        ? "bg-purple-500 text-white"
+                        : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
                         }`}
                     >
                       {filter}
                     </button>
                   )
-                )}
+                )} */}
+                {["Remote only", "Salary Range", "Date Posted"].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={
+                      filter === "Remote only"
+                        ? () => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            remote: !prev.remote,
+                          }));
+                          setPageNumber(1);
+                        }
+                        : filter === "Salary Range"
+                          ? toggleModal
+                          : toggleModalCalender
+                    }
+                    className={`md:px-3 md:py-2 p-2 border text-[12px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
+                      ? "bg-purple-500 text-white"
+                      : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                      }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
+
+                {/* Reset All Filters Button */}
+                <button
+                  onClick={resetAllFilters}
+                  className="md:px-3 md:py-2 p-2 border text-[12px] md:text-md rounded-full shadow bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                >
+                  Reset All
+                </button>
               </div>
 
               {/* Loader */}
@@ -702,7 +765,7 @@ const Page = () => {
               </div>
 
               {/* Apply and Close Buttons */}
-              <div className="mt-4 flex justify-between">
+              {/* <div className="mt-4 flex justify-between">
                 <button
                   onClick={handleApplySalary} // Apply salary on button click
                   className="px-4 py-2 bg-green-500 text-white rounded-full"
@@ -711,6 +774,28 @@ const Page = () => {
                 </button>
                 <button
                   onClick={toggleModal} // Close the modal
+                  className="px-4 py-2 bg-purple-500 text-white rounded-full"
+                >
+                  Close
+                </button>
+              </div> */}
+              <div className="mt-4 flex justify-between">
+                <div>
+                  <button
+                    onClick={handleApplySalary}
+                    className="px-4 py-2 bg-green-500 text-white rounded-full"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    onClick={handleResetSalary}
+                    className="px-4 py-2 mx-2 bg-red-500 text-white rounded-full"
+                  >
+                    Reset Salary
+                  </button>
+                </div>
+                <button
+                  onClick={toggleModal}
                   className="px-4 py-2 bg-purple-500 text-white rounded-full"
                 >
                   Close
@@ -740,12 +825,20 @@ const Page = () => {
 
               {/* Apply and Close Buttons */}
               <div className="mt-4 flex justify-between">
-                <button
-                  onClick={() => handleApplyDatePosted("datePosted")} // Set date on Apply
-                  className="px-4 py-2 bg-green-500 text-white rounded-full"
-                >
-                  Apply
-                </button>
+                <div>
+                  <button
+                    onClick={() => handleApplyDatePosted("datePosted")} // Set date on Apply
+                    className="px-4 py-2 bg-green-500 text-white rounded-full"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    onClick={handleResetDatePosted}
+                    className="px-4 py-2 mx-2 bg-red-500 text-white rounded-full"
+                  >
+                    Reset Date
+                  </button>
+                </div>
                 <button
                   onClick={toggleModalCalender} // Close the modal when clicked
                   className="px-4 py-2 bg-purple-500 text-white rounded-full"
