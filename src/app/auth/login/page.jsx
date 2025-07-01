@@ -74,8 +74,6 @@ const Page = () => {
         Cookies.set("userId", response.data.data.user._id, { expires: 9999, sameSite: 'Strict' });
         Cookies.set("role", response.data.data.user.role, { expires: 9999, sameSite: 'Strict' });
 
-
-
         console.log("token is :", response.data.data.token);
 
         console.log("role is :", response.data.data.user.role);
