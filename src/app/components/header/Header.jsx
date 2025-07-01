@@ -80,6 +80,8 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         Cookies.remove("access_token");
+        Cookies.remove("userId");
+        Cookies.remove("role");
         router.push("/auth/login");
       }
     });
@@ -239,9 +241,8 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
       {/* Mobile Side Drawer */}
       {/* Mobile Side Drawer */}
       <div
-        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
           <span className="font-semibold text-[#9866C7] text-lg">Menu</span>

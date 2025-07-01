@@ -102,6 +102,8 @@ const Header = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Cookies.remove("access_token");
+        Cookies.remove("userId");
+        Cookies.remove("role");
         router.push("/auth/login");
       }
     });
