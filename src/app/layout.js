@@ -13,18 +13,18 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "GenX Career – Find Jobs, Match Your CV & Build Resumes Instantly",
+  title: "GenX Career – Find Jobs, Match Your CV & Build CVs Instantly",
   description:
-    "GenX Career is your all‑in‑one career hub: search thousands of job listings, automatically match your CV to roles, and create stunning resumes in minutes.",
+    "GenX Career is your all‑in‑one career hub: search thousands of job listings, automatically match your CV to roles, and create stunning CVs in minutes.",
   keywords: [
     "job search",
     "CV matching",
-    "resume builder",
+    "CV builder",
     "job matching",
     "career development",
     "applicant tracking",
     "GenX Career platform",
-    "professional resume",
+    "professional CV",
     "CV creation"
   ],
   robots: {

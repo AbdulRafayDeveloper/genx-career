@@ -163,7 +163,7 @@ export const cvCreatorsData = [
   },
   {
     id: 8,
-    templateName: "Traditional Resume",
+    templateName: "Traditional CV",
     userEmail: "liam.anderson@example.com",
   },
 ];

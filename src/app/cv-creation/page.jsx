@@ -40,7 +40,7 @@ const Page = () => {
           console.log("Error fetching tendata:", response.data.message);
           toast.error(
             response.data.message ||
-              "Some Issue in Loading the templates right now. Please try again later"
+            "Some Issue in Loading the templates right now. Please try again later"
           );
           return;
         }
@@ -50,7 +50,7 @@ const Page = () => {
         console.log("Error fetching template data:", error);
         toast.error(
           error.message ||
-            "Some Issue in Loading the templates right now. Please try again later"
+          "Some Issue in Loading the templates right now. Please try again later"
         );
       } finally {
         setLoading(false);
@@ -109,8 +109,8 @@ const Page = () => {
               </h1>
 
               <p className="text-white text-lg md:text-xl font-sans leading-relaxed px-2">
-                Only 2% of resumes win. Yours will be one of them. Let’s build
-                you a resume that works.
+                Only 2% of CVs win. Yours will be one of them. Let’s build
+                you a CV that works.
               </p>
 
               <div className=" bg-opacity-40 rounded-2xl w-fit p-4">
@@ -153,7 +153,7 @@ const Page = () => {
                 <p className="text-center xl:text-lg md:text-lg text-[11px] font-sans pt-6">
                   Just pick a template and enter your data. It&apos;s THAT easy
                   to use, <br />
-                  even if you&apos;ve never made a resume in your life before!
+                  even if you&apos;ve never made a CV in your life before!
                 </p>
 
                 {/* Cards Section */}
@@ -161,32 +161,23 @@ const Page = () => {
                   <div className="flex flex-wrap justify-center gap-6 mt-10">
                     {templates?.records && templates.records.length > 0 ? (
                       templates.records.map((template, index) => (
-                        <>
-                          <div className="">
-                            <div
-                              key={index}
-                              className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative p-4"
+                        <div key={index} className="">
+                          <div className="w-80 bg-white border border-gray-200 rounded-lg shadow-sm relative p-4">
+                            <Image
+                              className="rounded-t-lg w-full h-[450px] object-cover"
+                              width={400}
+                              height={450}
+                              src={template.imageUrl ? template.imageUrl : "/images/resume1.png"}
+                              alt={template.name}
+                            />
+                            <Link
+                              href={`/cv-creation/${template.name}`}
+                              className="absolute bottom-5 left-1/2 font-sans transform -translate-x-1/2 px-8 py-2 border bg-opacity-70 bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
                             >
-                              <Image
-                                className="rounded-t-lg w-full h-[450px] object-cover"
-                                width={400}
-                                height={450}
-                                src={
-                                  template.imageUrl
-                                    ? `${template.imageUrl}`
-                                    : "/images/resume1.png"
-                                }
-                                alt={template.name}
-                              />
-                              <Link
-                                href={`/cv-creation/${template.name}`}
-                                className="absolute bottom-5 left-1/2 font-sans transform -translate-x-1/2 px-8 py-2 border bg-opacity-70 bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
-                              >
-                                Build My CV
-                              </Link>
-                            </div>
+                              Build My CV
+                            </Link>
                           </div>
-                        </>
+                        </div>
                       ))
                     ) : (
                       <div className="flex flex-col items-center justify-center bg-white bg-opacity-70 rounded-lg p-8 w-[500px] shadow-lg mt-10">
@@ -199,7 +190,7 @@ const Page = () => {
                           No CV Templates Available
                         </h2>
                         <p className="text-gray-600 mt-2 text-center font-sans">
-                          Currently, there are no resume templates available.{" "}
+                          Currently, there are no CV templates available.{" "}
                           <br /> Please check back later or contact support if
                           you think this is an error.
                         </p>

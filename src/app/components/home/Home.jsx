@@ -94,11 +94,11 @@ const Home = () => {
       title: "CV Matching",
       description: [
         "Effortlessly align your skills and experience with the perfect job opportunities using advanced CV matching technology.",
-        "Upload your resume in PDF or Word format.",
+        "Upload your CV in PDF or Word format.",
         "Select a job posting from the list of fetched jobs.",
-        "Click 'Match CV' to analyze how well your resume aligns with the selected job.",
-        "Review feedback and suggestions to improve your resume.",
-        "Update your resume and recheck the match to maximize compatibility.",
+        "Click 'Match CV' to analyze how well your CV aligns with the selected job.",
+        "Review feedback and suggestions to improve your CV.",
+        "Update your CV and recheck the match to maximize compatibility.",
       ],
       image: "/bg/cv_matching.PNG",
     },
@@ -106,11 +106,11 @@ const Home = () => {
       title: "CV Generation",
       description: [
         "Create a professional CV in minutes with customizable templates that highlight your strengths and achievements.",
-        "Choose a professional resume template from our collection.",
+        "Choose a professional CV template from our collection.",
         "Fill in your personal details, work experience, education, and skills.",
         "Add optional sections like certifications, achievements, or hobbies.",
-        "Preview your resume and make final adjustments.",
-        "Download your polished resume in PDF format.",
+        "Preview your CV and make final adjustments.",
+        "Download your polished CV in PDF format.",
       ],
       image: "/bg/cv_creation.PNG",
     },
@@ -359,7 +359,7 @@ const Home = () => {
                   <p className="leading-relaxed text-base text-[#595959]">
                     Create a professional, visually appealing CV in minutes.
                     Customize templates designed to showcase your strengths and
-                    achievements. Let our smart tool help you craft a resume
+                    achievements. Let our smart tool help you craft a CV
                     that gets noticed by employers and highlights your career
                     potential.
                   </p>
@@ -491,9 +491,9 @@ const Home = () => {
                     "Personalized job suggestions based on user preferences and profile.",
                 },
                 {
-                  title: "Resume Matching",
+                  title: "CV Matching",
                   description:
-                    "Accurately match resumes with job listings using AI-powered algorithms.",
+                    "Accurately match CVs with job listings using AI-powered algorithms.",
                 },
                 {
                   title: "Job Fit",

@@ -19,7 +19,7 @@ const Footer = () => {
                 </Link>
               </div>
               <p className=" text-white font-sans xl:text-lg md:text-sm text-[10px] ">
-                Easy job search, Smart CV matching, and Professional resume
+                Easy job search, Smart CV matching, and Professional CV
                 creation.
               </p>
             </div>

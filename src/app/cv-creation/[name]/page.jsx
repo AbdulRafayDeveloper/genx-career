@@ -133,6 +133,12 @@ const Page = () => {
         isValid = false;
       }
 
+      // Contact validations
+      if (!formData.contact.phone || !formData.contact.phone.trim()) {
+        newErrors.contact.phone = "Phone number is required.";
+        isValid = false;
+      }
+
       // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!formData.contact.email.trim()) {
@@ -184,10 +190,18 @@ const Page = () => {
       }
 
       // Interest max length
-      if (formData.interests[0].length > 100) {
+      // if (formData.interests[0].length > 100) {
+      //   newErrors.interests = "Interest should be less than 100 characters.";
+      //   isValid = false;
+      // }
+      if (!formData.interests[0] || !formData.interests[0].trim()) {
+        newErrors.interests = "Interest is required.";
+        isValid = false;
+      } else if (formData.interests[0].length > 100) {
         newErrors.interests = "Interest should be less than 100 characters.";
         isValid = false;
       }
+
 
       // Language validations
       newErrors.languages = formData.languages.map((lang) => {
@@ -351,15 +365,38 @@ const Page = () => {
       });
 
       // ✅ Certificates Validation (optional, both fields required if one is filled)
+      // formData.certificates.forEach((cert) => {
+      //   const entry = { name: "", date: "" };
+      //   const hasAny = cert.name.trim() || cert.date.trim();
+
+      //   if (hasAny) {
+      //     if (!cert.name.trim()) {
+      //       entry.name = "Certificate name is required.";
+      //       isValid = false;
+      //     }
+      //     if (!cert.date.trim()) {
+      //       entry.date = "Certificate date is required.";
+      //       isValid = false;
+      //     }
+      //   }
+
+      //   newErrors.certificates.push(entry);
+      // });
       formData.certificates.forEach((cert) => {
         const entry = { name: "", date: "" };
         const hasAny = cert.name.trim() || cert.date.trim();
 
         if (hasAny) {
+          // Name required
           if (!cert.name.trim()) {
             entry.name = "Certificate name is required.";
             isValid = false;
+          } else if (cert.name.length < 2 || cert.name.length > 50) {
+            entry.name = "Certificate name must be between 2 and 50 characters.";
+            isValid = false;
           }
+
+          // Date required
           if (!cert.date.trim()) {
             entry.date = "Certificate date is required.";
             isValid = false;
@@ -375,7 +412,7 @@ const Page = () => {
     if (isValid) {
       if (activeStep === steps.length - 1) {
         const result = await Swal.fire({
-          title: "Ready to generate your resume?",
+          title: "Ready to generate your CV?",
           width: 600,
           padding: "3em",
           color: "#716add",
@@ -449,8 +486,8 @@ const Page = () => {
               icon: "error",
               title: "Oops!",
               text:
-                error.response.data.message ||
-                "Something went wrong while generating your resume.",
+                error?.response?.data?.message ||
+                "Something went wrong while generating your CV.",
             });
             setIsGenerating(false);
           }
@@ -521,7 +558,7 @@ const Page = () => {
             </h1>
             <p className="text-gray-50 mt-2 text-lg">
               Fill in your details step by step to generate a polished and
-              professional resume.
+              professional CV.
             </p>
           </div>
 
@@ -756,7 +793,7 @@ const Page = () => {
 
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                    Interest
+                    Interest<span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -769,7 +806,7 @@ const Page = () => {
                       setFormData((prev) => ({ ...prev, interests: updated }));
                     }}
                   />
-                  {errors.summary && (
+                  {errors.interests && (
                     <p className="text-sm text-red-500 ">{errors.interests}</p>
                   )}
                 </div>
@@ -1069,8 +1106,8 @@ const Page = () => {
                         type="text"
                         placeholder="Job Title"
                         className={`p-2 rounded-xl border ${errors.experience?.[index]?.title
-                            ? "border-red-500"
-                            : "border-gray-300"
+                          ? "border-red-500"
+                          : "border-gray-300"
                           } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.title}
                         maxLength={30}
@@ -1093,8 +1130,8 @@ const Page = () => {
                         type="text"
                         placeholder="Company"
                         className={`p-2 rounded-xl border ${errors.experience?.[index]?.company
-                            ? "border-red-500"
-                            : "border-gray-300"
+                          ? "border-red-500"
+                          : "border-gray-300"
                           } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.company}
                         maxLength={50}
@@ -1116,8 +1153,8 @@ const Page = () => {
                       <textarea
                         placeholder="Description / Responsibilities"
                         className={`p-2 rounded-xl border ${errors.experience?.[index]?.description
-                            ? "border-red-500"
-                            : "border-gray-300"
+                          ? "border-red-500"
+                          : "border-gray-300"
                           } resize-none bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.description}
                         maxLength={400}
@@ -1187,8 +1224,8 @@ const Page = () => {
                         type="text"
                         placeholder="Project Name"
                         className={`p-2 rounded-xl border ${errors.projects?.[index]?.name
-                            ? "border-red-500"
-                            : "border-gray-300"
+                          ? "border-red-500"
+                          : "border-gray-300"
                           } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.name}
                         onChange={(e) =>
@@ -1220,10 +1257,10 @@ const Page = () => {
                               type="text"
                               placeholder={`Technology ${techIndex + 1}`}
                               className={`p-2 rounded-xl border ${errors.projects?.[index]?.technologies?.[
-                                  techIndex
-                                ]
-                                  ? "border-red-500"
-                                  : "border-gray-300"
+                                techIndex
+                              ]
+                                ? "border-red-500"
+                                : "border-gray-300"
                                 } w-full bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                               value={tech}
                               onChange={(e) => {
@@ -1287,8 +1324,8 @@ const Page = () => {
                         type="text"
                         placeholder="Project Link (Optional)"
                         className={`p-2 rounded-xl border ${errors.projects?.[index]?.link
-                            ? "border-red-500"
-                            : "border-gray-300"
+                          ? "border-red-500"
+                          : "border-gray-300"
                           } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.link}
                         onChange={(e) =>
@@ -1343,7 +1380,6 @@ const Page = () => {
                     + Add Project
                   </button>
                 </div>
-
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
                     Certificates
@@ -1354,46 +1390,42 @@ const Page = () => {
                       key={index}
                       className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4"
                     >
-                      <input
-                        type="text"
-                        placeholder="Certificate Title (e.g. Full Stack Web Dev - Coursera)"
-                        className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
-                        value={cert.name}
-                        maxLength={100}
-                        onChange={(e) =>
-                          handleChange(
-                            "certificates",
-                            index,
-                            "name",
-                            e.target.value
-                          )
-                        }
-                      />
+                      {/* Name field + error wrapper */}
+                      <div className="flex flex-col">
+                        <input
+                          type="text"
+                          placeholder="Certificate Title (e.g. Full Stack Web Dev - Coursera)"
+                          className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
+                          value={cert.name}
+                          maxLength={100}
+                          onChange={(e) =>
+                            handleChange("certificates", index, "name", e.target.value)
+                          }
+                        />
+                        {errors.certificates?.[index]?.name && (
+                          <p className="text-sm text-red-500">
+                            {errors.certificates[index].name}
+                          </p>
+                        )}
+                      </div>
 
-                      {errors.certificates?.[index]?.name && (
-                        <p className="text-sm text-red-500 ">
-                          {errors.certificates[index].name}
-                        </p>
-                      )}
-                      <input
-                        type="month"
-                        className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
-                        value={cert.date}
-                        onChange={(e) =>
-                          handleChange(
-                            "certificates",
-                            index,
-                            "date",
-                            e.target.value
-                          )
-                        }
-                      />
+                      {/* Date field + error wrapper */}
+                      <div className="flex flex-col">
+                        <input
+                          type="month"
+                          className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
+                          value={cert.date}
+                          onChange={(e) =>
+                            handleChange("certificates", index, "date", e.target.value)
+                          }
+                        />
+                        {errors.certificates?.[index]?.date && (
+                          <p className="text-sm text-red-500">
+                            {errors.certificates[index].date}
+                          </p>
+                        )}
+                      </div>
 
-                      {errors.certificates?.[index]?.date && (
-                        <p className="text-sm text-red-500 ">
-                          {errors.certificates[index].date}
-                        </p>
-                      )}
                       <div className="col-span-2 flex justify-end">
                         {formData.certificates.length > 1 && (
                           <button
@@ -1421,16 +1453,14 @@ const Page = () => {
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
-                        certificates: [
-                          ...prev.certificates,
-                          { name: "", date: "" },
-                        ],
+                        certificates: [...prev.certificates, { name: "", date: "" }],
                       }))
                     }
                   >
                     + Add certificate
                   </button>
                 </div>
+
               </div>
             )}
 

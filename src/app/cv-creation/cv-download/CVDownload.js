@@ -43,7 +43,7 @@ export default function CVDownload() {
     <div className="min-h-screen bg-[url('/bg/bg.jpg')] bg-cover bg-no-repeat bg-fixed">
       <div className="backdrop-blur-sm bg-white/30 min-h-screen p-10 flex flex-col items-center">
         <h1 className="text-5xl font-bold mb-6 text-purple-50">
-          Your Resume Preview
+          Preview Your Standout CV
         </h1>
         <iframe
           src={pdfUrl}

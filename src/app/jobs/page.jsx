@@ -465,7 +465,7 @@ const Page = () => {
               </svg>
 
               <p className="text-purple-200 font-semibold text-base">
-                Upload your resume - Find the best fitting job
+                Upload your CV - Find the best fitting job
               </p>
             </div>
           </div>

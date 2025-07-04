@@ -304,7 +304,7 @@ const Page = () => {
               <div className="relative feature-card2 h-[400px] flex flex-col justify-between bg-white shadow-lg rounded-lg hover:bg-gray-100">
                 <div className="flex items-center mb-5">
                   <h2 className="text-[#595959] text-xl font-medium">
-                    Resume Matching
+                    CV Matching
                   </h2>
                 </div>
                 <div className="flex-grow">
@@ -421,7 +421,7 @@ const Page = () => {
                 {
                   title: "Network Engineer",
                   description:
-                    "Accurately match resumes with job listings using AI-powered algorithms.",
+                    "Accurately match CVs with job listings using AI-powered algorithms.",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-4">
