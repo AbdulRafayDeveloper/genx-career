@@ -156,9 +156,9 @@ const Page = () => {
       } else if (formData.contact.location.length < 3) {
         newErrors.contact.location = "Location must be at least 3 characters.";
         isValid = false;
-      } else if (formData.contact.location.length > 50) {
+      } else if (formData.contact.location.length > 35) {
         newErrors.contact.location =
-          "Location must be less than 50 characters.";
+          "Location must be less than 35 characters.";
         isValid = false;
       }
 
@@ -194,14 +194,32 @@ const Page = () => {
       //   newErrors.interests = "Interest should be less than 100 characters.";
       //   isValid = false;
       // }
+
       if (!formData.interests[0] || !formData.interests[0].trim()) {
         newErrors.interests = "Interest is required.";
         isValid = false;
-      } else if (formData.interests[0].length > 100) {
-        newErrors.interests = "Interest should be less than 100 characters.";
-        isValid = false;
-      }
+      } else {
+        const interestsArr = formData.interests[0]
+          .split(",")
+          .map((int) => int.trim())
+          .filter((int) => int.length > 0); // Remove empty
 
+        // Check max number of interests
+        if (interestsArr.length > 10) {
+          newErrors.interests = "You can enter up to 10 interests only.";
+          isValid = false;
+        }
+
+        // Check each interest length
+        for (const interest of interestsArr) {
+          if (interest.length > 15) {
+            newErrors.interests =
+              "Each interest should be at most 15 characters.";
+            isValid = false;
+            break;
+          }
+        }
+      }
 
       // Language validations
       newErrors.languages = formData.languages.map((lang) => {
@@ -220,6 +238,11 @@ const Page = () => {
         }
         return entry;
       });
+
+      if (formData.languages.length > 7) {
+        newErrors.languagesGlobal = "You can add a maximum of 7 languages only.";
+        isValid = false;
+      }
     }
 
     // Step 1: Education & Skills
@@ -276,10 +299,18 @@ const Page = () => {
       });
 
       // Skills validation
-      if (formData.skills.some((skill) => !skill.trim())) {
-        newErrors.skills = "Skill fields must be filled.";
+      if (formData.skills.length > 12) {
+        newErrors.skillsGlobal = "You can add a maximum of 12 skills only.";
         isValid = false;
       }
+
+      newErrors.skills = formData.skills.map((skill) => {
+        if (!skill.trim()) {
+          isValid = false;
+          return "Skill is required.";
+        }
+        return "";
+      });
     }
 
     // Add this inside your handleNext function under step 2 validation:
@@ -337,16 +368,18 @@ const Page = () => {
           if (!proj.name.trim()) {
             entry.name = "Project name is required.";
             isValid = false;
-          } else if (proj.name.length < 2 || proj.name.length > 50) {
-            entry.name = "Project name must be 2–50 characters.";
+          } else if (proj.name.length < 2 || proj.name.length > 30) {
+            entry.name = "Project name must be 2–30 characters.";
             isValid = false;
           }
 
-          // Validate technologies
           entry.technologies = proj.technologies.map((tech) => {
             if (!tech.trim()) {
               isValid = false;
               return "Technology is required.";
+            } else if (tech.length < 2 || tech.length > 30) {
+              isValid = false;
+              return "Technology must be between 2 and 30 characters.";
             }
             return "";
           });
@@ -364,24 +397,6 @@ const Page = () => {
         newErrors.projects.push(entry);
       });
 
-      // ✅ Certificates Validation (optional, both fields required if one is filled)
-      // formData.certificates.forEach((cert) => {
-      //   const entry = { name: "", date: "" };
-      //   const hasAny = cert.name.trim() || cert.date.trim();
-
-      //   if (hasAny) {
-      //     if (!cert.name.trim()) {
-      //       entry.name = "Certificate name is required.";
-      //       isValid = false;
-      //     }
-      //     if (!cert.date.trim()) {
-      //       entry.date = "Certificate date is required.";
-      //       isValid = false;
-      //     }
-      //   }
-
-      //   newErrors.certificates.push(entry);
-      // });
       formData.certificates.forEach((cert) => {
         const entry = { name: "", date: "" };
         const hasAny = cert.name.trim() || cert.date.trim();
@@ -391,8 +406,8 @@ const Page = () => {
           if (!cert.name.trim()) {
             entry.name = "Certificate name is required.";
             isValid = false;
-          } else if (cert.name.length < 2 || cert.name.length > 50) {
-            entry.name = "Certificate name must be between 2 and 50 characters.";
+          } else if (cert.name.length < 2 || cert.name.length > 40) {
+            entry.name = "Certificate name must be between 2 and 40 characters.";
             isValid = false;
           }
 
@@ -405,6 +420,21 @@ const Page = () => {
 
         newErrors.certificates.push(entry);
       });
+
+      if (formData.experience.length > 5) {
+        newErrors.experienceGlobal = "You can add a maximum of 5 experiences only.";
+        isValid = false;
+      }
+
+      if (formData.projects.length > 7) {
+        newErrors.projectsGlobal = "You can add a maximum of 7 projects only.";
+        isValid = false;
+      }
+
+      if (formData.certificates.length > 7) {
+        newErrors.certificatesGlobal = "You can add a maximum of 7 certificates only.";
+        isValid = false;
+      }
     }
 
     setErrors(newErrors);
@@ -456,6 +486,11 @@ const Page = () => {
               (cert) => cert.name.trim() || cert.date.trim()
             ),
           };
+
+          // Remove imageUrl when template2
+          if (!(name === "template1" || name === "template3")) {
+            delete cleanedData.imageUrl;
+          }
 
           try {
             const response = await axios.post(
@@ -761,7 +796,7 @@ const Page = () => {
                           type="text"
                           placeholder={field.label}
                           className="w-full p-2 rounded-xl bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200 placeholder:text-gray-400 shadow-sm"
-                          maxLength={100}
+                          maxLength={field.key === "location" ? 35 : 100}
                           value={formData.contact[field.key]}
                           onChange={(e) =>
                             handleChange(
@@ -797,7 +832,7 @@ const Page = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Football, Reading"
+                    placeholder="e.g. Football, Reading (max 10 items, each max 15 chars)"
                     className="w-full p-2 rounded-xl bg-white border border-gray-300 focus:border-[oklch(0.74_0.238_322.16)] focus:outline-none focus:ring-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200 placeholder:text-gray-400 shadow-sm"
                     value={formData.interests[0]}
                     onChange={(e) => {
@@ -883,14 +918,19 @@ const Page = () => {
                     </div>
                   ))}
 
-                  {/* ✅ Add Language Button */}
                   <button
                     type="button"
-                    className="text-blue-600 text-sm mt-2"
+                    className={`text-blue-600 text-sm mt-2 ${formData.languages.length >= 7 ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                     onClick={handleAddLanguage}
+                    disabled={formData.languages.length >= 7}
                   >
                     + Add Language
                   </button>
+
+                  {errors.languagesGlobal && (
+                    <p className="text-sm text-red-500 mt-1">{errors.languagesGlobal}</p>
+                  )}
                 </div>
               </div>
             )}
@@ -1052,9 +1092,10 @@ const Page = () => {
                           setFormData((prev) => ({ ...prev, skills: updated }));
                         }}
                       />
-                      {errors.skills && (
-                        <p className="text-sm text-red-500 ">{errors.skills}</p>
+                      {errors.skills && errors.skills[index] && (
+                        <p className="text-sm text-red-500">{errors.skills[index]}</p>
                       )}
+
                       {formData.skills.length > 1 && (
                         <button
                           type="button"
@@ -1076,16 +1117,23 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className="text-blue-600 text-sm mt-2"
+                    className={`text-blue-600 text-sm mt-2 ${formData.skills.length >= 12 ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
                         skills: [...prev.skills, ""],
                       }))
                     }
+                    disabled={formData.skills.length >= 12}
                   >
                     + Add skill
                   </button>
+
+                  {errors.skillsGlobal && (
+                    <p className="text-sm text-red-500 mt-1">{errors.skillsGlobal}</p>
+                  )}
+
                 </div>
               </div>
             )}
@@ -1196,7 +1244,7 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className="text-blue-600 text-sm mt-2"
+                    className={`text-blue-600 text-sm mt-2 ${formData.experience.length >= 5 ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1206,6 +1254,7 @@ const Page = () => {
                         ],
                       }))
                     }
+                    disabled={formData.experience.length >= 5}
                   >
                     + Add experience
                   </button>
@@ -1223,18 +1272,14 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Project Name"
+                        maxLength={30}
                         className={`p-2 rounded-xl border ${errors.projects?.[index]?.name
                           ? "border-red-500"
                           : "border-gray-300"
                           } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.name}
                         onChange={(e) =>
-                          handleChange(
-                            "projects",
-                            index,
-                            "name",
-                            e.target.value
-                          )
+                          handleChange("projects", index, "name", e.target.value)
                         }
                       />
                       {errors.projects?.[index]?.name && (
@@ -1256,6 +1301,7 @@ const Page = () => {
                             <input
                               type="text"
                               placeholder={`Technology ${techIndex + 1}`}
+                              maxLength={30}
                               className={`p-2 rounded-xl border ${errors.projects?.[index]?.technologies?.[
                                 techIndex
                               ]
@@ -1265,8 +1311,7 @@ const Page = () => {
                               value={tech}
                               onChange={(e) => {
                                 const updatedProjects = [...formData.projects];
-                                updatedProjects[index].technologies[techIndex] =
-                                  e.target.value;
+                                updatedProjects[index].technologies[techIndex] = e.target.value;
                                 setFormData({
                                   ...formData,
                                   projects: updatedProjects,
@@ -1366,7 +1411,7 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className="text-blue-600 text-sm mt-2"
+                    className={`text-blue-600 text-sm mt-2 ${formData.projects.length >= 7 ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1376,10 +1421,12 @@ const Page = () => {
                         ],
                       }))
                     }
+                    disabled={formData.projects.length >= 7}
                   >
                     + Add Project
                   </button>
                 </div>
+
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
                     Certificates
@@ -1394,10 +1441,10 @@ const Page = () => {
                       <div className="flex flex-col">
                         <input
                           type="text"
-                          placeholder="Certificate Title (e.g. Full Stack Web Dev - Coursera)"
+                          placeholder="Certificate Title (max 40 chars)"
                           className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
                           value={cert.name}
-                          maxLength={100}
+                          maxLength={40}
                           onChange={(e) =>
                             handleChange("certificates", index, "name", e.target.value)
                           }
@@ -1449,16 +1496,18 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className="text-blue-600 text-sm mt-2"
+                    className={`text-blue-600 text-sm mt-2 ${formData.certificates.length >= 7 ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
                         certificates: [...prev.certificates, { name: "", date: "" }],
                       }))
                     }
+                    disabled={formData.certificates.length >= 7}
                   >
                     + Add certificate
                   </button>
+
                 </div>
 
               </div>
