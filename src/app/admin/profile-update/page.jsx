@@ -203,15 +203,12 @@ export default function SettingForm() {
             <LeftSideBar />
 
             {/* Title */}
-            {/* <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-              Welcome Back!
-            </p> */}
-            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              Welcome Back
+              Back
             </p>
 
             {/* Header component */}
@@ -343,8 +340,8 @@ export default function SettingForm() {
                     <button
                       type="submit"
                       className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
-                          ? "cursor-not-allowed bg-purple-600"
-                          : "hover:bg-purple-800"
+                        ? "cursor-not-allowed bg-purple-600"
+                        : "hover:bg-purple-800"
                         }`}
                       disabled={loading}
                     >

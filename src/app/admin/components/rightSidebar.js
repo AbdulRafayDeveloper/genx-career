@@ -156,12 +156,8 @@ const RightSide = () => {
               <LeftSideBar />
 
               {/* Title */}
-              <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-                <HiArrowLeft
-                  className="cursor-pointer mr-2"
-                  onClick={() => router.back()}
-                />
-                Welcome Back
+              <p className="flex text-[12px] md:text-2xl md:font-semibold ml-3">
+                Admin Panel
               </p>
 
               {/* Header component */}

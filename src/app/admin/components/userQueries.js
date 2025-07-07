@@ -161,17 +161,13 @@ const UserQueries = () => {
             {/* Mobile: Show sidebar toggle */}
             <LeftSideBar />
 
-            {/* Title
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-              Welcome Back!
-            </p> */}
-
-            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            {/* Title */}
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              Welcome Back
+              Back
             </p>
 
             {/* Header component */}

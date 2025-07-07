@@ -137,12 +137,12 @@ export default function ApplianceForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              Welcome Back
+              Back
             </p>
 
             {/* Header component */}
@@ -215,8 +215,8 @@ export default function ApplianceForm() {
                   <button
                     type="submit"
                     className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${loading
-                        ? "cursor-not-allowed bg-purple-600"
-                        : "hover:bg-purple-800"
+                      ? "cursor-not-allowed bg-purple-600"
+                      : "hover:bg-purple-800"
                       }`}
                     disabled={loading}
                   >
