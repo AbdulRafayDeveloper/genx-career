@@ -485,11 +485,7 @@ const Home = () => {
                   description:
                     "Quickly refine job search with powerful filtering options.",
                 },
-                {
-                  title: "Job Recommendations",
-                  description:
-                    "Personalized job suggestions based on user preferences and profile.",
-                },
+
                 {
                   title: "CV Matching",
                   description:
@@ -498,7 +494,7 @@ const Home = () => {
                 {
                   title: "Job Fit",
                   description:
-                    "Evaluate job suitability based on candidate profiles and job criteria.",
+                    "Evaluate job suitability based on candidate CV and job criteria.",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-4">
