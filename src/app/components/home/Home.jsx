@@ -359,8 +359,8 @@ const Home = () => {
                   <p className="leading-relaxed text-base text-[#595959]">
                     Create a professional, visually appealing CV in minutes.
                     Customize templates designed to showcase your strengths and
-                    achievements. Let our smart tool help you craft a CV
-                    that gets noticed by employers and highlights your career
+                    achievements. Let our smart tool help you craft a CV that
+                    gets noticed by employers and highlights your career
                     potential.
                   </p>
                 </div>
@@ -529,7 +529,7 @@ const Home = () => {
           </div>
         </div>
 
-        <section className="flex items-center justify-center bg-opacity-25  ">
+        {/*<section className="flex items-center justify-center bg-opacity-25  ">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
             <figure className="max-w-screen-md mx-auto p-8 bg-white bg-opacity-40 rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
               <svg
@@ -543,7 +543,7 @@ const Home = () => {
                   fill="currentColor"
                 />
               </svg>
-              {/* Testimonial content */}
+             
               <blockquote>
                 <p className="text-2xl font-medium text-white animate__animated animate__fadeIn animate__delay-1s">
                   {testimonialSlides[currentSlide].quote}
@@ -577,7 +577,7 @@ const Home = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section>*/}
       </div>
       <Footer />
     </div>
