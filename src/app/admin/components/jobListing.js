@@ -70,7 +70,7 @@ const JobListing = () => {
     if (!selectedJobId) return;
 
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get('genx_access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${selectedJobId}`,
         {
@@ -111,7 +111,7 @@ const JobListing = () => {
 
   const downloadJobsExcel = async () => {
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get('genx_access_token');
 
       if (!token) {
         toast.error('You are not logged in. Please log in to download Jobs Excel file.');

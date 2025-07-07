@@ -31,7 +31,7 @@ const CVTemplates = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('access_token');
+        const token = Cookies.get('genx_access_token');
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`,
           {
@@ -66,7 +66,7 @@ const CVTemplates = () => {
     if (!selectedUserId) return;
 
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get('genx_access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${selectedUserId}`,
         {

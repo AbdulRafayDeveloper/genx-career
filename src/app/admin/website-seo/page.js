@@ -87,11 +87,11 @@ export default function SeoFormPage() {
             console.log('Record ID:', recordId);
             if (isEdit && recordId) {
                 res = await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/seo/${recordId}`, payload, {
-                    headers: { Authorization: `Bearer ${Cookies.get('access_token')}` }
+                    headers: { Authorization: `Bearer ${Cookies.get('genx_access_token')}` }
                 });
             } else {
                 res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/seo`, payload, {
-                    headers: { Authorization: `Bearer ${Cookies.get('access_token')}` }
+                    headers: { Authorization: `Bearer ${Cookies.get('genx_access_token')}` }
                 });
             }
             console.log('Response:', res);

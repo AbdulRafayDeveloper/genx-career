@@ -32,7 +32,7 @@ const CvCreators = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('access_token');
+        const token = Cookies.get('genx_access_token');
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
           {
@@ -74,7 +74,7 @@ const CvCreators = () => {
     if (!selectedUserId) return;
 
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get('genx_access_token');
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation/${selectedUserId}`,
         {
@@ -115,7 +115,7 @@ const CvCreators = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('access_token');
+      const token = Cookies.get('genx_access_token');
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation-list/export`, {
         responseType: "blob",
         headers: {
