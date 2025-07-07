@@ -172,7 +172,7 @@ const CvCreators = () => {
               <LeftSideBar />
 
               {/* Title */}
-              <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
+              <p className="flex text-[12px] md:text-2xl md:font-semibold ml-3">
                 <HiArrowLeft
                   className="cursor-pointer mr-2 mt-1"
                   onClick={() => router.back()}
