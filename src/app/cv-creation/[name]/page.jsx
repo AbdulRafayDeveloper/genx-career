@@ -15,6 +15,8 @@ import {
 import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
@@ -569,13 +571,14 @@ const Page = () => {
 
   return (
     <>
-      {/* {isGenerating && (
-        <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="flex justify-center items-center h-screen">
-            <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
-          </div>
-        </div>
-      )} */}
+      {/* Back button */}
+      <button
+        onClick={() => router.back()}
+        className="absolute top-6 left-6 p-3 bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline z-50"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} className="w-8 h-8" />
+      </button>
+
       {isGenerating && (
         <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center flex-col">
           <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>

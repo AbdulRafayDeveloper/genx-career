@@ -1,32 +1,17 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function CVDownload() {
   const searchParams = useSearchParams();
-  // const url = searchParams.get("url");
-  // const rawUrl = searchParams.get("url");
+  const router = useRouter();
   const [pdfUrl, setPdfUrl] = useState("");
 
-  // useEffect(() => {
-  //     if (url) {
-  //         setPdfUrl(`${process.env.NEXT_PUBLIC_BASE_URL}${url}`);
-  //     }
-  // }, [url]);
-
   useEffect(() => {
-    // console.log("rawUrl:", rawUrl);
-    // // if (url) {
-    // //     // ✅ Use the full URL directly
-    // //     setPdfUrl(url);
-    // // }
-    // if (rawUrl) {
-    //     // ✅ decode it once in case it's encoded
-    //     const decodedUrl = decodeURIComponent(rawUrl);
-    //     console.log("decodedUrl:", decodedUrl);
-    //     setPdfUrl(decodedUrl);
-    // }
     const downloadUrl = Cookies.get("downloadUrl");
     console.log("downloadUrl:", downloadUrl);
     if (downloadUrl) {
@@ -40,23 +25,34 @@ export default function CVDownload() {
   if (!pdfUrl) return <p>Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-[url('/bg/bg.jpg')] bg-cover bg-no-repeat bg-fixed">
-      <div className="backdrop-blur-sm bg-white/30 min-h-screen p-10 flex flex-col items-center">
-        <h1 className="text-5xl font-bold mb-6 text-purple-50">
-          Preview Your Standout CV
-        </h1>
-        <iframe
-          src={pdfUrl}
-          width="100%"
-          height="700px"
-          className="border rounded-xl shadow-lg max-w-4xl"
-        >
-          <p>
-            Your browser does not support PDFs. Please download the file to view
-            it.
-          </p>
-        </iframe>
+    <>
+      {/* Back button */}
+      <button
+        onClick={() => router.push("/")}
+        className="absolute top-6 left-6 flex items-center gap-2 p-3 bg-opacity-80 rounded-full text-white font-semibold hover:underline z-50"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6" />
+        <span className="text-base">Go to home page</span>
+      </button>
+
+      <div className="min-h-screen bg-[url('/bg/bg.jpg')] bg-cover bg-no-repeat bg-fixed">
+        <div className="backdrop-blur-sm bg-white/30 min-h-screen p-10 flex flex-col items-center">
+          <h1 className="text-5xl font-bold mb-6 text-purple-50 mt-10">
+            Preview Your Standout CV
+          </h1>
+          <iframe
+            src={pdfUrl}
+            width="100%"
+            height="700px"
+            className="border rounded-xl shadow-lg max-w-4xl"
+          >
+            <p>
+              Your browser does not support PDFs. Please download the file to view
+              it.
+            </p>
+          </iframe>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
