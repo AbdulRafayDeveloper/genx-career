@@ -22,6 +22,7 @@ const CVTemplates = () => {
   const [totalusers, setTotalusers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+  const [isDeleting, setIsDeleting] = useState(false);
   const totalPages = Math.ceil(totalusers / itemsPerPage);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -65,6 +66,8 @@ const CVTemplates = () => {
   const handleDelete = async () => {
     if (!selectedUserId) return;
 
+    setIsDeleting(true);
+
     try {
       const token = Cookies.get('genx_access_token');
       const response = await axios.delete(
@@ -92,6 +95,7 @@ const CVTemplates = () => {
         toast.error('An error occurred. Please try again.');
       }
     } finally {
+      setIsDeleting(false);
       setIsDialogOpen(false);
       setselectedUserId(null);
     }
@@ -243,11 +247,26 @@ const CVTemplates = () => {
                                   >
                                     Cancel
                                   </button>
-                                  <button
+                                  {/* <button
                                     className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
                                     onClick={handleDelete} // Call the function without passing an argument
                                   >
                                     Delete
+                                  </button> */}
+                                  <button
+                                    className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${isDeleting ? "bg-red-300 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+                                      }`}
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                  >
+                                    {isDeleting ? (
+                                      <div className="flex items-center space-x-2">
+                                        <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                        <span>Deleting...</span>
+                                      </div>
+                                    ) : (
+                                      "Delete"
+                                    )}
                                   </button>
                                 </div>
                               </div>

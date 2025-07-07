@@ -20,6 +20,7 @@ const UserSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const itemsPerPage = 3;
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);
   const totalPages = Math.ceil(totalusers / itemsPerPage);
@@ -70,6 +71,8 @@ const UserSection = () => {
   const handleDelete = async () => {
     if (!selectedUserId) return;
 
+    setIsDeleting(true); // Start loader
+
     try {
       const token = Cookies.get('genx_access_token');
       const response = await axios.delete(
@@ -105,6 +108,7 @@ const UserSection = () => {
         confirmButtonText: 'OK',
       });
     } finally {
+      setIsDeleting(false); // Stop loader
       setIsDialogOpen(false);
       setselectedUserId(null);
     }
@@ -279,11 +283,26 @@ const UserSection = () => {
                                 >
                                   Cancel
                                 </button>
-                                <button
+                                {/* <button
                                   className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
                                   onClick={handleDelete} // Call the function without passing an argument
                                 >
                                   Delete
+                                </button> */}
+                                <button
+                                  className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${isDeleting ? "bg-red-300 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+                                    }`}
+                                  onClick={handleDelete}
+                                  disabled={isDeleting}
+                                >
+                                  {isDeleting ? (
+                                    <div className="flex items-center space-x-2">
+                                      <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                      <span>Deleting...</span>
+                                    </div>
+                                  ) : (
+                                    "Delete"
+                                  )}
                                 </button>
                               </div>
                             </div>

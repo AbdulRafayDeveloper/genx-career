@@ -24,6 +24,7 @@ const JobListing = () => {
   const itemsPerPage = 5;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const totalPages = Math.ceil(totalJobs / itemsPerPage);
   // loading table
   const [loading, setLoading] = useState(true);
@@ -66,8 +67,53 @@ const JobListing = () => {
     setIsDialogOpen(true);
   };
 
+  // const handleDelete = async () => {
+  //   if (!selectedJobId) return;
+
+  //   try {
+  //     const token = Cookies.get('genx_access_token');
+  //     const response = await axios.delete(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${selectedJobId}`,
+  //       {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     if (response.data.status === 200) {
+  //       setSearchStatus(!searchStatus);
+  //       Swal.fire({
+  //         title: 'Deleted!',
+  //         text: 'The record has been deleted.',
+  //         icon: 'success',
+  //         confirmButtonText: 'OK',
+  //       });
+  //     } else {
+  //       Swal.fire({
+  //         title: 'Error!',
+  //         text: response.data.message || 'Failed to delete the record.',
+  //         icon: 'error',
+  //         confirmButtonText: 'OK',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Failed to delete record. Please try again later.',
+  //       icon: 'error',
+  //       confirmButtonText: 'OK',
+  //     });
+  //   } finally {
+  //     setIsDialogOpen(false);
+  //     setSelectedJobId(null);
+  //   }
+  // };
+
   const handleDelete = async () => {
     if (!selectedJobId) return;
+
+    setIsDeleting(true); // Start loader
 
     try {
       const token = Cookies.get('genx_access_token');
@@ -104,6 +150,7 @@ const JobListing = () => {
         confirmButtonText: 'OK',
       });
     } finally {
+      setIsDeleting(false); // Stop loader
       setIsDialogOpen(false);
       setSelectedJobId(null);
     }
@@ -299,11 +346,26 @@ const JobListing = () => {
                                   Cancel
                                 </button>
                                 <button
+                                  className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${isDeleting ? "bg-red-300 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+                                    }`}
+                                  onClick={handleDelete}
+                                  disabled={isDeleting}
+                                >
+                                  {isDeleting ? (
+                                    <div className="flex items-center space-x-2">
+                                      <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                      <span>Deleting...</span>
+                                    </div>
+                                  ) : (
+                                    "Delete"
+                                  )}
+                                </button>
+                                {/* <button
                                   className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
                                   onClick={handleDelete} // Call the function without passing an argument
                                 >
                                   Delete
-                                </button>
+                                </button> */}
                               </div>
                             </div>
                           </div>
