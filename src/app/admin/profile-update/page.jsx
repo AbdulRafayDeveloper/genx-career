@@ -9,7 +9,6 @@ import axios from "axios";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi";
 
 export default function SettingForm() {
