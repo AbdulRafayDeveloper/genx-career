@@ -294,8 +294,9 @@ const Page = () => {
                 </div>
                 <div className="flex-grow">
                   <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities.
+                    Narrow your job search using intuitive filters such as
+                    country, posting date, and remote availability to find your
+                    perfect fit.
                   </p>
                 </div>
               </div>
@@ -309,8 +310,9 @@ const Page = () => {
                 </div>
                 <div className="flex-grow">
                   <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities.
+                    Instantly match your resume with jobs that align with your
+                    skills, experience, and interests using intelligent matching
+                    algorithms.
                   </p>
                 </div>
               </div>
@@ -324,8 +326,8 @@ const Page = () => {
                 </div>
                 <div className="flex-grow">
                   <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities.
+                    Enjoy a smooth, intuitive interface designed to make job
+                    searching, CV creation, and CV matching .
                   </p>
                 </div>
               </div>
@@ -340,8 +342,8 @@ const Page = () => {
                 </div>
                 <div className="flex-grow">
                   <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities.
+                    All features including job search, CV builder, and guidance
+                    are completely free — no hidden fees or subscriptions.
                   </p>
                 </div>
               </div>
@@ -355,8 +357,9 @@ const Page = () => {
                 </div>
                 <div className="flex-grow">
                   <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities.
+                    Get support and career tips to craft compelling applications
+                    after matching CV and boost your chances of landing your
+                    dream job.
                   </p>
                 </div>
               </div>
@@ -477,8 +480,9 @@ const Page = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      className={`w-6 h-6 text-white transform ${openQuestion === index ? "rotate-180" : ""
-                        }`}
+                      className={`w-6 h-6 text-white transform ${
+                        openQuestion === index ? "rotate-180" : ""
+                      }`}
                     >
                       <path
                         strokeLinecap="round"
