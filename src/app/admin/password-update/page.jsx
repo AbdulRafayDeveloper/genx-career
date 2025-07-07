@@ -90,7 +90,7 @@ export default function ApplianceForm() {
       return;
     }
 
-    const token = Cookies.get("access_token");
+    const token = Cookies.get("genx_access_token");
     const userId = Cookies.get("userId");
 
     if (!token) {

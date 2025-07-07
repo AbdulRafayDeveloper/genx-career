@@ -71,7 +71,7 @@ const Contact = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("access_token");
+    const storedToken = Cookies.get("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }

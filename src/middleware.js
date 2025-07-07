@@ -9,7 +9,7 @@ const ROLE_DASHBOARD = {
 };
 
 export async function middleware(req) {
-  const token = req.cookies.get("access_token")?.value;
+  const token = req.cookies.get("genx_access_token")?.value;
   console.log("token in middleware: ", token);
   const { pathname } = req.nextUrl;
 
@@ -73,7 +73,7 @@ export async function middleware(req) {
   } catch (error) {
     console.log("JWT verification failed:", error);
     const response = NextResponse.redirect(new URL("/auth/login", req.url));
-    response.cookies.set("access_token", "", { maxAge: 0, path: "/" });
+    response.cookies.set("genx_access_token", "", { maxAge: 0, path: "/" });
     return response;
   }
 }

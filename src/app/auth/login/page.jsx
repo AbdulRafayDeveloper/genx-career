@@ -67,10 +67,10 @@ const Page = () => {
       if (response.status === 200) {
         toast.success(response.data.message || "Login successful!");
         const token = response.data.data.token;
-        // Cookies.set("access_token", token);
+        // Cookies.set("genx_access_token", token);
         // Cookies.set("userId", response.data.data.user._id);
         // Cookies.set("role", response.data.data.user.role);
-        Cookies.set("access_token", token, { expires: 9999, sameSite: 'Strict' });
+        Cookies.set("genx_access_token", token, { expires: 9999, sameSite: 'Strict' });
         Cookies.set("userId", response.data.data.user._id, { expires: 9999, sameSite: 'Strict' });
         Cookies.set("role", response.data.data.user.role, { expires: 9999, sameSite: 'Strict' });
 

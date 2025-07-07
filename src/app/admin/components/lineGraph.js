@@ -187,7 +187,7 @@ ChartJS.register(
 const App = () => {
   const currentYear = new Date().getFullYear();
   const [monthlyData, setMonthlyData] = useState([]);
-  const token = Cookies.get("access_token");
+  const token = Cookies.get("genx_access_token");
 
   useEffect(() => {
     const fetchMonthlyData = async () => {

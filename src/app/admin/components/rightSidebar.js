@@ -26,7 +26,7 @@ const RightSide = () => {
   const [totalCvMatchers, setTotalCvMatchers] = useState(0);
   const [statsLoading, setStatsLoading] = useState(false);
   const [monthlyStatsLoading, setMonthlyStatsLoading] = useState(false);
-  const token = Cookies.get("access_token");
+  const token = Cookies.get("genx_access_token");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const buttonRef = useRef(null);

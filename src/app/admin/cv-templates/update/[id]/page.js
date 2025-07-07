@@ -28,7 +28,7 @@ export default function ApplianceForm() {
         const fetchUserData = async () => {
             setLoading(true);
             try {
-                const token = Cookies.get("access_token");
+                const token = Cookies.get("genx_access_token");
 
                 if (!token) {
                     console.log("Token not found");
@@ -79,7 +79,7 @@ export default function ApplianceForm() {
         e.preventDefault();
         setLoading(true);
 
-        const token = Cookies.get("access_token");
+        const token = Cookies.get("genx_access_token");
         if (!token) {
             console.log("Token not found");
             setLoading(false);

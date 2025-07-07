@@ -49,7 +49,7 @@ const ProfileUpdatePage = () => {
     const fetchUserData = async () => {
       // setLoading(true);
       try {
-        const token = Cookies.get("access_token");
+        const token = Cookies.get("genx_access_token");
         const userId = Cookies.get("userId");
 
         if (!token) {
@@ -125,7 +125,7 @@ const ProfileUpdatePage = () => {
     }
 
     try {
-      const token = Cookies.get("access_token");
+      const token = Cookies.get("genx_access_token");
       const userId = Cookies.get("userId");
       if (!token) return toast.error("Token not found");
 

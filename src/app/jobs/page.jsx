@@ -18,7 +18,7 @@ import defaultJobPic from "../../../public/images/ats_friendly.png";
 
 const Page = () => {
   const router = useRouter();
-  // const token = Cookies.get("access_token");
+  // const token = Cookies.get("genx_access_token");
   const userId = Cookies.get("userId");
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -290,7 +290,7 @@ const Page = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("access_token");
+    const storedToken = Cookies.get("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }

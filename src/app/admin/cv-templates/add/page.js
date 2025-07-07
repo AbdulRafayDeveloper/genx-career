@@ -32,7 +32,7 @@ export default function ApplianceForm() {
     e.preventDefault();
     setLoading(true);
 
-    const token = Cookies.get("access_token");
+    const token = Cookies.get("genx_access_token");
     if (!token) {
       console.log("Token not found");
       setLoading(false);
