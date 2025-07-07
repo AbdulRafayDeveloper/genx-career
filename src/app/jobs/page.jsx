@@ -104,7 +104,6 @@ const Page = () => {
     setPageNumber(1);
   };
 
-
   const matchCv = async () => {
     console.log("entered 1");
 
@@ -150,7 +149,7 @@ const Page = () => {
         // setIsMatching(false);
         toast.error(
           response.data.message ||
-          "There is some error in uploading this file. Please try with a correct CV!"
+            "There is some error in uploading this file. Please try with a correct CV!"
         );
       }
     } catch (error) {
@@ -162,7 +161,7 @@ const Page = () => {
       ) {
         toast.error(
           error.response.data.message ||
-          "There is some error in uploading this file. Please try with a correct CV!"
+            "There is some error in uploading this file. Please try with a correct CV!"
         );
       } else {
         // setIsMatching(false);
@@ -503,30 +502,33 @@ const Page = () => {
                     </button>
                   )
                 )} */}
-                {["Remote only", "Salary Range", "Date Posted"].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={
-                      filter === "Remote only"
-                        ? () => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            remote: !prev.remote,
-                          }));
-                          setPageNumber(1);
-                        }
-                        : filter === "Salary Range"
+                {["Remote only", "Salary Range", "Date Posted"].map(
+                  (filter) => (
+                    <button
+                      key={filter}
+                      onClick={
+                        filter === "Remote only"
+                          ? () => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                remote: !prev.remote,
+                              }));
+                              setPageNumber(1);
+                            }
+                          : filter === "Salary Range"
                           ? toggleModal
                           : toggleModalCalender
-                    }
-                    className={`md:px-3 md:py-2 p-2 border text-[12px] md:text-md rounded-full shadow ${filter === "Remote only" && formData.remote
-                      ? "bg-purple-500 text-white"
-                      : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
+                      }
+                      className={`md:px-3 md:py-2 p-2 border text-[12px] md:text-md rounded-full shadow ${
+                        filter === "Remote only" && formData.remote
+                          ? "bg-purple-500 text-white"
+                          : "bg-white text-black bg-opacity-80 hover:bg-purple-100"
                       }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
+                    >
+                      {filter}
+                    </button>
+                  )
+                )}
 
                 {/* Reset All Filters Button */}
                 <button
@@ -582,8 +584,8 @@ const Page = () => {
                       {job.hybrid
                         ? "Hybrid"
                         : job.remote
-                          ? "Remote"
-                          : "On-site"}
+                        ? "Remote"
+                        : "On-site"}
                     </p>
                     <p className="text-gray-600">{job.salary}</p>
                   </div>
@@ -697,16 +699,23 @@ const Page = () => {
                     <p className="font-semibold text-gray-800">
                       {selectedJob.companyName}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      {selectedJob.location}, {selectedJob.country}
-                    </p>
+                    {(selectedJob.location !== "Location not specified" ||
+                      selectedJob.country !== "Location not specified") && (
+                      <p className="text-sm text-gray-500">
+                        {[selectedJob.location, selectedJob.country]
+                          .filter(
+                            (loc) => loc && loc !== "Location not specified"
+                          )
+                          .join(", ")}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <p className="text-gray-600 mb-4">
                   Salary: {selectedJob.salary}
                   {selectedJob.salary !== "Not disclosed" &&
-                    selectedJob.salaryCurrency
+                  selectedJob.salaryCurrency
                     ? ` ${selectedJob.salaryCurrency}`
                     : ""}
                 </p>
