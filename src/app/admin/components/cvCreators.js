@@ -79,8 +79,11 @@ const CvCreators = () => {
 
     setIsDeleting(true);
 
+    console.log("first: ", selectedUserId);
+
     try {
       const token = Cookies.get('genx_access_token');
+      console.log("token: ", token);
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation/${selectedUserId}`,
         {
@@ -89,6 +92,8 @@ const CvCreators = () => {
           },
         }
       );
+
+      console.log("response: ", response);
 
       if (response.data.status === 200) {
         setSearchStatus(!searchStatus);
@@ -107,6 +112,7 @@ const CvCreators = () => {
         });
       }
     } catch (error) {
+      console.log("error: ", error);
       Swal.fire({
         title: 'Error!',
         text: 'Failed to delete record. Please try again later.',
