@@ -13,6 +13,7 @@ import { FaUpload } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import { parseAppSegmentConfig } from "next/dist/build/segment-config/app/app-segment-config";
 import Image from "next/image";
+import { HiArrowLeft } from "react-icons/hi";
 
 export default function ApplianceForm() {
     const router = useRouter();
@@ -172,8 +173,12 @@ export default function ApplianceForm() {
                         <LeftSideBar />
 
                         {/* Title */}
-                        <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-                            Welcome Back!
+                        <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                            <HiArrowLeft
+                                className="cursor-pointer mr-2"
+                                onClick={() => router.back()}
+                            />
+                            Welcome Back
                         </p>
 
                         {/* Header component */}

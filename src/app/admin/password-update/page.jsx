@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import LeftSideBar from "../components/sidebar";
-import { useRouter } from "next/navigation";
 import Header from "../components/header";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 export default function ApplianceForm() {
+  const router = useRouter();
   const sidebarRef = useRef(null);
   const buttonRef = useRef(null); // Ref for toggle button
   const dropdownRef = useRef(null);
@@ -30,7 +32,6 @@ export default function ApplianceForm() {
   };
 
   const [errors, setErrors] = useState({});
-  const router = useRouter();
 
   const validatePassword = (password) => {
     if (!password) return "Password is required";
@@ -196,8 +197,15 @@ export default function ApplianceForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            {/* <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
               Welcome Back!
+            </p> */}
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}
@@ -407,11 +415,10 @@ export default function ApplianceForm() {
                       type="submit"
                       className={`inline-flex items-center justify-center
                           px-6 py-2 text-sm font-medium rounded-lg
-                          bg-purple-600 text-white ${
-                            loading
-                              ? "cursor-not-allowed bg-purple-300"
-                              : "hover:bg-purple-800"
-                          }`}
+                          bg-purple-600 text-white ${loading
+                          ? "cursor-not-allowed bg-purple-300"
+                          : "hover:bg-purple-800"
+                        }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">

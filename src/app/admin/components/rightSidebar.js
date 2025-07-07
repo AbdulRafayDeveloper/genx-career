@@ -13,8 +13,11 @@ import Cookies from "js-cookie";
 import LeftSideBar from "./sidebar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const RightSide = () => {
+  const router = useRouter();
   const [monthlyData, setMonthlyData] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalJobs, setTotalJobs] = useState(0);
@@ -52,7 +55,7 @@ const RightSide = () => {
         if (!data) {
           toast.error(
             response.data.message ||
-              "Failed to fetch stats. Please try again later."
+            "Failed to fetch stats. Please try again later."
           );
           return;
         }
@@ -68,7 +71,7 @@ const RightSide = () => {
         console.log("Error fetching monthly user data:", error);
         toast.error(
           error.response?.data?.message ||
-            "Failed to fetch stats. Please try again later."
+          "Failed to fetch stats. Please try again later."
         );
       } finally {
         setStatsLoading(false);
@@ -91,7 +94,7 @@ const RightSide = () => {
         if (!data) {
           toast.error(
             response.data.message ||
-              "Failed to fetch monthly user data. Please try again later."
+            "Failed to fetch monthly user data. Please try again later."
           );
           return;
         }
@@ -105,7 +108,7 @@ const RightSide = () => {
         console.log("Error fetching monthly user data:", error);
         toast.error(
           error.response?.data?.message ||
-            "Failed to fetch monthly user data. Please try again later."
+          "Failed to fetch monthly user data. Please try again later."
         );
       } finally {
         setMonthlyStatsLoading(false);
@@ -153,8 +156,12 @@ const RightSide = () => {
               <LeftSideBar />
 
               {/* Title */}
-              <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-                Welcome Back!
+              <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                <HiArrowLeft
+                  className="cursor-pointer mr-2"
+                  onClick={() => router.back()}
+                />
+                Welcome Back
               </p>
 
               {/* Header component */}

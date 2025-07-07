@@ -11,6 +11,7 @@ import axios from "axios";
 import { FaUpload } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import { HiArrowLeft } from "react-icons/hi";
 
 export default function ApplianceForm() {
   const router = useRouter();
@@ -136,8 +137,12 @@ export default function ApplianceForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-              Welcome Back!
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}
@@ -209,11 +214,10 @@ export default function ApplianceForm() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${
-                      loading
+                    className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${loading
                         ? "cursor-not-allowed bg-purple-600"
                         : "hover:bg-purple-800"
-                    }`}
+                      }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-4">

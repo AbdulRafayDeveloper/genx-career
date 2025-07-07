@@ -12,8 +12,11 @@ import LeftSideBar from "./sidebar";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const UserSection = () => {
+  const router = useRouter();
   const [users, setusers] = useState([]);
   const [searchStatus, setSearchStatus] = useState(true);
   const [totalusers, setTotalusers] = useState(0);
@@ -147,8 +150,16 @@ const UserSection = () => {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+            {/* <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
               Welcome Back!
+            </p> */}
+            {/* Title with back arrow */}
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}

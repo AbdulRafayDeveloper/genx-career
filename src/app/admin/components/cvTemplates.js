@@ -11,9 +11,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Pagination from "./pagination";
 import LeftSideBar from "./sidebar";
-
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const CVTemplates = () => {
+  const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [searchStatus, setSearchStatus] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -126,7 +128,11 @@ const CVTemplates = () => {
                 <LeftSideBar />
 
                 {/* Title */}
-                <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+                <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                  <HiArrowLeft
+                    className="cursor-pointer mr-2"
+                    onClick={() => router.back()}
+                  />
                   Welcome Back
                 </p>
 

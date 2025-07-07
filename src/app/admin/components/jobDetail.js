@@ -7,8 +7,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "lucide-react";
 import LeftSideBar from "./sidebar";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const JobDetail = () => {
+  const router = useRouter();
   const [jobDetails, setJobDetails] = useState();
   const { id } = useParams();
 
@@ -42,8 +45,12 @@ const JobDetail = () => {
           <LeftSideBar />
 
           {/* Title */}
-          <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
-            Job Details
+          <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            <HiArrowLeft
+              className="cursor-pointer mr-2"
+              onClick={() => router.back()}
+            />
+            Welcome Back
           </p>
 
           {/* Header component */}

@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LeftSideBar from '../components/sidebar';
 import Header from '../components/header';
+import { HiArrowLeft } from 'react-icons/hi';
 
 export default function SeoFormPage() {
     const router = useRouter();
@@ -121,9 +122,17 @@ export default function SeoFormPage() {
                         {/* Mobile: Show sidebar toggle */}
                         <LeftSideBar />
 
-                        {/* Title */}
+                        {/* Title
                         <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
-                            Website SEO
+                            Welcome Back
+                        </p> */}
+                        {/* Title with back arrow */}
+                        <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                            <HiArrowLeft
+                                className="cursor-pointer mr-2"
+                                onClick={() => router.back()}
+                            />
+                            Welcome Back
                         </p>
 
                         {/* Header component */}

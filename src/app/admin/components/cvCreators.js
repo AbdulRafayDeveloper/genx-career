@@ -11,8 +11,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LeftSideBar from "./sidebar";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const CvCreators = () => {
+  const router = useRouter();
   const [users, setusers] = useState([]);
   const [searchStatus, setSearchStatus] = useState(true);
   const [totalusers, setTotalusers] = useState(0);
@@ -163,7 +166,11 @@ const CvCreators = () => {
               <LeftSideBar />
 
               {/* Title */}
-              <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+              <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+                <HiArrowLeft
+                  className="cursor-pointer mr-2"
+                  onClick={() => router.back()}
+                />
                 Welcome Back
               </p>
 

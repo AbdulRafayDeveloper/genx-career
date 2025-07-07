@@ -9,6 +9,8 @@ import axios from "axios";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 export default function SettingForm() {
   const router = useRouter();
@@ -65,7 +67,7 @@ export default function SettingForm() {
           console.log("Error fetching user data:", response.data.message);
           toast.error(
             response.data.message ||
-              "Profile Information not found currently. Please try again later"
+            "Profile Information not found currently. Please try again later"
           );
           return;
         }
@@ -85,7 +87,7 @@ export default function SettingForm() {
         console.log("Error fetching user data:", error);
         toast.error(
           error.response.data.message ||
-            "Profile Information not found currently. Please try again later"
+          "Profile Information not found currently. Please try again later"
         );
       } finally {
         setLoading(false);
@@ -173,7 +175,7 @@ export default function SettingForm() {
       setLoading(false);
       toast.error(
         error.response.data.message ||
-          "Something went wrong while updating the profile."
+        "Something went wrong while updating the profile."
       );
     } finally {
       setLoading(false);
@@ -202,8 +204,15 @@ export default function SettingForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+            {/* <p className="text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
               Welcome Back!
+            </p> */}
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}
@@ -227,8 +236,8 @@ export default function SettingForm() {
                       imageFile
                         ? image // Temporary preview for newly uploaded image
                         : image
-                        ? `${image}`
-                        : defaultProfile
+                          ? `${image}`
+                          : defaultProfile
                     }
                     alt="User Profile"
                     width={40}
@@ -334,11 +343,10 @@ export default function SettingForm() {
                   <div className="!mt-8">
                     <button
                       type="submit"
-                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
-                        loading
+                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
                           ? "cursor-not-allowed bg-purple-600"
                           : "hover:bg-purple-800"
-                      }`}
+                        }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">

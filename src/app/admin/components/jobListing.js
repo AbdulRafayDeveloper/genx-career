@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react"
 import axios from "axios";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
@@ -13,6 +12,8 @@ import LeftSideBar from "./sidebar";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const JobListing = () => {
   const router = useRouter();
@@ -195,8 +196,16 @@ const JobListing = () => {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
+            {/* <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
               Welcome Back!
+            </p> */}
+
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}

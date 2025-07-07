@@ -10,8 +10,11 @@ import Header from "./header";
 import { toast } from "react-toastify";
 import LeftSideBar from "./sidebar";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { HiArrowLeft } from "react-icons/hi";
 
 const UserQueries = () => {
+  const router = useRouter();
   const [users, setusers] = useState([]);
   const [searchStatus, setSearchStatus] = useState(true);
   const [totalusers, setTotalusers] = useState(0);
@@ -158,9 +161,17 @@ const UserQueries = () => {
             {/* Mobile: Show sidebar toggle */}
             <LeftSideBar />
 
-            {/* Title */}
+            {/* Title
             <p className="text-[12px] md:text-2xl md:font-semibold ml-3 ">
               Welcome Back!
+            </p> */}
+
+            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3 md:ml-64">
+              <HiArrowLeft
+                className="cursor-pointer mr-2"
+                onClick={() => router.back()}
+              />
+              Welcome Back
             </p>
 
             {/* Header component */}
