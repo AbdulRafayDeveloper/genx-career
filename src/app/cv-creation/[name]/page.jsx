@@ -29,6 +29,7 @@ const Page = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const isImageInputEnabled = name === "template1" || name === "template3";
+  const isColorEnabled = false;
   console.log(isImageInputEnabled);
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -693,24 +694,27 @@ const Page = () => {
                     </div>
 
                     {/* Color Picker */}
-                    <div className="mt-6 flex flex-col items-start">
-                      <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
-                        Select Template Color
-                      </label>
-                      <div className="flex items-center gap-4">
-                        <input
-                          type="color"
-                          value={formData.color}
-                          onChange={(e) =>
-                            handleChange("color", null, null, e.target.value)
-                          }
-                          className="h-12 w-24 rounded-xl border border-gray-300 cursor-pointer bg-white"
-                        />
-                        <span className="text-sm text-gray-600">
-                          {formData.color}
-                        </span>
+                    {isColorEnabled && (
+                      <div className="mt-6 flex flex-col items-start">
+                        <label className="block text-gray-700 font-semibold mb-2 text-sm tracking-wide uppercase">
+                          Select Template Color
+                        </label>
+                        <div className="flex items-center gap-4">
+                          <input
+                            type="color"
+                            value={formData.color}
+                            onChange={(e) =>
+                              handleChange("color", null, null, e.target.value)
+                            }
+                            className="h-12 w-24 rounded-xl border border-gray-300 cursor-pointer bg-white"
+                          />
+                          <span className="text-sm text-gray-600">
+                            {formData.color}
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
+
                   </>
                 )}
 
