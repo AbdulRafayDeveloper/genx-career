@@ -301,7 +301,7 @@ const ProfileUpdatePage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="abcd@gmail.com"
                   disabled
-                  className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-sm border border-purple-700 text-sm bg-gray-100 cursor-not-allowed"
+                  className="mt-1 pl-10 block w-full px-4 py-3 rounded-md shadow-sm border border-purple-700 text-sm bg-gray-100 cursor-not-allowed text-gray-500"
                 />
               </div>
             </div>

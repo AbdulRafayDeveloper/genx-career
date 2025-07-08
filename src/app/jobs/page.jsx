@@ -375,7 +375,7 @@ const Page = () => {
         ></div>
 
         {/* Main Content */}
-        <div className="relative z-10 scrollbar-hidden ">
+        <div className="relative z-100 scrollbar-hidden ">
           <Header
             token={token}
             isCheckingAuth={isCheckingAuth}
@@ -383,7 +383,7 @@ const Page = () => {
           />
 
           <div className="flex flex-col justify-center items-center">
-            <div className="w-screen flex justify-center mt-24">
+            <div className="w-screen flex justify-center mt-32">
               <form
                 action="/search"
                 className="flex max-w-[480px] w-full px-4"
@@ -541,7 +541,7 @@ const Page = () => {
 
               {/* Loader */}
               {loading && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+                <div className="fixed inset-0 z-[40] flex items-center justify-center bg-white bg-opacity-80">
                   <div className="flex flex-col text-lg justify-center items-center">
                     <svg
                       aria-hidden="true"

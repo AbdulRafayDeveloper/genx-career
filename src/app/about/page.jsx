@@ -419,12 +419,7 @@ const Page = () => {
                 {
                   title: "Artifical Intelligence Engineer",
                   description:
-                    "Personalized job suggestions based on user preferences and profile.",
-                },
-                {
-                  title: "Network Engineer",
-                  description:
-                    "Accurately match CVs with job listings using AI-powered algorithms.",
+                    "Personalized suggestions on matching jobs and CV to help improve.",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-4">

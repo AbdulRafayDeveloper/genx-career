@@ -134,7 +134,7 @@ const Footer = () => {
               </h6>
               <div className="flex flex-col gap-1 mt-7">
                 <Link
-                  href="#"
+                  href="tel:+923060815246"
                   className="flex flex-row hover:text-purple-400 transition text-white font-sans xl:text-lg md:text-md text-[10px] gap-2"
                 >
                   <svg

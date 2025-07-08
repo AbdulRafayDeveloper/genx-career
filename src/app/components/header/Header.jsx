@@ -178,7 +178,7 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
                     />
                   </button>
                   {showData && (
-                    <div className="absolute w-44 right-0 mt-8 p-2 bg-gray-200 rounded-lg shadow-lg z-50 pr-2">
+                    <div className="absolute w-44 right-0 mt-8 p-2 bg-gray-200 rounded-lg shadow-lg z-[999] pr-2">
                       <button
                         onClick={() => router.push("/user/profile-update")}
                         className="flex items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded min-h-[40px]"
@@ -241,8 +241,9 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
       {/* Mobile Side Drawer */}
       {/* Mobile Side Drawer */}
       <div
-        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
           <span className="font-semibold text-[#9866C7] text-lg">Menu</span>
