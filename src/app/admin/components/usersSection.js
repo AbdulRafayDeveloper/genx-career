@@ -22,7 +22,7 @@ const UserSection = () => {
   const [totalusers, setTotalusers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const itemsPerPage = 3;
+  const itemsPerPage = 8;
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setselectedUserId] = useState(null);

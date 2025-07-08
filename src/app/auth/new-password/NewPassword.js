@@ -100,7 +100,7 @@ const NewPassword = () => {
       } else {
         toast.error(
           response.data.message ||
-            "Failed to update password. Please try again."
+            "Failed to set new password. Please try again."
         );
         setLoading(false);
       }
@@ -136,7 +136,7 @@ const NewPassword = () => {
                 className="max-w-md md:ml-auto w-full mt-10"
               >
                 <h3 className="text-purple-50 font-calibri text-5xl  font-extrabold mb-8 text-center whitespace-nowrap">
-                  Update Password
+                  Set New Password
                 </h3>
 
                 <div className="space-y-4">
@@ -281,7 +281,7 @@ const NewPassword = () => {
                             className="text-white size-3"
                           />
                           <p className="text-white text-lg font-semibold">
-                            Update Password
+                            Submit
                           </p>
                         </>
                       )}

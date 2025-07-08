@@ -22,7 +22,7 @@ const JobListing = () => {
   const [totalJobs, setTotalJobs] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);

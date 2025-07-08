@@ -3,9 +3,11 @@ import axios from "axios";
 
 export async function generateMetadata() {
     try {
+        console.log("Fetching SEO data... about 1");
         const res = await axios.get(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/seo-page?pageName=About`
         );
+        console.log("Fetching SEO data... about 2", res);
         const data = res.data;
         console.log("Data for Seo:", data);
         if (data.status === 200) {

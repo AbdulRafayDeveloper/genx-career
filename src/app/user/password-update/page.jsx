@@ -395,7 +395,7 @@ const Page = () => {
                             className="text-white size-4"
                           />
                           <p className="text-white text-lg font-semibold">
-                            Update Password
+                            Submit
                           </p>
                         </>
                       )}

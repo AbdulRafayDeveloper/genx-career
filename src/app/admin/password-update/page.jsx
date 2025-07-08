@@ -429,7 +429,7 @@ export default function ApplianceForm() {
                         ) : (
                           <>
                             <p className="text-white text-lg font-semibold">
-                              Update Password
+                              Submit
                             </p>
                           </>
                         )}
