@@ -173,13 +173,13 @@ export default function ApplianceForm() {
                         <LeftSideBar />
 
                         {/* Title */}
-                        <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
+                        <div className="flex items-center mt-3 ml-6 md:ml-64">
                             <HiArrowLeft
-                                className="cursor-pointer mr-2 mt-1"
+                                className="cursor-pointer mr-2 mt-1 ml-5 text-xl md:text-2xl md:font-semibold"
                                 onClick={() => router.back()}
                             />
-                            Back
-                        </p>
+                            <span className="text-[12px] md:text-2xl md:font-semibold mt-1">Back</span>
+                        </div>
 
                         {/* Header component */}
                         <div className="ml-auto">

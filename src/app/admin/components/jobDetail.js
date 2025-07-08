@@ -5,7 +5,7 @@ import { data1 } from "./data";
 import Header from "./header";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "lucide-react";
+import Link from "next/link";
 import LeftSideBar from "./sidebar";
 import { useRouter } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi";
@@ -180,7 +180,7 @@ const JobDetail = () => {
                 {jobDetails.foundedYear || "N/A"}
               </span>
             </div>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Company Website:
               </span>
@@ -192,6 +192,23 @@ const JobDetail = () => {
               >
                 Visit Site
               </Link>
+            </div> */}
+            <div className="flex items-center">
+              <span className="font-semibold text-sm text-gray-700 w-1/2">
+                Company Website:
+              </span>
+              {jobDetails.companyUrl ? (
+                <Link
+                  href={jobDetails.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline text-sm"
+                >
+                  Visit Site
+                </Link>
+              ) : (
+                <span className="text-gray-600 text-sm">Not mentioned</span>
+              )}
             </div>
           </div>
         </div>
