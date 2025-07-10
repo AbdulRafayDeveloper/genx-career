@@ -106,7 +106,6 @@ export async function middleware(req) {
 
   const isProtectedAdminRoute = pathname.startsWith("/admin");
   const isProtectedUserRoute =
-    pathname.startsWith("/cv-creation") ||
     pathname.startsWith("/cv-matching") ||
     pathname.startsWith("/user/profile-update") ||
     pathname.startsWith("/user/password-update");
@@ -161,7 +160,6 @@ export async function middleware(req) {
 export const config = {
   matcher: [
     "/admin/:path*",
-    "/cv-creation/:path*",
     "/cv-matching/:path*",
     "/user/profile-update",
     "/user/password-update",

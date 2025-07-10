@@ -17,6 +17,9 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
@@ -54,6 +57,29 @@ const Page = () => {
     color: "#2563eb",
     templateName: "",
   });
+
+  useEffect(() => {
+    const token = Cookies.get("genx_access_token");
+    if (!token) {
+      toast.error(
+        "You are not logged in. Please login first to create your CV.",
+        {
+          position: "top-right",
+          autoClose: 5000, // 5 seconds so user can read
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 5500); // Wait slightly longer than toast so they can read
+    }
+  }, []);
 
   useEffect(() => {
     if (name) {
@@ -573,6 +599,7 @@ const Page = () => {
   return (
     <>
       {/* Back button */}
+      <ToastContainer position="top-center" />
       <button
         onClick={() => router.back()}
         className="absolute top-6 left-6 p-3 bg-opacity-80 rounded-[300px] text-purple-600 font-semibold hover:underline z-50"

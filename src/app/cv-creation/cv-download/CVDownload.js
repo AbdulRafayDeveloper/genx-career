@@ -5,11 +5,36 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CVDownload() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [pdfUrl, setPdfUrl] = useState("");
+
+  useEffect(() => {
+    const token = Cookies.get("genx_access_token");
+    if (!token) {
+      toast.error(
+        "You are not logged in. Please login first to create your CV.",
+        {
+          position: "top-right",
+          autoClose: 3000, // 5 seconds so user can read
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 3500); // Wait slightly longer than toast so they can read
+    }
+  }, []);
 
   useEffect(() => {
     const downloadUrl = Cookies.get("downloadUrl");
@@ -18,7 +43,7 @@ export default function CVDownload() {
       // If the download URL is stored in cookies, use it
       setPdfUrl(downloadUrl);
     } else {
-      console.error("No valid URL found for PDF download.");
+      console.log("No valid URL found for PDF download.");
     }
   }, []);
 
@@ -26,6 +51,7 @@ export default function CVDownload() {
 
   return (
     <>
+      <ToastContainer position="top-center" />
       {/* Back button */}
       <button
         onClick={() => router.push("/")}

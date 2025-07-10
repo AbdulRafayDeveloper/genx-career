@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 const Page = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -170,12 +171,33 @@ const Page = () => {
                               src={template.imageUrl ? template.imageUrl : "/images/resume1.png"}
                               alt={template.name}
                             />
-                            <Link
-                              href={`/cv-creation/${template.name}`}
+
+                            <button
+                              onClick={() => {
+                                const storedToken = Cookies.get("genx_access_token");
+
+                                if (!storedToken) {
+                                  Swal.fire({
+                                    title: "Login Required",
+                                    text: "You need to login first.",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Login",
+                                    cancelButtonText: "Cancel",
+                                  }).then((result) => {
+                                    if (result.isConfirmed) {
+                                      router.push("/auth/login");
+                                    }
+                                  });
+                                  return;
+                                }
+
+                                router.push(`/cv-creation/${template.name}`);
+                              }}
                               className="absolute bottom-5 left-1/2 font-sans transform -translate-x-1/2 px-8 py-2 border bg-opacity-70 bg-[#a67ccd] text-white rounded-lg shadow-md hover:bg-opacity-100"
                             >
                               Build My CV
-                            </Link>
+                            </button>
                           </div>
                         </div>
                       ))
@@ -190,9 +212,8 @@ const Page = () => {
                           No CV Templates Available
                         </h2>
                         <p className="text-gray-600 mt-2 text-center font-sans">
-                          Currently, there are no CV templates available.{" "}
-                          <br /> Please check back later or contact support if
-                          you think this is an error.
+                          Currently, there are no CV templates available. <br />
+                          Please check back later or contact support if you think this is an error.
                         </p>
                       </div>
                     )}
