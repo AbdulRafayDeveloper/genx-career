@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiUpload } from "react-icons/fi";
@@ -36,7 +36,8 @@ const CvMatchers = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('genx_access_token');
+        // const token = Cookies.get('genx_access_token');
+        const token = localStorage.getItem("genx_access_token");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matchers?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
           {
@@ -77,7 +78,8 @@ const CvMatchers = () => {
     setIsDeleting(true);
 
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching/${selectedUserId}`,
         {
@@ -119,7 +121,8 @@ const CvMatchers = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching-list/export`, {
         responseType: "blob",
         headers: {

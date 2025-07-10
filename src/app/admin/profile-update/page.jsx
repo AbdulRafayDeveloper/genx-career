@@ -4,7 +4,7 @@ import LeftSideBar from "../components/sidebar";
 import Header from "../components/header";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 import defaultProfile from "../../../../public/images/profile avatar.png";
 import Image from "next/image";
@@ -43,8 +43,11 @@ export default function SettingForm() {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get("genx_access_token");
-        const userId = Cookies.get("userId");
+        // const token = Cookies.get("genx_access_token");
+        // const userId = Cookies.get("userId");
+
+        const token = localStorage.getItem("genx_access_token");
+        const userId = localStorage.getItem("userId");
 
         if (!token) {
           console.log("Token not found");
@@ -129,8 +132,12 @@ export default function SettingForm() {
     }
 
     try {
-      const token = Cookies.get("genx_access_token");
-      const userId = Cookies.get("userId");
+      // const token = Cookies.get("genx_access_token");
+      // const userId = Cookies.get("userId");
+
+      const token = localStorage.getItem("genx_access_token");
+      const userId = localStorage.getItem("userId");
+
       if (!token) {
         console.log("Token not found");
         toast.error("You are not authorized to perform this action.");

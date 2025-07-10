@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Header from "../../../components/header";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import axios from 'axios';
 import { FaUpload } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
@@ -29,7 +29,8 @@ export default function ApplianceForm() {
         const fetchUserData = async () => {
             setLoading(true);
             try {
-                const token = Cookies.get("genx_access_token");
+                // const token = Cookies.get("genx_access_token");
+                const token = localStorage.getItem("genx_access_token");
 
                 if (!token) {
                     console.log("Token not found");
@@ -80,7 +81,8 @@ export default function ApplianceForm() {
         e.preventDefault();
         setLoading(true);
 
-        const token = Cookies.get("genx_access_token");
+        // const token = Cookies.get("genx_access_token");
+        const token = localStorage.getItem("genx_access_token");
         if (!token) {
             console.log("Token not found");
             setLoading(false);

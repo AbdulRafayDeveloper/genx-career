@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { RiEyeLine, RiDeleteBin6Line } from "react-icons/ri";
 import { FiUpload } from "react-icons/fi";
@@ -117,7 +117,8 @@ const JobListing = () => {
     setIsDeleting(true); // Start loader
 
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${selectedJobId}`,
         {
@@ -159,7 +160,8 @@ const JobListing = () => {
 
   const downloadJobsExcel = async () => {
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
 
       if (!token) {
         toast.error('You are not logged in. Please log in to download Jobs Excel file.');

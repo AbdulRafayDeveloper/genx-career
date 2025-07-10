@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,10 +12,11 @@ export default function CVDownload() {
   const [pdfUrl, setPdfUrl] = useState("");
 
   useEffect(() => {
-    const downloadUrl = Cookies.get("downloadUrl");
+    // const downloadUrl = Cookies.get("downloadUrl");
+    const downloadUrl = localStorage.getItem("downloadUrl");
     console.log("downloadUrl:", downloadUrl);
     if (downloadUrl) {
-      // If the download URL is stored in cookies, use it
+      // If the download URL is stored in localStorage, use it
       setPdfUrl(downloadUrl);
     } else {
       console.error("No valid URL found for PDF download.");

@@ -10,7 +10,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../components/footer/Footer";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -71,7 +71,8 @@ const Contact = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("genx_access_token");
+    // const storedToken = Cookies.get("genx_access_token");
+    const storedToken = localStorage.getItem("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }

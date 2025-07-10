@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { RiEdit2Line, RiDeleteBin6Line } from "react-icons/ri";
 import Header from "./header";
 import Link from "next/link";
@@ -34,7 +34,8 @@ const CVTemplates = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('genx_access_token');
+        // const token = Cookies.get('genx_access_token');
+        const token = localStorage.getItem("genx_access_token");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates`,
           {
@@ -71,7 +72,8 @@ const CVTemplates = () => {
     setIsDeleting(true);
 
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-templates/${selectedUserId}`,
         {

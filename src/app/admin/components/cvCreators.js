@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiUpload } from "react-icons/fi";
@@ -36,7 +36,8 @@ const CvCreators = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('genx_access_token');
+        // const token = Cookies.get('genx_access_token');
+        const token = localStorage.getItem("genx_access_token");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
           {
@@ -82,7 +83,8 @@ const CvCreators = () => {
     console.log("first: ", selectedUserId);
 
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       console.log("token: ", token);
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation/${selectedUserId}`,
@@ -128,7 +130,8 @@ const CvCreators = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('genx_access_token');
+      // const token = Cookies.get('genx_access_token');
+      const token = localStorage.getItem("genx_access_token");
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-creation-list/export`, {
         responseType: "blob",
         headers: {

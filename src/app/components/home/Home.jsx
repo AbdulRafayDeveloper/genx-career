@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../footer/Footer";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -125,7 +125,8 @@ const Home = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("genx_access_token");
+    // const storedToken = Cookies.get("genx_access_token");
+    const storedToken = localStorage.getItem("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }
@@ -409,9 +410,8 @@ const Home = () => {
                 {slides.map((slide, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${
-                      currentSlide === index ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 p-8 transition-opacity duration-500 ${currentSlide === index ? "opacity-100" : "opacity-0"
+                      }`}
                   >
                     <h2 className="text-3xl font-semibold text-white mb-4">
                       {slide.title}

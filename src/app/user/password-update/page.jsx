@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -83,8 +83,11 @@ const Page = () => {
 
     setErrors({});
 
-    const token = Cookies.get("genx_access_token");
-    const userId = Cookies.get("userId");
+    // const token = Cookies.get("genx_access_token");
+    // const userId = Cookies.get("userId");
+
+    const token = localStorage.getItem("genx_access_token");
+    const userId = localStorage.getItem("userId");
 
     if (!token) {
       toast.error("You need to login again.");

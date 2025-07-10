@@ -3,7 +3,7 @@ import Header from "../components/header/Header";
 import { useState, useEffect } from "react";
 import Footer from "../components/footer/Footer";
 import Link from "next/link";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 const Page = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
@@ -87,7 +87,8 @@ const Page = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("genx_access_token");
+    const storedToken = localStorage.getItem("genx_access_token");
+    // const storedToken = Cookies.get("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }

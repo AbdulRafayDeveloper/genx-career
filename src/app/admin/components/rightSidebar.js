@@ -9,7 +9,7 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { RiMoneyPoundCircleLine } from "react-icons/ri";
 import { BsBullseye } from "react-icons/bs";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import LeftSideBar from "./sidebar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,7 +29,8 @@ const RightSide = () => {
   const [totalCvMatchers, setTotalCvMatchers] = useState(0);
   const [statsLoading, setStatsLoading] = useState(false);
   const [monthlyStatsLoading, setMonthlyStatsLoading] = useState(false);
-  const token = Cookies.get("genx_access_token");
+  // const token = Cookies.get("genx_access_token");
+  const token = localStorage.getItem("genx_access_token");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const buttonRef = useRef(null);

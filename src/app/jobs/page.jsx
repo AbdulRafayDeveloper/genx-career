@@ -8,7 +8,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
@@ -19,7 +19,9 @@ import defaultJobPic from "../../../public/images/ats_friendly.png";
 const Page = () => {
   const router = useRouter();
   // const token = Cookies.get("genx_access_token");
-  const userId = Cookies.get("userId");
+  // const token = localStorage.getItem("genx_access_token");
+  // const userId = Cookies.get("userId");
+  const userId = localStorage.getItem("userId");
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   // mobile view
@@ -193,7 +195,9 @@ const Page = () => {
       return;
     }
 
-    const role = Cookies.get("role")?.trim().toLowerCase();
+    // const role = Cookies.get("role")?.trim().toLowerCase();
+    const role = localStorage.getItem("role")?.trim().toLowerCase();
+    
     if (role !== "user") {
       console.log("entered 2");
       toast.error("You are not a user. Please login as a user to match CV.");
@@ -289,7 +293,10 @@ const Page = () => {
 
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const storedToken = Cookies.get("genx_access_token");
+    // const storedToken = Cookies.get("genx_access_token");
+    const storedToken = localStorage.getItem("genx_access_token");
+    
+
     if (storedToken) {
       setToken(storedToken);
     }

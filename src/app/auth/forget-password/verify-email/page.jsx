@@ -55,7 +55,8 @@ const Page = () => {
 
       if (response.status === 200) {
         toast.success(response.data.message || "Email sent successfully.");
-        Cookies.set("emailVerified", true);
+        localStorage.setItem("emailVerified", "true");
+        // Cookies.set("emailVerified", true);
         router.push(`/auth/forget-password/verify-otp?token=${token}`);
       } else {
         toast.error(

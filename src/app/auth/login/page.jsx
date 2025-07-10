@@ -70,9 +70,13 @@ const Page = () => {
         // Cookies.set("genx_access_token", token);
         // Cookies.set("userId", response.data.data.user._id);
         // Cookies.set("role", response.data.data.user.role);
-        Cookies.set("genx_access_token", token, { expires: 9999, sameSite: 'Strict' });
-        Cookies.set("userId", response.data.data.user._id, { expires: 9999, sameSite: 'Strict' });
-        Cookies.set("role", response.data.data.user.role, { expires: 9999, sameSite: 'Strict' });
+        // Cookies.set("genx_access_token", token, { expires: 9999, sameSite: 'Strict' });
+        // Cookies.set("userId", response.data.data.user._id, { expires: 9999, sameSite: 'Strict' });
+        // Cookies.set("role", response.data.data.user.role, { expires: 9999, sameSite: 'Strict' });
+localStorage.setItem("genx_access_token", token);
+localStorage.setItem("userId", response.data.data.user._id);
+localStorage.setItem("role", response.data.data.user.role);
+
 
         console.log("token is :", response.data.data.token);
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 import Link from "next/link";
 import Footer from "../components/footer/Footer";
@@ -19,7 +19,8 @@ const Page = () => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const storedToken = Cookies.get("genx_access_token");
+    // const storedToken = Cookies.get("genx_access_token");
+    const storedToken = localStorage.getItem("genx_access_token");
     if (storedToken) {
       setToken(storedToken);
     }

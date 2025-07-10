@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -464,7 +464,8 @@ const Page = () => {
         if (result.isConfirmed) {
           setIsGenerating(true);
 
-          const token = Cookies.get("genx_access_token");
+          // const token = Cookies.get("genx_access_token");
+          const token = localStorage.getItem("genx_access_token");
           if (!token) {
             console.log("Token not found");
             setLoading(false);
@@ -516,7 +517,8 @@ const Page = () => {
             // ⚠️ Don't double encode — use downloadUrl as is
             console.log("Download URL:", downloadUrl);
             // store in cookie
-            Cookies.set("downloadUrl", downloadUrl, { expires: 1 });
+            // Cookies.set("downloadUrl", downloadUrl, { expires: 1 });
+            localStorage.setItem("downloadUrl", downloadUrl);
             router.push(`/cv-creation/cv-download`);
           } catch (error) {
             console.log("Error generating CV:", error);

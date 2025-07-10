@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
@@ -25,8 +25,11 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = Cookies.get("genx_access_token");
-        const userId = Cookies.get("userId");
+        // const token = Cookies.get("genx_access_token");
+        // const userId = Cookies.get("userId");
+
+        const token = localStorage.getItem("genx_access_token");
+        const userId = localStorage.getItem("userId");
 
         if (!token) return;
 
@@ -79,9 +82,13 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove("genx_access_token");
-        Cookies.remove("userId");
-        Cookies.remove("role");
+        // Cookies.remove("genx_access_token");
+        // Cookies.remove("userId");
+        // Cookies.remove("role");
+        localStorage.removeItem("genx_access_token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("role");
+
         router.push("/auth/login");
       }
     });
@@ -241,9 +248,8 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
       {/* Mobile Side Drawer */}
       {/* Mobile Side Drawer */}
       <div
-        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 w-64 h-full bg-white  shadow-lg transform transition-transform duration-300 ease-in-out md:hidden lg:hidden z-[9999] ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
           <span className="font-semibold text-[#9866C7] text-lg">Menu</span>

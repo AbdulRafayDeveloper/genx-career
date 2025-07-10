@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 import defaultProfile from "../../../../public/images/profile.jpg";
 import Image from "next/image";
@@ -49,8 +49,11 @@ const ProfileUpdatePage = () => {
     const fetchUserData = async () => {
       // setLoading(true);
       try {
-        const token = Cookies.get("genx_access_token");
-        const userId = Cookies.get("userId");
+        // const token = Cookies.get("genx_access_token");
+        // const userId = Cookies.get("userId");
+
+        const token = localStorage.getItem("genx_access_token");
+        const userId = localStorage.getItem("userId");
 
         if (!token) {
           console.log("Token not found");
@@ -72,7 +75,7 @@ const ProfileUpdatePage = () => {
           console.log("Error fetching user data:", response.data.message);
           toast.error(
             response.data.message ||
-              "Profile Information not found currently. Please try again later"
+            "Profile Information not found currently. Please try again later"
           );
           return;
         }
@@ -93,7 +96,7 @@ const ProfileUpdatePage = () => {
         console.log("Error fetching user data:", error);
         toast.error(
           error.message ||
-            "Profile Information not found currently. Please try again later"
+          "Profile Information not found currently. Please try again later"
         );
       }
     };
@@ -125,8 +128,12 @@ const ProfileUpdatePage = () => {
     }
 
     try {
-      const token = Cookies.get("genx_access_token");
-      const userId = Cookies.get("userId");
+      // const token = Cookies.get("genx_access_token");
+      // const userId = Cookies.get("userId");
+
+      const token = localStorage.getItem("genx_access_token");
+      const userId = localStorage.getItem("userId");
+
       if (!token) return toast.error("Token not found");
 
       const updateData = new FormData();
@@ -166,7 +173,7 @@ const ProfileUpdatePage = () => {
       console.log("Update error:", error);
       toast.error(
         error.response.data.message ||
-          "Something went wrong while updating the profile."
+        "Something went wrong while updating the profile."
       );
     } finally {
       setLoading(false);
@@ -218,8 +225,8 @@ const ProfileUpdatePage = () => {
                   imageFile
                     ? image // Temporary preview for newly uploaded image
                     : image
-                    ? `${image}`
-                    : defaultProfile
+                      ? `${image}`
+                      : defaultProfile
                 }
                 alt="Avatar"
                 width={40}
@@ -309,11 +316,10 @@ const ProfileUpdatePage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
-                loading
-                  ? "cursor-not-allowed bg-purple-300"
-                  : "hover:bg-purple-800"
-              }`}
+              className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
+                ? "cursor-not-allowed bg-purple-300"
+                : "hover:bg-purple-800"
+                }`}
               disabled={loading}
             >
               <div className="flex items-center justify-center space-x-2">

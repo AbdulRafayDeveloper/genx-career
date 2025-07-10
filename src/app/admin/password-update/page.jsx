@@ -5,7 +5,7 @@ import LeftSideBar from "../components/sidebar";
 import Header from "../components/header";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi";
@@ -91,9 +91,12 @@ export default function ApplianceForm() {
       return;
     }
 
-    const token = Cookies.get("genx_access_token");
-    const userId = Cookies.get("userId");
+    // const token = Cookies.get("genx_access_token");
 
+    // const userId = Cookies.get("userId");
+
+    const token = localStorage.getItem("genx_access_token");
+    const userId = localStorage.getItem("userId");
     if (!token) {
       console.log("Token not found");
       toast.error("Token not found. Please log in again.");

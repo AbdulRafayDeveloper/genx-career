@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +27,8 @@ ChartJS.register(
 const App = () => {
   const currentYear = new Date().getFullYear();
   const [monthlyData, setMonthlyData] = useState([]);
-  const token = Cookies.get("genx_access_token");
+  // const token = Cookies.get("genx_access_token");
+  const token = localStorage.getItem("genx_access_token");
 
   useEffect(() => {
     const fetchMonthlyData = async () => {
