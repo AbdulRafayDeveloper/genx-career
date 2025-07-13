@@ -82,6 +82,7 @@
 //   matcher: ["/((?!_next|favicon.ico|images|fonts|api).*)"],
 // };
 
+
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
