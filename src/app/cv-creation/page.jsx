@@ -102,10 +102,10 @@ const Page = () => {
         )}
 
         <div className="flex  w-screen flex-col">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 pt-24 sm:pt-0 lg:mt-2 gap-10 sm:mt-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 pt-20 sm:pt-0 lg:mt-10 gap-10 sm:mt-20 mt-10">
             {/* Left Column */}
-            <div className="flex flex-col justify-center items-center text-center lg:w-1/2 space-y-6">
-              <h1 className="xl:text-7xl lg:text-6xl md:text-4xl text-3xl font-sans font-extrabold  bg-clip-text text-white">
+            <div className="flex flex-col justify-center items-center text-center lg:w-1/2 space-y-6 ">
+              <h1 className="text-5xl md:text-4xl lg:text-6xl xl:text-7xl font-sans font-extrabold bg-clip-text text-white">
                 Professional CV Builder
               </h1>
 
@@ -129,7 +129,7 @@ const Page = () => {
             </div>
 
             {/* Right Column (Image) */}
-            <div className="lg:w-1/2 w-full flex justify-center items-center">
+            <div className="lg:flex md:flex lg:w-1/2 w-full justify-center items-center">
               <img
                 src="/images/B.png"
                 alt="Decorative background"
@@ -141,16 +141,14 @@ const Page = () => {
           {/*Next section */}
           <div className="w-full h-8" id="cvCreationSection">
             {/* Section with Background Image */}
-            <div
-              className=" bg-cover bg-center flex flex-col text-white"
-              style={{ backgroundImage: "url('/images/bg.png')" }}
-            >
+            <div className="flex flex-col text-white bg-center bg-cover  bg-none ">
               {/* Section Content */}
               <div className="flex flex-col pt-12 items-center h-full bg-black bg-opacity-30 pb-12">
-                <p className="xl:text-5xl lg:text-4xl md:text-3xl text-lg font-bold font-sans text-purple-100 text-center">
+                <p className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold font-sans text-purple-100 text-center">
                   CV TEMPLATES FOR <br />
                   LANDING A PERFECT JOB
                 </p>
+
                 <p className="text-center xl:text-lg md:text-lg text-[11px] font-sans pt-6">
                   Just pick a template and enter your data. It&apos;s THAT easy
                   to use, <br />
@@ -218,8 +216,6 @@ const Page = () => {
                         </h2>
                         <p className="text-gray-600 mt-2 text-center font-sans">
                           Currently, there are no CV templates available. <br />
-                          Please check back later or contact support if you
-                          think this is an error.
                         </p>
                       </div>
                     )}

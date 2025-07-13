@@ -137,14 +137,14 @@ export default function ApplianceForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <div className="flex items-center mt-3 ml-6 md:ml-64">
+            <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2 mt-1 ml-5 text-xl md:text-2xl md:font-semibold"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              <span className="text-[12px] md:text-2xl md:font-semibold mt-1">Back</span>
+              Back
             </div>
-            
+
             {/* Header component */}
             <div className="ml-auto">
               <Header appear={true} />
@@ -163,9 +163,20 @@ export default function ApplianceForm() {
                 onSubmit={handleSubmit}
                 className="max-w-xl mx-auto bg-gray-100 p-8 shadow-lg shadow-purple-300 rounded-xl space-y-6"
               >
-                <h2 className="text-2xl font-semibold text-center mb-4">
-                  Upload CV Template
-                </h2>
+                <div className="block lg:hidden w-full mt-4 ml-2">
+                  <div className="flex items-center gap-2">
+                    <HiArrowLeft
+                      className="text-xl cursor-pointer text-gray-700"
+                      onClick={() => router.back()}
+                    />
+                    <h1 className="text-xl font-bold "> Upload CV Template</h1>
+                  </div>
+                </div>
+
+                {/* Desktop: Heading only (keep existing layout) */}
+                <div className="hidden lg:block">
+                  <h1 className="text-xl font-bold "> Upload CV Template</h1>
+                </div>
                 <div>
                   <label className="block mb-2 text-lg font-bold">
                     Select Template
@@ -214,10 +225,11 @@ export default function ApplianceForm() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${loading
-                      ? "cursor-not-allowed bg-purple-600"
-                      : "hover:bg-purple-800"
-                      }`}
+                    className={`p-2 px-12 bg-purple-600 text-white py-3 rounded-md hover:bg-purple-800 transition-colors duration-300 ${
+                      loading
+                        ? "cursor-not-allowed bg-purple-600"
+                        : "hover:bg-purple-800"
+                    }`}
                     disabled={loading}
                   >
                     <div className="flex items-center justify-center space-x-4">

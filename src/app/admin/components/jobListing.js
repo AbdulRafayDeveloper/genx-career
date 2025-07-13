@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
@@ -49,13 +49,15 @@ const JobListing = () => {
         if (data.status == 200) {
           setJobs(data.data.getAllJobs);
           setTotalJobs(data.data.totalJobsCount);
-        }
-        else {
+        } else {
           toast.error(data.message);
         }
       } catch (error) {
-        console.log("error", error)
-        toast.error(error.response.data.message || "Failed to fetch jobs. Please try again later.");
+        console.log("error", error);
+        toast.error(
+          error.response.data.message ||
+            "Failed to fetch jobs. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -117,12 +119,12 @@ const JobListing = () => {
     setIsDeleting(true); // Start loader
 
     try {
-      const token = Cookies.get('genx_access_token');
+      const token = Cookies.get("genx_access_token");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/job/${selectedJobId}`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -130,25 +132,25 @@ const JobListing = () => {
       if (response.data.status === 200) {
         setSearchStatus(!searchStatus);
         Swal.fire({
-          title: 'Deleted!',
-          text: 'The record has been deleted.',
-          icon: 'success',
-          confirmButtonText: 'OK',
+          title: "Deleted!",
+          text: "The record has been deleted.",
+          icon: "success",
+          confirmButtonText: "OK",
         });
       } else {
         Swal.fire({
-          title: 'Error!',
-          text: response.data.message || 'Failed to delete the record.',
-          icon: 'error',
-          confirmButtonText: 'OK',
+          title: "Error!",
+          text: response.data.message || "Failed to delete the record.",
+          icon: "error",
+          confirmButtonText: "OK",
         });
       }
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Failed to delete record. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
+        title: "Error!",
+        text: "Failed to delete record. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     } finally {
       setIsDeleting(false); // Stop loader
@@ -159,21 +161,28 @@ const JobListing = () => {
 
   const downloadJobsExcel = async () => {
     try {
-      const token = Cookies.get('genx_access_token');
+      const token = Cookies.get("genx_access_token");
 
       if (!token) {
-        toast.error('You are not logged in. Please log in to download Jobs Excel file.');
+        toast.error(
+          "You are not logged in. Please log in to download Jobs Excel file."
+        );
         return;
       }
 
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/export`, {
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/export`,
+        {
+          responseType: "blob",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = "Jobs_Export.xlsx";
@@ -181,7 +190,10 @@ const JobListing = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      toast.error(error.response.data.message || 'Failed to download Jobs Excel file. Please try again later.');
+      toast.error(
+        error.response.data.message ||
+          "Failed to download Jobs Excel file. Please try again later."
+      );
     }
   };
 
@@ -197,13 +209,14 @@ const JobListing = () => {
 
             {/* Title */}
 
-            <p className="flex text-[12px] md:text-2xl md:font-semibold ml-3">
+            {/* Back button for desktop (hidden on mobile) */}
+            <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
                 className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
               Back
-            </p>
+            </div>
 
             {/* Header component */}
             <div className="ml-auto">
@@ -211,6 +224,7 @@ const JobListing = () => {
             </div>
           </div>
         </div>
+
         {loading && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
             <div className="flex flex-col items-center justify-center text-lg">
@@ -240,13 +254,20 @@ const JobListing = () => {
         <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
           <div className="flex flex-wrap justify-between items-center gap-4">
             {/* Job Listing Section */}
-            <div className="w-full lg:w-auto">
-              <div className="grid grid-cols-2 lg:justify-between items-center gap-4">
-                <div>
-                  <h1 className="text-lg lg:text-xl font-bold">Job Listing</h1>
-                </div>
-                <div></div>
+            {/* Mobile: Back + Heading together */}
+            <div className="block lg:hidden w-full mt-4 ml-2">
+              <div className="flex items-center gap-2">
+                <HiArrowLeft
+                  className="text-xl cursor-pointer text-gray-700"
+                  onClick={() => router.back()}
+                />
+                <h1 className="text-lg font-bold text-gray-800">Job Listing</h1>
               </div>
+            </div>
+
+            {/* Desktop: Heading only (keep existing layout) */}
+            <div className="hidden lg:block">
+              <h1 className="text-xl font-bold">Job Listing</h1>
             </div>
 
             {/* Search Form */}
@@ -258,12 +279,18 @@ const JobListing = () => {
                   aria-label="Export Records"
                   className="flex items-center justify-center gap-2 w-full bg-white p-1 rounded-lg border border-gray-300 transition duration-300"
                 >
-                  <p className="text-md ">Export </p> <Image src="/upload-icon.png" height={24} width={24} alt="Export" />
+                  <p className="text-md ">Export </p>{" "}
+                  <Image
+                    src="/upload-icon.png"
+                    height={24}
+                    width={24}
+                    alt="Export"
+                  />
                 </button>
                 <div className="w-full  flex justify-start">
                   <input
                     type="text"
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     id="simple-search"
                     placeholder="Search by title..."
                     className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
@@ -274,7 +301,6 @@ const JobListing = () => {
               </div>
 
               {/* Search Input */}
-
 
               {/* Search Button */}
               <div className="w-full sm:w-auto flex justify-start">
@@ -291,7 +317,6 @@ const JobListing = () => {
                 </button>
               </div>
             </div>
-
           </div>
 
           {/* Table */}
@@ -308,78 +333,85 @@ const JobListing = () => {
                 </tr>
               </thead>
               <tbody>
-
-                {jobs && jobs.map((item, index) => (
-                  <tr key={item._id} className="bg-white border-b text-center">
-                    <td className="px-6 py-4">{item.title}</td>
-                    <td className="px-6 py-4">
-                      {new Date(item.jobPostDate).toLocaleDateString("en-GB")}
-                    </td>
-                    <td className="px-6 py-4">{item.companyName}</td>
-                    <td className="px-6 py-4">{item.location}</td>
-                    <td className="px-6 py-4">{item.salary}</td>
-                    <td className="px-6 py-4 flex gap-1">
-                      <div
-                        className="p-1 w-5 h-5 bg-yellow-300 rounded-md flex justify-center items-center cursor-pointer"
-                        onClick={() => handleViewDetails(item._id)}
-                      >
-                        <RiEyeLine color="white" />
-                      </div>
-                      <div>
-                        {/* Delete Button */}
+                {jobs &&
+                  jobs.map((item, index) => (
+                    <tr
+                      key={item._id}
+                      className="bg-white border-b text-center"
+                    >
+                      <td className="px-6 py-4">{item.title}</td>
+                      <td className="px-6 py-4">
+                        {new Date(item.jobPostDate).toLocaleDateString("en-GB")}
+                      </td>
+                      <td className="px-6 py-4">{item.companyName}</td>
+                      <td className="px-6 py-4">{item.location}</td>
+                      <td className="px-6 py-4">{item.salary}</td>
+                      <td className="px-6 py-4 flex gap-1">
                         <div
-                          className="p-1 w-5 h-5 bg-red-600 rounded-md flex justify-center items-center cursor-pointer"
-                          onClick={() => handleDeleteClick(item._id)} // Pass the specific ID
+                          className="p-1 w-5 h-5 bg-yellow-300 rounded-md flex justify-center items-center cursor-pointer"
+                          onClick={() => handleViewDetails(item._id)}
                         >
-                          <RiDeleteBin6Line color="white" />
+                          <RiEyeLine color="white" />
                         </div>
+                        <div>
+                          {/* Delete Button */}
+                          <div
+                            className="p-1 w-5 h-5 bg-red-600 rounded-md flex justify-center items-center cursor-pointer"
+                            onClick={() => handleDeleteClick(item._id)} // Pass the specific ID
+                          >
+                            <RiDeleteBin6Line color="white" />
+                          </div>
 
-                        {/* Dialog Box */}
-                        {isDialogOpen && (
-                          <div className="fixed inset-0 bg-black bg-opacity-20  z-50 flex items-center justify-center">
-                            <div className="bg-white  rounded-lg p-8 shadow-lg w-[350px]">
-                              <h1 className="text-xl font-bold">
-                                Delete Confirmation
-                              </h1>
-                              <p className="text-md text-gray-600 mt-2">
-                                Are you sure you want to delete this record from database?
-                              </p>
-                              <div className="flex justify-end gap-2 mt-8">
-                                <button
-                                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
-                                  onClick={() => setIsDialogOpen(false)}
-                                >
-                                  Cancel
-                                </button>
-                                <button
-                                  className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${isDeleting ? "bg-red-300 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+                          {/* Dialog Box */}
+                          {isDialogOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-20  z-50 flex items-center justify-center">
+                              <div className="bg-white  rounded-lg p-8 shadow-lg w-[350px]">
+                                <h1 className="text-xl font-bold">
+                                  Delete Confirmation
+                                </h1>
+                                <p className="text-md text-gray-600 mt-2">
+                                  Are you sure you want to delete this record
+                                  from database?
+                                </p>
+                                <div className="flex justify-end gap-2 mt-8">
+                                  <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
+                                    onClick={() => setIsDialogOpen(false)}
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${
+                                      isDeleting
+                                        ? "bg-red-300 cursor-not-allowed"
+                                        : "bg-red-600 hover:bg-red-700"
                                     }`}
-                                  onClick={handleDelete}
-                                  disabled={isDeleting}
-                                >
-                                  {isDeleting ? (
-                                    <div className="flex items-center space-x-2">
-                                      <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                      <span>Deleting...</span>
-                                    </div>
-                                  ) : (
-                                    "Delete"
-                                  )}
-                                </button>
-                                {/* <button
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                  >
+                                    {isDeleting ? (
+                                      <div className="flex items-center space-x-2">
+                                        <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                        <span>Deleting...</span>
+                                      </div>
+                                    ) : (
+                                      "Delete"
+                                    )}
+                                  </button>
+                                  {/* <button
                                   className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
                                   onClick={handleDelete} // Call the function without passing an argument
                                 >
                                   Delete
                                 </button> */}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 {jobs.length == 0 && (
                   <tr>
                     <td colSpan={6} className="py-12">
@@ -401,7 +433,9 @@ const JobListing = () => {
                         </svg>
 
                         {/* Main message */}
-                        <h3 className="text-xl font-medium text-gray-700">No records found</h3>
+                        <h3 className="text-xl font-medium text-gray-700">
+                          No records found
+                        </h3>
 
                         {/* Help text */}
                         <p className="text-sm text-gray-500">
@@ -427,7 +461,6 @@ const JobListing = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-
         </div>
       </div>
     </div>

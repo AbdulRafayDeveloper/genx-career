@@ -197,15 +197,19 @@ export default function CVDownload() {
               <h1 className="text-5xl font-bold mb-6 text-purple-50 mt-10">
                 Preview Your Standout CV
               </h1>
-              <iframe
+              {/*<iframe
                 src={pdfUrl}
                 width="100%"
                 height="700px"
                 className="border rounded-xl shadow-lg max-w-4xl"
+              >*/}
+              <iframe
+                src={pdfUrl}
+                className="w-full h-[500px] sm:h-[600px] md:h-[700px] border rounded-xl shadow-lg"
               >
                 <p>
-                  Your browser does not support PDFs. Please download the file to view
-                  it.
+                  Your browser does not support PDFs. Please download the file
+                  to view it.
                 </p>
               </iframe>
             </div>

@@ -197,12 +197,12 @@ export default function ApplianceForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <div className="flex items-center mt-3 ml-6 md:ml-64">
+            <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2 mt-1 ml-5 text-xl md:text-2xl md:font-semibold"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              <span className="text-[12px] md:text-2xl md:font-semibold mt-1">Back</span>
+              Back
             </div>
 
             {/* Header component */}
@@ -217,7 +217,16 @@ export default function ApplianceForm() {
           {/* header */}
           {/* <Header /> */}
           {/* Scrollable Content Area */}
-          <main className="flex items-center justify-center min-h-screen bg-white p-4">
+          <div className="block lg:hidden w-full ml-2">
+            <div className="flex items-center gap-2">
+              <HiArrowLeft
+                className="text-xl cursor-pointer text-gray-700"
+                onClick={() => router.back()}
+              />
+              Back
+            </div>
+          </div>
+          <main className="flex items-center justify-center bg-white p-4">
             <div className="w-full max-w-lg bg-gray-50 rounded-xl shadow-lg overflow-hidden">
               <div className="p-2 sm:p-6 lg:p-8">
                 <h1 className="text-2xl sm:text-3xl font-bold text-center text-purple-600 mb-6">
@@ -412,10 +421,11 @@ export default function ApplianceForm() {
                       type="submit"
                       className={`inline-flex items-center justify-center
                           px-6 py-2 text-sm font-medium rounded-lg
-                          bg-purple-600 text-white ${loading
-                          ? "cursor-not-allowed bg-purple-300"
-                          : "hover:bg-purple-800"
-                        }`}
+                          bg-purple-600 text-white ${
+                            loading
+                              ? "cursor-not-allowed bg-purple-300"
+                              : "hover:bg-purple-800"
+                          }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">

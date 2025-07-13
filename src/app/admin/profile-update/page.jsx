@@ -66,7 +66,7 @@ export default function SettingForm() {
           console.log("Error fetching user data:", response.data.message);
           toast.error(
             response.data.message ||
-            "Profile Information not found currently. Please try again later"
+              "Profile Information not found currently. Please try again later"
           );
           return;
         }
@@ -86,7 +86,7 @@ export default function SettingForm() {
         console.log("Error fetching user data:", error);
         toast.error(
           error.response.data.message ||
-          "Profile Information not found currently. Please try again later"
+            "Profile Information not found currently. Please try again later"
         );
       } finally {
         setLoading(false);
@@ -174,7 +174,7 @@ export default function SettingForm() {
       setLoading(false);
       toast.error(
         error.response.data.message ||
-        "Something went wrong while updating the profile."
+          "Something went wrong while updating the profile."
       );
     } finally {
       setLoading(false);
@@ -203,12 +203,12 @@ export default function SettingForm() {
             <LeftSideBar />
 
             {/* Title */}
-            <div className="flex items-center mt-3 ml-6 md:ml-64">
+            <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
-                className="cursor-pointer mr-2 mt-1 ml-5 text-xl md:text-2xl md:font-semibold"
+                className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
-              <span className="text-[12px] md:text-2xl md:font-semibold mt-1">Back</span>
+              Back
             </div>
 
             {/* Header component */}
@@ -222,7 +222,16 @@ export default function SettingForm() {
         <div className="sm:ml-64 p-2">
           {/* <Header title="Profile Setting" toggleSidebar={handleSidebarToggle} buttonRef={buttonRef} /> */}
 
-          <div className="flex justify-center items-center mt-12 p-2">
+          <div className="block lg:hidden w-full mt-4 ml-2">
+            <div className="flex items-center gap-2">
+              <HiArrowLeft
+                className="text-xl cursor-pointer text-gray-700"
+                onClick={() => router.back()}
+              />
+              Back
+            </div>
+          </div>
+          <div className="flex justify-center items-center p-2">
             <div className="bg-gray-100 rounded-2xl shadow-xl shadow-purple-400  p-6 w-full max-w-2xl">
               {/* Profile Picture Section */}
               <div className="flex flex-col items-center mb-6">
@@ -232,8 +241,8 @@ export default function SettingForm() {
                       imageFile
                         ? image // Temporary preview for newly uploaded image
                         : image
-                          ? `${image}`
-                          : defaultProfile
+                        ? `${image}`
+                        : defaultProfile
                     }
                     alt="User Profile"
                     width={40}
@@ -264,6 +273,7 @@ export default function SettingForm() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Username */}
+
                 <div>
                   <label className="block text-lg font-bold mb-1">
                     Username
@@ -339,10 +349,11 @@ export default function SettingForm() {
                   <div className="!mt-8">
                     <button
                       type="submit"
-                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${loading
-                        ? "cursor-not-allowed bg-purple-600"
-                        : "hover:bg-purple-800"
-                        }`}
+                      className={`w-full bg-purple-500 text-white py-2 px-4 rounded-md transition ${
+                        loading
+                          ? "cursor-not-allowed bg-purple-600"
+                          : "hover:bg-purple-800"
+                      }`}
                       disabled={loading}
                     >
                       <div className="flex items-center justify-center space-x-4">

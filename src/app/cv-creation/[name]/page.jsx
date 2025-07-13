@@ -20,7 +20,6 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const steps = ["Personal Info", "Education", "Experience & Skills"];
 
 const Page = () => {
@@ -269,7 +268,8 @@ const Page = () => {
       });
 
       if (formData.languages.length > 7) {
-        newErrors.languagesGlobal = "You can add a maximum of 7 languages only.";
+        newErrors.languagesGlobal =
+          "You can add a maximum of 7 languages only.";
         isValid = false;
       }
     }
@@ -436,7 +436,8 @@ const Page = () => {
             entry.name = "Certificate name is required.";
             isValid = false;
           } else if (cert.name.length < 2 || cert.name.length > 40) {
-            entry.name = "Certificate name must be between 2 and 40 characters.";
+            entry.name =
+              "Certificate name must be between 2 and 40 characters.";
             isValid = false;
           }
 
@@ -451,7 +452,8 @@ const Page = () => {
       });
 
       if (formData.experience.length > 5) {
-        newErrors.experienceGlobal = "You can add a maximum of 5 experiences only.";
+        newErrors.experienceGlobal =
+          "You can add a maximum of 5 experiences only.";
         isValid = false;
       }
 
@@ -461,7 +463,8 @@ const Page = () => {
       }
 
       if (formData.certificates.length > 7) {
-        newErrors.certificatesGlobal = "You can add a maximum of 7 certificates only.";
+        newErrors.certificatesGlobal =
+          "You can add a maximum of 7 certificates only.";
         isValid = false;
       }
     }
@@ -610,7 +613,9 @@ const Page = () => {
       {isGenerating && (
         <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center flex-col">
           <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
-          <p className="mt-4 text-violet-800 text-lg font-medium">Your CV is being generated...</p>
+          <p className="mt-4 text-violet-800 text-lg font-medium">
+            Your CV is being generated...
+          </p>
         </div>
       )}
       <div
@@ -619,10 +624,10 @@ const Page = () => {
       >
         <div className="max-w-4xl mx-auto pt-12">
           <div className="text-center mb-8">
-            <h1 className="text-6xl font-bold text-white">
+            <h1 className="text-6xl font-bold text-white pt-8 sm:pt-0">
               Build Your Professional CV
             </h1>
-            <p className="text-gray-50 mt-2 text-lg">
+            <p className="text-gray-50 mt-2 text-lg px-4 sm:px-0">
               Fill in your details step by step to generate a polished and
               professional CV.
             </p>
@@ -688,7 +693,7 @@ const Page = () => {
                             <img
                               src={
                                 formData?.imageUrl &&
-                                  formData.imageUrl !== "N/A"
+                                formData.imageUrl !== "N/A"
                                   ? formData.imageUrl
                                   : "/images/profile.jpg"
                               }
@@ -741,7 +746,6 @@ const Page = () => {
                         </div>
                       </div>
                     )}
-
                   </>
                 )}
 
@@ -954,8 +958,11 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className={`text-blue-600 text-sm mt-2 ${formData.languages.length >= 7 ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                    className={`text-blue-600 text-sm mt-2 ${
+                      formData.languages.length >= 7
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                     onClick={handleAddLanguage}
                     disabled={formData.languages.length >= 7}
                   >
@@ -963,7 +970,9 @@ const Page = () => {
                   </button>
 
                   {errors.languagesGlobal && (
-                    <p className="text-sm text-red-500 mt-1">{errors.languagesGlobal}</p>
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.languagesGlobal}
+                    </p>
                   )}
                 </div>
               </div>
@@ -1127,7 +1136,9 @@ const Page = () => {
                         }}
                       />
                       {errors.skills && errors.skills[index] && (
-                        <p className="text-sm text-red-500">{errors.skills[index]}</p>
+                        <p className="text-sm text-red-500">
+                          {errors.skills[index]}
+                        </p>
                       )}
 
                       {formData.skills.length > 1 && (
@@ -1151,8 +1162,11 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className={`text-blue-600 text-sm mt-2 ${formData.skills.length >= 12 ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                    className={`text-blue-600 text-sm mt-2 ${
+                      formData.skills.length >= 12
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1165,9 +1179,10 @@ const Page = () => {
                   </button>
 
                   {errors.skillsGlobal && (
-                    <p className="text-sm text-red-500 mt-1">{errors.skillsGlobal}</p>
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.skillsGlobal}
+                    </p>
                   )}
-
                 </div>
               </div>
             )}
@@ -1187,10 +1202,11 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Job Title"
-                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.title
-                          ? "border-red-500"
-                          : "border-gray-300"
-                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                        className={`p-2 rounded-xl border ${
+                          errors.experience?.[index]?.title
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.title}
                         maxLength={30}
                         onChange={(e) =>
@@ -1211,10 +1227,11 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Company"
-                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.company
-                          ? "border-red-500"
-                          : "border-gray-300"
-                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                        className={`p-2 rounded-xl border ${
+                          errors.experience?.[index]?.company
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.company}
                         maxLength={50}
                         onChange={(e) =>
@@ -1234,10 +1251,11 @@ const Page = () => {
 
                       <textarea
                         placeholder="Description / Responsibilities"
-                        className={`p-2 rounded-xl border ${errors.experience?.[index]?.description
-                          ? "border-red-500"
-                          : "border-gray-300"
-                          } resize-none bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                        className={`p-2 rounded-xl border ${
+                          errors.experience?.[index]?.description
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } resize-none bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={exp.description}
                         maxLength={400}
                         onChange={(e) =>
@@ -1278,7 +1296,11 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className={`text-blue-600 text-sm mt-2 ${formData.experience.length >= 5 ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`text-blue-600 text-sm mt-2 ${
+                      formData.experience.length >= 5
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1301,19 +1323,25 @@ const Page = () => {
                   {formData.projects.map((proj, index) => (
                     <div
                       key={index}
-                      className="grid grid-cols-1 gap-4 mb-6 p-4  bg-white "
+                      className="grid grid-cols-1 gap-4 mb-6 p-4  "
                     >
                       <input
                         type="text"
                         placeholder="Project Name"
                         maxLength={30}
-                        className={`p-2 rounded-xl border ${errors.projects?.[index]?.name
-                          ? "border-red-500"
-                          : "border-gray-300"
-                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                        className={`p-2 rounded-xl border ${
+                          errors.projects?.[index]?.name
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.name}
                         onChange={(e) =>
-                          handleChange("projects", index, "name", e.target.value)
+                          handleChange(
+                            "projects",
+                            index,
+                            "name",
+                            e.target.value
+                          )
                         }
                       />
                       {errors.projects?.[index]?.name && (
@@ -1336,16 +1364,18 @@ const Page = () => {
                               type="text"
                               placeholder={`Technology ${techIndex + 1}`}
                               maxLength={30}
-                              className={`p-2 rounded-xl border ${errors.projects?.[index]?.technologies?.[
-                                techIndex
-                              ]
-                                ? "border-red-500"
-                                : "border-gray-300"
-                                } w-full bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                              className={`p-2 rounded-xl border ${
+                                errors.projects?.[index]?.technologies?.[
+                                  techIndex
+                                ]
+                                  ? "border-red-500"
+                                  : "border-gray-300"
+                              } w-full bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                               value={tech}
                               onChange={(e) => {
                                 const updatedProjects = [...formData.projects];
-                                updatedProjects[index].technologies[techIndex] = e.target.value;
+                                updatedProjects[index].technologies[techIndex] =
+                                  e.target.value;
                                 setFormData({
                                   ...formData,
                                   projects: updatedProjects,
@@ -1355,10 +1385,10 @@ const Page = () => {
                             {errors.projects?.[index]?.technologies?.[
                               techIndex
                             ] && (
-                                <p className="text-sm text-red-500">
-                                  {errors.projects[index].technologies[techIndex]}
-                                </p>
-                              )}
+                              <p className="text-sm text-red-500">
+                                {errors.projects[index].technologies[techIndex]}
+                              </p>
+                            )}
 
                             {proj.technologies.length > 1 && (
                               <button
@@ -1402,10 +1432,11 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="Project Link (Optional)"
-                        className={`p-2 rounded-xl border ${errors.projects?.[index]?.link
-                          ? "border-red-500"
-                          : "border-gray-300"
-                          } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
+                        className={`p-2 rounded-xl border ${
+                          errors.projects?.[index]?.link
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 transition-all duration-200`}
                         value={proj.link}
                         onChange={(e) =>
                           handleChange(
@@ -1445,7 +1476,11 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className={`text-blue-600 text-sm mt-2 ${formData.projects.length >= 7 ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`text-blue-600 text-sm mt-2 ${
+                      formData.projects.length >= 7
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1480,7 +1515,12 @@ const Page = () => {
                           value={cert.name}
                           maxLength={40}
                           onChange={(e) =>
-                            handleChange("certificates", index, "name", e.target.value)
+                            handleChange(
+                              "certificates",
+                              index,
+                              "name",
+                              e.target.value
+                            )
                           }
                         />
                         {errors.certificates?.[index]?.name && (
@@ -1497,7 +1537,12 @@ const Page = () => {
                           className="p-2 rounded-xl border border-gray-300 bg-white focus:border-[oklch(0.74_0.238_322.16)] focus:ring-1 focus:ring-[oklch(0.74_0.238_322.16)] transition-all duration-200"
                           value={cert.date}
                           onChange={(e) =>
-                            handleChange("certificates", index, "date", e.target.value)
+                            handleChange(
+                              "certificates",
+                              index,
+                              "date",
+                              e.target.value
+                            )
                           }
                         />
                         {errors.certificates?.[index]?.date && (
@@ -1530,20 +1575,25 @@ const Page = () => {
 
                   <button
                     type="button"
-                    className={`text-blue-600 text-sm mt-2 ${formData.certificates.length >= 7 ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`text-blue-600 text-sm mt-2 ${
+                      formData.certificates.length >= 7
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
-                        certificates: [...prev.certificates, { name: "", date: "" }],
+                        certificates: [
+                          ...prev.certificates,
+                          { name: "", date: "" },
+                        ],
                       }))
                     }
                     disabled={formData.certificates.length >= 7}
                   >
                     + Add certificate
                   </button>
-
                 </div>
-
               </div>
             )}
 
