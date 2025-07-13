@@ -144,16 +144,20 @@ const Page = () => {
         setTimeout(() => {
           router.push(`/cv-matching/${matchJob}`);
         }, 50);
-        // setIsMatching(false);
+        setIsMatching(false);
+        setSelectFile(false);
       } else {
-        // setIsMatching(false);
+        setIsMatching(false);
+        setSelectFile(false);
         toast.error(
           response.data.message ||
             "There is some error in uploading this file. Please try with a correct CV!"
         );
+        //setIsMatching(false);
       }
     } catch (error) {
-      // setIsMatching(false);
+      setIsMatching(false);
+      setSelectFile(false);
       if (
         error.response &&
         error.response.data &&
@@ -164,7 +168,8 @@ const Page = () => {
             "There is some error in uploading this file. Please try with a correct CV!"
         );
       } else {
-        // setIsMatching(false);
+        setIsMatching(false);
+        setSelectFile(false);
         toast.error(
           "There is some error in uploading this file. Please try with a correct CV!"
         );
@@ -569,54 +574,108 @@ const Page = () => {
                 {jobsPost.length} jobs fetched
               </p>
 
-              {/* Job Cards (with mobile accordion) */}
+              {/*Mobile view */}
               {jobsPost.map((job) => (
                 <React.Fragment key={job._id}>
+                  {/* Job card */}
                   <div
                     onClick={() =>
                       setSelectedJob(selectedJob === job ? null : job)
                     }
                     className="p-4 mb-2 bg-white bg-opacity-80 rounded-lg cursor-pointer hover:shadow-lg transition"
                   >
-                    <p className="text-gray-600">{job.companyName}</p>
-                    <h3 className="font-semibold text-lg">{job.title}</h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-700 text-base sm:text-sm">
+                      {job.companyName}
+                    </p>
+                    <h3 className="font-semibold text-lg sm:text-xl">
+                      {job.title}
+                    </h3>
+                    <p className="text-gray-600 text-base sm:text-sm">
+                      Location:
                       {job.hybrid
                         ? "Hybrid"
                         : job.remote
                         ? "Remote"
                         : "On-site"}
                     </p>
-                    <p className="text-gray-600">{job.salary}</p>
+                    <p className="text-gray-600 text-base sm:text-sm">
+                      Salary: {job.salary}
+                    </p>
                   </div>
 
-                  {/* Mobile-only inline detail */}
+                  {/* Mobile-only full-screen modal */}
                   {isMobile && selectedJob === job && (
-                    <div className="mb-4 p-4 bg-gray-100 rounded-lg shadow-inner">
-                      <h4 className="font-bold text-xl mb-2">{job.title}</h4>
-                      <p className="text-gray-700 mb-2 text-[8px]">
-                        {job.description}
-                      </p>
-                      <div className="flex gap-1">
+                    <div className="fixed inset-0 z-50 bg-white overflow-y-auto flex flex-col">
+                      {/* Top Bar with Actions */}
+                      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+                        <div className="flex gap-2">
+                          <button
+                            className="px-4 py-2 bg-white text-black border border-gray-300 rounded-full text-sm"
+                            onClick={() => {
+                              setMatchJob(selectedJob._id);
+                              toggleMatch();
+                            }}
+                          >
+                            Match CV
+                          </button>
+                          <button
+                            className="px-4 py-2 bg-purple-500 text-white rounded-full text-sm"
+                            onClick={() => {
+                              handleProtectedAction(() => {
+                                window.open(selectedJob.applyUrl, "_blank");
+                              });
+                            }}
+                          >
+                            Easy Apply
+                          </button>
+                        </div>
+
                         <button
-                          className="mt-2 px-4 py-2 bg-white text-black rounded-full"
-                          onClick={() => {
-                            setMatchJob(selectedJob._id);
-                            toggleMatch();
-                          }}
+                          className="text-black text-2xl font-bold"
+                          onClick={() => setSelectedJob(null)}
                         >
-                          Match CV
+                          &times;
                         </button>
-                        <button
-                          className="mt-2 px-4 py-2 bg-purple-400 text-white rounded-full"
-                          onClick={() => {
-                            handleProtectedAction(() => {
-                              window.open(selectedJob.applyUrl, "_blank");
-                            });
-                          }}
-                        >
-                          Easy Apply
-                        </button>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-4 space-y-4">
+                        {/* Company Logo */}
+                        {job.companyLogo && (
+                          <div className="w-full flex justify-center">
+                            <img
+                              src={job.companyLogo}
+                              alt="Company Logo"
+                              className="h-16 object-contain"
+                            />
+                          </div>
+                        )}
+
+                        {/* Job Info */}
+                        <div className="text-center">
+                          <h4 className="font-bold text-xl">{job.title}</h4>
+                          <p className="text-gray-700 text-base">
+                            {job.companyName}
+                          </p>
+                          <p className="text-gray-500 text-sm">
+                            {job.hybrid
+                              ? "Hybrid"
+                              : job.remote
+                              ? "Remote"
+                              : "On-site"}
+                          </p>
+                          <p className="text-gray-600 text-sm">{job.salary}</p>
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                          <h5 className="text-lg font-semibold mb-1">
+                            Job Description
+                          </h5>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            {job.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}

@@ -147,22 +147,32 @@ const Home = () => {
           isCheckingAuth={isCheckingAuth}
           setIsCheckingAuth={setIsCheckingAuth}
         />
-        <div className="flex flex-col justify-center items-center mt-28">
-          {/*<h1 className="md:text-8xl text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 text-stroke-black text-center">*/}
-          <h1 className="md:text-8xl text-4xl font-semibold bg-clip-text text-white text-center">
-            Revolutionize
-            <br /> Job Hunt with GenX <br />
-            Career
+        <div className="flex flex-col justify-center items-center mb-16 mt-28">
+          <h1 className="text-8xl font-extrabold bg-clip-text text-center text-white">
+            {/* Desktop view (md and up) */}
+            <span className="hidden md:block">
+              Revolutionize
+              <br /> Job Hunt with GenX <br />
+              Career
+            </span>
+
+            {/* Mobile view (below md) */}
+            <span className="block md:hidden text-8xl">GenX Career</span>
           </h1>
-          <p className="mt-10 text-lg text-center font-normal text-white">
-            Effortlessly Fetch, Match, and Create: Discover the Power of Job
-            Tools
+
+          <p className="mt-4 text-lg text-center font-normal text-white pl-2 pr-2">
+            {/* Desktop version */}
+            <span className="">
+              Effortlessly Fetch, Match, and Create: Discover the Power of Job
+              Tools
+            </span>
           </p>
-          <div className="mt-4">
-            <div className=" bg-black bg-opacity-40 rounded-lg">
+
+          <div className="mt-12">
+            <div className="bg-black bg-opacity-40 rounded-lg">
               <button
                 onClick={() => (window.location.href = "/jobs")}
-                className="px-8 py-1 bg-black rounded-lg text-white hover:bg-white hover:text-black"
+                className="px-8 py-1 bg-black rounded-lg text-white hover:bg-white hover:text-black bg-opacity-50"
               >
                 <Link href="/jobs" className="whitespace-nowrap">
                   Explore Jobs
@@ -264,13 +274,14 @@ const Home = () => {
         </div>
 
         <div className=" items-center justify-center flex flex-col mt-8 mb-4 bg-[#7c53a380] bg-opacity-50 pb-6">
-          <h1 className="text-5xl font-extralight text-white mb-2 text-center mt-4 ">
+          <h1 className="text-5xl  font-extralight text-white mb-2 text-center mt-4">
             Our Features
           </h1>
-          <p className="text-center text-white">
-            Effortlessly match your skills to jobs, create a standout CV, and
-            navigate the job market <br /> with confidence.
+
+          <p className="text-center text-white text-sm md:text-base lg:text-base pl-2 pr-2">
+            Match skills to jobs, create a standout CV, navigate the job market
           </p>
+
           <div className="flex flex-wrap justify-center mt-4">
             {/* Feature Card 1 */}
             <div className="p-4 max-w-sm">
@@ -281,11 +292,22 @@ const Home = () => {
                   </h2>
                 </div>
                 <div className="flex-grow">
-                  <p className="leading-relaxed text-base text-[#595959]">
-                    Navigate the job market with confidence. Discover the
-                    best-suited roles for your skills, apply with ease, and
-                    track your applications seamlessly. Empower your job search
-                    journey with tools designed to land your dream role.
+                  <p className="leading-relaxed text-base text-[#595959]"></p>
+                  <p className=" text-[#595959] text-sm md:text-base pl-2 pr-2">
+                    {/* Short version for small screens */}
+                    <span className="block md:hidden">
+                      Discover roles that match your skills. Apply quickly and
+                      track your progress with ease.
+                    </span>
+
+                    {/* Full version for medium and up */}
+                    <span className="hidden md:block">
+                      Navigate the job market with confidence. Discover the
+                      best-suited roles for your skills, apply with ease, and
+                      track your applications seamlessly. Empower your job
+                      search journey with tools designed to land your dream
+                      role.
+                    </span>
                   </p>
                 </div>
                 <div className="mt-5">
@@ -317,12 +339,22 @@ const Home = () => {
                   </h2>
                 </div>
                 <div className="flex-grow">
-                  <p className="leading-relaxed text-base text-[#595959]">
-                    Effortlessly align your skills and experience with the
-                    perfect job opportunities. Our advanced CV matching
-                    technology analyzes your profile and recommends positions
-                    tailored to your expertise and aspirations. Stand out from
-                    the crowd and save time in your job search.
+                  <p className="leading-relaxed text-base text-[#595959]"></p>
+                  <p className=" text-[#595959] text-sm md:text-base pl-2 pr-2">
+                    {/* Short version for small screens */}
+                    <span className="block md:hidden">
+                      Get job recommendations that align perfectly with your CV
+                      and goals.
+                    </span>
+
+                    {/* Full version for medium and up */}
+                    <span className="hidden md:block">
+                      Effortlessly align your skills and experience with the
+                      perfect job opportunities. Our advanced CV matching
+                      technology analyzes your profile and recommends positions
+                      tailored to your expertise and aspirations. Stand out from
+                      the crowd and save time in your job search.
+                    </span>
                   </p>
                 </div>
                 <div className="mt-5">
@@ -356,18 +388,28 @@ const Home = () => {
                   </h2>
                 </div>
                 <div className="flex-grow">
-                  <p className="leading-relaxed text-base text-[#595959]">
-                    Create a professional, visually appealing CV in minutes.
-                    Customize templates designed to showcase your strengths and
-                    achievements. Let our smart tool help you craft a CV that
-                    gets noticed by employers and highlights your career
-                    potential.
+                  <p className="leading-relaxed text-base text-[#595959]"></p>
+                  <p className=" text-[#595959] text-sm md:text-base pl-2 pr-2">
+                    {/* Short version for small screens */}
+                    <span className="block md:hidden">
+                      Build a standout CV using customizable templates that
+                      highlight your strengths.
+                    </span>
+
+                    {/* Full version for medium and up */}
+                    <span className="hidden md:block">
+                      Create a professional, visually appealing CV in minutes.
+                      Customize templates designed to showcase your strengths
+                      and achievements. Let our smart tool help you craft a CV
+                      that gets noticed by employers and highlights your career
+                      potential.
+                    </span>
                   </p>
                 </div>
                 <div className="mt-5">
                   <Link
                     href="/cv-creation"
-                    className="text-black hover:text-[#9866C7] inline-flex items-center"
+                    className="text-black hover:text-[#9866C7] inline-flex items-center "
                   >
                     Get Started
                     <svg
@@ -395,7 +437,7 @@ const Home = () => {
 
           <div className="flex flex-col md:flex-row gap-8">
             {/* Large Image Section */}
-            <div className="lg:w-1/2 w-full h-full">
+            <div className="lg:w-1/2 w-full h-full md:block hidden">
               <img
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].title}

@@ -114,7 +114,7 @@ const Page = () => {
             About
             <br /> GenX Career
           </h1>
-          <p className="mt-4 text-lg text-center font-normal text-white">
+          <p className="mt-4 text-lg text-center font-normal text-white pl-2 pr-2">
             Effortlessly Fetch, Match, and Create: Discover the Power of Job
             Tools
           </p>
@@ -239,21 +239,17 @@ const Page = () => {
           </video>
 
           {/* Content */}
-          <div className="flex flex-col items-center w-full h-full bg-[#7c53a380] bg-opacity-50 flex-wrap justify-center">
-            <div className="p-4">
-              <h1 className="text-2xl md:text-5xl lg:text-5xl font-extralight text-white mb-2 text-center mt-4 ">
-                Our Vision : Empowering Careers,<br></br> Simplifying Job Search
+          <div className="flex flex-col items-center w-full h-full bg-[#7c53a380] bg-opacity-50 justify-center text-white px-4 py-8">
+            <div className="max-w-4xl w-full text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-snug sm:leading-snug md:leading-tight mb-6">
+                Our Vision: Empowering Careers, Simplifying Job Search
               </h1>
-              <p className="text-center text-white md:mt-4 font-medium">
-                Empowering job seekers with a seamless platform that bridges the{" "}
-                <br />
+              <p className="text-sm sm:text-base md:text-lg font-extralight sm:font-light leading-relaxed sm:leading-7 lg:pl-20 lg:pr-20">
+                Empowering job seekers with a seamless platform that bridges the
                 gap between opportunities and talents. By leveraging
-                cutting-edge <br />
-                technologies, we fetch job listings from multiple platforms via{" "}
-                <br />
-                the TheirStack API, curate them periodically, and offer advanced{" "}
-                <br />
-                search filters for precision job hunting.
+                cutting-edge technologies, we fetch job listings from multiple
+                platforms via the TheirStack API, curate them periodically, and
+                offer advanced search filters for precision job hunting.
               </p>
             </div>
           </div>

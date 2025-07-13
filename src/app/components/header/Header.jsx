@@ -94,14 +94,34 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
           {/* Brand */}
           <div className="lg:flex flex items-center h-2 pl-4 md:hidden">
             <Link href="/" className="flex items-center">
-              <div className="relative h-12 w-12">
-                <Image
-                  src="/bg/GENX.png"
-                  alt="GenX Career Logo"
-                  layout="fill"
-                  objectFit="contain"
-                  className="scale-125"
-                />
+              {/* Mobile Logo */}
+              <div className="flex items-center pl-4 md:hidden">
+                <Link href="/" className="flex items-center">
+                  <div className="relative h-12 w-12">
+                    <Image
+                      src="/bg/bg_2.png"
+                      alt="GenX Mobile Logo"
+                      layout="fill"
+                      objectFit="contain"
+                      className="scale-125"
+                    />
+                  </div>
+                </Link>
+              </div>
+
+              {/* Desktop Logo */}
+              <div className="hidden md:flex items-center pl-4">
+                <Link href="/" className="flex items-center">
+                  <div className="relative h-12 w-12">
+                    <Image
+                      src="/bg/GENX.png"
+                      alt="GenX Career Logo"
+                      layout="fill"
+                      objectFit="contain"
+                      className="scale-125"
+                    />
+                  </div>
+                </Link>
               </div>
             </Link>
           </div>
@@ -110,9 +130,9 @@ const Header = ({ token, isCheckingAuth, setIsCheckingAuth }) => {
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? (
-                <HiX className="w-8 h-8 text-[#9866C7]" />
+                <HiX className="w-8 h-8 text-white" />
               ) : (
-                <HiMenuAlt3 className="w-8 h-8 text-[#9866C7]" />
+                <HiMenuAlt3 className="w-8 h-8 text-white" />
               )}
             </button>
           </div>

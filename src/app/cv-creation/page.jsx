@@ -41,7 +41,7 @@ const Page = () => {
           console.log("Error fetching tendata:", response.data.message);
           toast.error(
             response.data.message ||
-            "Some Issue in Loading the templates right now. Please try again later"
+              "Some Issue in Loading the templates right now. Please try again later"
           );
           return;
         }
@@ -51,7 +51,7 @@ const Page = () => {
         console.log("Error fetching template data:", error);
         toast.error(
           error.message ||
-          "Some Issue in Loading the templates right now. Please try again later"
+            "Some Issue in Loading the templates right now. Please try again later"
         );
       } finally {
         setLoading(false);
@@ -102,7 +102,7 @@ const Page = () => {
         )}
 
         <div className="flex  w-screen flex-col">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 lg:mt-2 gap-10 sm:mt-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1200px] mx-auto px-6 py-6 pt-24 sm:pt-0 lg:mt-2 gap-10 sm:mt-20">
             {/* Left Column */}
             <div className="flex flex-col justify-center items-center text-center lg:w-1/2 space-y-6">
               <h1 className="xl:text-7xl lg:text-6xl md:text-4xl text-3xl font-sans font-extrabold  bg-clip-text text-white">
@@ -110,8 +110,8 @@ const Page = () => {
               </h1>
 
               <p className="text-white text-lg md:text-xl font-sans leading-relaxed px-2">
-                Only 2% of CVs win. Yours will be one of them. Let’s build
-                you a CV that works.
+                Only 2% of CVs win. Yours will be one of them. Let’s build you a
+                CV that works.
               </p>
 
               <div className=" bg-opacity-40 rounded-2xl w-fit p-4">
@@ -168,13 +168,18 @@ const Page = () => {
                               className="rounded-t-lg w-full h-[450px] object-cover"
                               width={400}
                               height={450}
-                              src={template.imageUrl ? template.imageUrl : "/images/resume1.png"}
+                              src={
+                                template.imageUrl
+                                  ? template.imageUrl
+                                  : "/images/resume1.png"
+                              }
                               alt={template.name}
                             />
 
                             <button
                               onClick={() => {
-                                const storedToken = Cookies.get("genx_access_token");
+                                const storedToken =
+                                  Cookies.get("genx_access_token");
 
                                 if (!storedToken) {
                                   Swal.fire({
@@ -213,7 +218,8 @@ const Page = () => {
                         </h2>
                         <p className="text-gray-600 mt-2 text-center font-sans">
                           Currently, there are no CV templates available. <br />
-                          Please check back later or contact support if you think this is an error.
+                          Please check back later or contact support if you
+                          think this is an error.
                         </p>
                       </div>
                     )}
