@@ -786,7 +786,7 @@ const Page = () => {
         </div>
         {isModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg w-1/3">
+            <div className="bg-white p-6 rounded-lg w-[90%] sm:w-2/3 md:w-1/2 lg:w-1/3">
               <h3 className="text-lg font-bold">Filter Options</h3>
               <p className="text-gray-700">
                 Here you can adjust the filter options for jobs.
@@ -833,22 +833,8 @@ const Page = () => {
               </div>
 
               {/* Apply and Close Buttons */}
-              {/* <div className="mt-4 flex justify-between">
-                <button
-                  onClick={handleApplySalary} // Apply salary on button click
-                  className="px-4 py-2 bg-green-500 text-white rounded-full"
-                >
-                  Apply
-                </button>
-                <button
-                  onClick={toggleModal} // Close the modal
-                  className="px-4 py-2 bg-purple-500 text-white rounded-full"
-                >
-                  Close
-                </button>
-              </div> */}
-              <div className="mt-4 flex justify-between">
-                <div>
+              <div className="mt-4 flex justify-between flex-wrap">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={handleApplySalary}
                     className="px-4 py-2 bg-green-500 text-white rounded-full"
@@ -857,14 +843,14 @@ const Page = () => {
                   </button>
                   <button
                     onClick={handleResetSalary}
-                    className="px-4 py-2 mx-2 bg-red-500 text-white rounded-full"
+                    className="px-4 py-2 bg-red-500 text-white rounded-full"
                   >
                     Reset Salary
                   </button>
                 </div>
                 <button
                   onClick={toggleModal}
-                  className="px-4 py-2 bg-purple-500 text-white rounded-full"
+                  className="px-4 py-2 bg-purple-500 text-white rounded-full mt-2 sm:mt-0"
                 >
                   Close
                 </button>
@@ -875,7 +861,7 @@ const Page = () => {
 
         {isCalenderModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg w-1/3">
+            <div className="bg-white p-6 rounded-lg w-[90%] sm:w-2/3 md:w-1/2 lg:w-1/3">
               {/* Calendar for Date Selection */}
               <div className="mt-4">
                 <label
@@ -885,31 +871,31 @@ const Page = () => {
                   Select Date:
                 </label>
                 <Calendar
-                  onChange={handleDateChange} // Handle date change
-                  value={formData.datePosted} // Set calendar value to selected date
+                  onChange={handleDateChange}
+                  value={formData.datePosted}
                   className="my-4"
                 />
               </div>
 
               {/* Apply and Close Buttons */}
-              <div className="mt-4 flex justify-between">
-                <div>
+              <div className="mt-4 flex justify-between flex-wrap">
+                <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleApplyDatePosted("datePosted")} // Set date on Apply
+                    onClick={() => handleApplyDatePosted("datePosted")}
                     className="px-4 py-2 bg-green-500 text-white rounded-full"
                   >
                     Apply
                   </button>
                   <button
                     onClick={handleResetDatePosted}
-                    className="px-4 py-2 mx-2 bg-red-500 text-white rounded-full"
+                    className="px-4 py-2 bg-red-500 text-white rounded-full"
                   >
                     Reset Date
                   </button>
                 </div>
                 <button
-                  onClick={toggleModalCalender} // Close the modal when clicked
-                  className="px-4 py-2 bg-purple-500 text-white rounded-full"
+                  onClick={toggleModalCalender}
+                  className="px-4 py-2 bg-purple-500 text-white rounded-full mt-2 sm:mt-0"
                 >
                   Close
                 </button>

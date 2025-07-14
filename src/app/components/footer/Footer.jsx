@@ -18,7 +18,7 @@ const Footer = () => {
                   />
                 </Link>
               </div>
-              <p className="text-white font-sans text-xs sm:text-sm md:text-base xl:text-lg ">
+              <p className="text-white font-sans text-md sm:text-md md:text-base xl:text-lg ">
                 Easy job search, Smart CV matching, and Professional CV
                 creation.
               </p>
@@ -28,14 +28,14 @@ const Footer = () => {
 
             {/* Middle Section */}
             <div className="md:col-span-1">
-              <h6 className="text-sm xl:text-xl font-semibold text-white font-sans  mb-4">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4">
                 Our Services
               </h6>
               <ul className="mt-7">
                 <li>
                   <Link
                     href="/jobs"
-                    className=" text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
+                    className=" text-white font-sans text-md sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
                   >
                     Explore Jobs
                   </Link>
@@ -43,7 +43,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/jobs"
-                    className="text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
+                    className="text-white font-sans text-md sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
                   >
                     Cv Matching
                   </Link>
@@ -51,7 +51,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/cv-creation"
-                    className="text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
+                    className="text-white font-sans text-md sm:text-lg md:text-base xl:text-lg  hover:text-purple-400 transition"
                   >
                     CV Creation
                   </Link>
@@ -61,13 +61,13 @@ const Footer = () => {
 
             {/* Right Section */}
             <div className="md:col-span-1 font-mono">
-              <h6 className="text-sm xl:text-xl font-semibold text-white font-sans  mb-4 ">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4 ">
                 Social Media
               </h6>
               <div className="flex flex-col gap-3 mt-7">
                 <Link
                   href="#"
-                  className="flex flex-row text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg gap-2 hover:text-purple-400 transition"
+                  className="flex flex-row text-white font-sans text-md sm:text-lg md:text-base xl:text-lg gap-2 hover:text-purple-400 transition"
                   aria-label="Facebook"
                 >
                   <svg
@@ -85,7 +85,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   href="#"
-                  className="flex flex-row gap-2 text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg hover:text-purple-400 transition"
+                  className="flex flex-row gap-2 text-white font-sans text-md sm:text-lg md:text-base xl:text-lg hover:text-purple-400 transition"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +99,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   href="#"
-                  className="flex flex-row gap-2 text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg hover:text-purple-400 transition"
+                  className="flex flex-row gap-2 text-white font-sans text-md sm:text-lg md:text-base xl:text-lg hover:text-purple-400 transition"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +113,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg gap-2"
+                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-md sm:text-lg md:text-base xl:text-lg gap-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,13 +129,13 @@ const Footer = () => {
             </div>
 
             <div className="md:col-span-1 font-mono">
-              <h6 className="text-sm xl:text-xl font-semibold text-white font-sans  mb-4 ">
+              <h6 className="text-md xl:text-xl font-semibold text-white font-sans  mb-4 ">
                 Contact Us
               </h6>
               <div className="flex flex-col gap-1 mt-7">
                 <Link
                   href="tel:+923060815246"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg gap-2"
+                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-md sm:text-lg md:text-base xl:text-lg gap-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   href="#"
-                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-sm sm:text-lg md:text-base xl:text-lg gap-2"
+                  className="flex flex-row hover:text-purple-400 transition text-white font-sans text-md sm:text-lg md:text-base xl:text-lg gap-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

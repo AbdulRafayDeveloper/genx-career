@@ -45,13 +45,13 @@ const JobDetail = () => {
           <LeftSideBar />
 
           {/* Title */}
-          <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
+          <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
             <HiArrowLeft
               className="cursor-pointer mr-2 mt-1"
               onClick={() => router.back()}
             />
             Back
-          </p>
+          </div>
 
           {/* Header component */}
           <div className="ml-auto">
@@ -61,12 +61,31 @@ const JobDetail = () => {
       </div>
       <div className="p-6 bg-gray-50 shadow-md rounded-md max-w-5xl mx-auto mt-4">
         {/* Job Title */}
-        <h1 className="text-2xl font-bold " style={{ color: "purple" }}>
-          {jobDetails.title || "N/A"}
-        </h1>
+
+        <div className="block lg:hidden w-full mt-4 ml-2">
+          <div className="flex items-center gap-2">
+            <HiArrowLeft
+              className="text-xl cursor-pointer text-gray-700"
+              onClick={() => router.back()}
+            />
+            <h1 className="text-xl font-bold " style={{ color: "purple" }}>
+              {" "}
+              {jobDetails.title || "N/A"}
+            </h1>
+          </div>
+        </div>
+
+        {/* Desktop: Heading only (keep existing layout) */}
+        <div className="hidden lg:block">
+          <h1 className="text-xl font-bold " style={{ color: "purple" }}>
+            {" "}
+            {jobDetails.title || "N/A"}
+          </h1>
+        </div>
         <div className="flex items-center space-x-4 mt-2">
           <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-            Posted on: {new Date(jobDetails.jobPostDate).toISOString().split('T')[0]}
+            Posted on:{" "}
+            {new Date(jobDetails.jobPostDate).toISOString().split("T")[0]}
           </span>
         </div>
 
@@ -78,7 +97,9 @@ const JobDetail = () => {
               <span className="font-semibold text-sm text-gray-700 w-1/2">
                 Job Title:
               </span>
-              <span className="text-gray-600 text-sm">{jobDetails.title || "N/A"}</span>
+              <span className="text-gray-600 text-sm">
+                {jobDetails.title || "N/A"}
+              </span>
             </div>
             <div className="flex items-center">
               <span className="font-semibold text-sm text-gray-700 w-1/2">

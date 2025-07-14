@@ -36,12 +36,12 @@ const CvMatchers = () => {
     const fetchusers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get('genx_access_token');
+        const token = Cookies.get("genx_access_token");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matchers?pageNumber=${currentPage}&pageSize=${itemsPerPage}&search=${search}`,
           {
             headers: {
-              'Authorization': `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -57,11 +57,10 @@ const CvMatchers = () => {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(data.message)
+        toast.error(data.message);
       } finally {
         setLoading(false);
       }
-
     };
     fetchusers();
   }, [currentPage, itemsPerPage, searchStatus]);
@@ -77,12 +76,12 @@ const CvMatchers = () => {
     setIsDeleting(true);
 
     try {
-      const token = Cookies.get('genx_access_token');
+      const token = Cookies.get("genx_access_token");
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching/${selectedUserId}`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -90,25 +89,25 @@ const CvMatchers = () => {
       if (response.data.status === 200) {
         setSearchStatus(!searchStatus);
         Swal.fire({
-          title: 'Deleted!',
-          text: 'The record has been deleted.',
-          icon: 'success',
-          confirmButtonText: 'OK',
+          title: "Deleted!",
+          text: "The record has been deleted.",
+          icon: "success",
+          confirmButtonText: "OK",
         });
       } else {
         Swal.fire({
-          title: 'Error!',
-          text: response.data.message || 'Failed to delete the record.',
-          icon: 'error',
-          confirmButtonText: 'OK',
+          title: "Error!",
+          text: response.data.message || "Failed to delete the record.",
+          icon: "error",
+          confirmButtonText: "OK",
         });
       }
     } catch (error) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Failed to delete record. Please try again later.',
-        icon: 'error',
-        confirmButtonText: 'OK',
+        title: "Error!",
+        text: "Failed to delete record. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     } finally {
       setIsDeleting(false);
@@ -119,15 +118,20 @@ const CvMatchers = () => {
 
   const downloadusersExcel = async () => {
     try {
-      const token = Cookies.get('genx_access_token');
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching-list/export`, {
-        responseType: "blob",
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const token = Cookies.get("genx_access_token");
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/cv-matching-list/export`,
+        {
+          responseType: "blob",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = "CvMatchers_List.xlsx";
@@ -135,7 +139,10 @@ const CvMatchers = () => {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      toast.error(error.response.data.message || 'Failed to download Cv Matchers Excel file. Please try again later.');
+      toast.error(
+        error.response.data.message ||
+          "Failed to download Cv Matchers Excel file. Please try again later."
+      );
     }
   };
 
@@ -150,13 +157,13 @@ const CvMatchers = () => {
             <LeftSideBar />
 
             {/* Title */}
-            <p className="flex items-center text-[12px] md:text-2xl md:font-semibold ml-3">
+            <div className="hidden lg:flex text-[12px] md:text-2xl md:font-semibold ml-3">
               <HiArrowLeft
                 className="cursor-pointer mr-2 mt-1"
                 onClick={() => router.back()}
               />
               Back
-            </p>
+            </div>
 
             {/* Header component */}
             <div className="ml-auto">
@@ -192,13 +199,19 @@ const CvMatchers = () => {
         <div className="p-4 bg-gray-50 rounded-xl shadow-sm my-7 ml-5">
           <div className="flex flex-wrap justify-between items-center gap-4">
             {/* Job Listing Section */}
-            <div className="w-full lg:w-auto">
-              <div className="grid grid-cols-2 lg:justify-between items-center gap-4">
-                <div>
-                  <h1 className="text-lg lg:text-xl font-bold">Cv Matchers</h1>
-                </div>
-                <div></div>
+            <div className="block lg:hidden w-full mt-4 ml-2">
+              <div className="flex items-center gap-2">
+                <HiArrowLeft
+                  className="text-xl cursor-pointer text-gray-700"
+                  onClick={() => router.back()}
+                />
+                <h1 className="text-xl font-bold "> CV Matchers</h1>
               </div>
+            </div>
+
+            {/* Desktop: Heading only (keep existing layout) */}
+            <div className="hidden lg:block">
+              <h1 className="text-xl font-bold "> CV Matchers</h1>
             </div>
 
             {/* Search Form */}
@@ -209,12 +222,18 @@ const CvMatchers = () => {
                   aria-label="Export Records"
                   className="flex items-center justify-center gap-2 w-full bg-white  p-1 rounded-lg border border-gray-300 transition duration-300"
                 >
-                  <p className="text-md ">Export </p> <Image src="/upload-icon.png" height={24} width={24} alt="Export" />
+                  <p className="text-md ">Export </p>{" "}
+                  <Image
+                    src="/upload-icon.png"
+                    height={24}
+                    width={24}
+                    alt="Export"
+                  />
                 </button>
                 <div className="w-full  flex justify-start">
                   <input
                     type="text"
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     id="simple-search"
                     placeholder="Search by email..."
                     className="w-full sm:w-full py-2 px-3 text-sm rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 transition duration-300"
@@ -223,7 +242,6 @@ const CvMatchers = () => {
                   />
                 </div>
               </div>
-
 
               <div className="w-full sm:w-auto sm:w-auto flex justify-start">
                 <button
@@ -254,64 +272,72 @@ const CvMatchers = () => {
                 </tr>
               </thead>
               <tbody>
-                {users && users.map((item, index) => (
-                  <tr key={item._id} className="bg-white border-b text-center">
-                    <td className="px-6 py-4">{index + 1}</td>
-                    <td className="px-6 py-4">{item.userEmail}</td>
-                    <td className="px-6 py-4">{item.result.length}</td>
-                    <td className="px-6 py-4">
-                      {new Date(item.createdAt).toLocaleDateString("en-GB")}
-                    </td>
-                    <td className="px-6 py-4 flex gap-1 justify-center items-center">
-                      <div>
-                        {/* Delete Button */}
-                        <div
-                          className="p-1 w-5 h-5 bg-red-600 rounded-md flex justify-center items-center cursor-pointer"
-                          onClick={() => handleDeleteClick(item._id)} // Pass the specific ID
-                        >
-                          <RiDeleteBin6Line color="white" />
-                        </div>
+                {users &&
+                  users.map((item, index) => (
+                    <tr
+                      key={item._id}
+                      className="bg-white border-b text-center"
+                    >
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{item.userEmail}</td>
+                      <td className="px-6 py-4">{item.result.length}</td>
+                      <td className="px-6 py-4">
+                        {new Date(item.createdAt).toLocaleDateString("en-GB")}
+                      </td>
+                      <td className="px-6 py-4 flex gap-1 justify-center items-center">
+                        <div>
+                          {/* Delete Button */}
+                          <div
+                            className="p-1 w-5 h-5 bg-red-600 rounded-md flex justify-center items-center cursor-pointer"
+                            onClick={() => handleDeleteClick(item._id)} // Pass the specific ID
+                          >
+                            <RiDeleteBin6Line color="white" />
+                          </div>
 
-                        {/* Dialog Box */}
-                        {isDialogOpen && (
-                          <div className="fixed inset-0 bg-black bg-opacity-20 z-50 flex items-center justify-center">
-                            <div className="bg-white rounded-lg p-8 shadow-lg w-[350px]">
-                              <h1 className="text-xl font-bold">
-                                Delete Confirmation
-                              </h1>
-                              <p className="text-md text-gray-600 mt-2">
-                                Are you sure you want to delete this record from database?
-                              </p>
-                              <div className="flex justify-end gap-2 mt-8">
-                                <button
-                                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
-                                  onClick={() => setIsDialogOpen(false)}
-                                >
-                                  Cancel
-                                </button>
-                                <button
-                                  className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${isDeleting ? "bg-red-300 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+                          {/* Dialog Box */}
+                          {isDialogOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-20 z-50 flex items-center justify-center">
+                              <div className="bg-white rounded-lg p-8 shadow-lg w-[350px]">
+                                <h1 className="text-xl font-bold">
+                                  Delete Confirmation
+                                </h1>
+                                <p className="text-md text-gray-600 mt-2">
+                                  Are you sure you want to delete this record
+                                  from database?
+                                </p>
+                                <div className="flex justify-end gap-2 mt-8">
+                                  <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
+                                    onClick={() => setIsDialogOpen(false)}
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    className={`px-4 py-2 text-sm font-medium text-white rounded-md transition duration-200 ${
+                                      isDeleting
+                                        ? "bg-red-300 cursor-not-allowed"
+                                        : "bg-red-600 hover:bg-red-700"
                                     }`}
-                                  onClick={handleDelete}
-                                  disabled={isDeleting}
-                                >
-                                  {isDeleting ? (
-                                    <div className="flex items-center space-x-2">
-                                      <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                      <span>Deleting...</span>
-                                    </div>
-                                  ) : (
-                                    "Delete"
-                                  )}
-                                </button>
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                  >
+                                    {isDeleting ? (
+                                      <div className="flex items-center space-x-2">
+                                        <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                        <span>Deleting...</span>
+                                      </div>
+                                    ) : (
+                                      "Delete"
+                                    )}
+                                  </button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 {users.length === 0 && (
                   <tr>
                     <td colSpan={6} className="py-12">
@@ -333,7 +359,9 @@ const CvMatchers = () => {
                         </svg>
 
                         {/* Main message */}
-                        <h3 className="text-xl font-medium text-gray-700">No records found</h3>
+                        <h3 className="text-xl font-medium text-gray-700">
+                          No records found
+                        </h3>
 
                         {/* Help text */}
                         <p className="text-sm text-gray-500">

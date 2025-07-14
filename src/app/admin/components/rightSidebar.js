@@ -55,7 +55,7 @@ const RightSide = () => {
         if (!data) {
           toast.error(
             response.data.message ||
-            "Failed to fetch stats. Please try again later."
+              "Failed to fetch stats. Please try again later."
           );
           return;
         }
@@ -71,7 +71,7 @@ const RightSide = () => {
         console.log("Error fetching monthly user data:", error);
         toast.error(
           error.response?.data?.message ||
-          "Failed to fetch stats. Please try again later."
+            "Failed to fetch stats. Please try again later."
         );
       } finally {
         setStatsLoading(false);
@@ -94,7 +94,7 @@ const RightSide = () => {
         if (!data) {
           toast.error(
             response.data.message ||
-            "Failed to fetch monthly user data. Please try again later."
+              "Failed to fetch monthly user data. Please try again later."
           );
           return;
         }
@@ -108,7 +108,7 @@ const RightSide = () => {
         console.log("Error fetching monthly user data:", error);
         toast.error(
           error.response?.data?.message ||
-          "Failed to fetch monthly user data. Please try again later."
+            "Failed to fetch monthly user data. Please try again later."
         );
       } finally {
         setMonthlyStatsLoading(false);
@@ -156,7 +156,7 @@ const RightSide = () => {
               <LeftSideBar />
 
               {/* Title */}
-              <p className="flex text-[12px] md:text-2xl md:font-semibold ml-3">
+              <p className="lg:flex hidden text-[12px] md:text-2xl md:font-semibold ml-3">
                 Admin Panel
               </p>
 

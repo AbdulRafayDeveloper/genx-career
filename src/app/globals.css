@@ -229,6 +229,14 @@ body {
   height: 40px !important;
 }
 
+.css-12eb3rq-MuiStepLabel-label.Mui-active{
+  color: #fff !important;
+}
+
+.css-12eb3rq-MuiStepLabel-label.Mui-completed {
+  color: #fff !important;
+}
+
 /*.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root{
   fill: #7d0dbe !important;
 }*/
