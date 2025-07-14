@@ -641,7 +641,13 @@ const Page = () => {
                     "& .MuiStepLabel-label": {
                       fontSize: "1.125rem",
                       fontWeight: 200,
-                      color: "#ffff",
+                      color: "#ffff", // Default label color
+                    },
+                    "& .MuiStepLabel-label.Mui-active": {
+                      color: "#fff !important", // Active step label color
+                    },
+                    "& .MuiStepLabel-label.Mui-completed": {
+                      color: "#fff !important", // Completed step label color
                     },
                     "& .MuiStepIcon-root": {
                       fontSize: "2.5rem",
