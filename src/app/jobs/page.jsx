@@ -144,7 +144,7 @@ const Page = () => {
         setTimeout(() => {
           router.push(`/cv-matching/${matchJob}`);
         }, 50);
-        setIsMatching(false);
+        // setIsMatching(false);
       //  setSelectFile(false);
       } else {
         setIsMatching(false);
@@ -163,6 +163,7 @@ const Page = () => {
         error.response.data &&
         error.response.data.message
       ) {
+        setIsMatching(false);
         toast.error(
           error.response.data.message ||
             "There is some error in uploading this file. Please try with a correct CV!"
