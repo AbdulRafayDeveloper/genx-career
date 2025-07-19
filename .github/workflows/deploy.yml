@@ -1,4 +1,4 @@
-name: Deploy Next.js to EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
 
 jobs:
   deploy:
+    name: Deploy App to EC2
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
       - name: Checkout Code
@@ -17,20 +17,16 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.EC2_PATH }}
-            export NODE_ENV=production
-            export PNPM_HOME="$HOME/.local/share/pnpm"
-            export PATH="$PNPM_HOME:$PATH"
-            source ~/.bashrc
             git pull origin main
-            pnpm install
-            pnpm build
-            pm2 restart next-app || pm2 start "pnpm start" --name next-app
+            npm install
+            npm run build
+            pm2 restart all || pm2 start npm --name "nextjs-app" -- start
           EOF
