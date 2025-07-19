@@ -1,0 +1,41 @@
+name: Deploy Next.js App to EC2
+
+on:
+  push:
+    branches:
+      - main  # Ya tumhari deployment branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 23.21.182.33 >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh ubuntu@23.21.182.33 << 'EOF'
+            cd /var/www/html/genx-frontend
+            git pull origin main
+
+            # Install dependencies
+            npm install
+
+            # Build Next.js app
+            npm run build
+
+            # Start/restart with PM2
+            pm2 delete genx-frontend || true
+            pm2 start "npm run start" --name genx-frontend
+
+            # Optional: save PM2 config
+            pm2 save
+          EOF
